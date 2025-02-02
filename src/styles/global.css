@@ -1,7 +1,9 @@
 * {
   margin: 0;
   padding: 0;
+  /* height:100% ; */
   font-family: "Poppins", serif;
+  background-color: #f9f3e3;
 }
 
 /* Custom Scrollbar */
@@ -21,4 +23,12 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #6b705c; /* Scrollbar color on hover */
+}
+
+body {
+  background-image: url("../assets/backgroundImage.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed; /* Key for parallax effect */
 }

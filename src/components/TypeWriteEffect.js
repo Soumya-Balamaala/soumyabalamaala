@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 
 export default function TypewriterEffect({
   text = "Soumya Balamaala",
@@ -10,6 +10,9 @@ export default function TypewriterEffect({
 }) {
   const [displayedText, setDisplayedText] = useState("");
   const [typingComplete, setTypingComplete] = useState(false); // Track typing completion
+  const theme = useTheme();
+
+  const isMobile = useMediaQuery(theme.breakpoints.between("xs", "md"));
 
   useEffect(() => {
     let timeout;
@@ -37,10 +40,10 @@ export default function TypewriterEffect({
       transition={{ duration: 1 }}
     >
       <Stack direction="row" alignItems="center" spacing={1}>
-        <Typography variant="h3" color="primary.main">
+        <Typography variant="h3" color="primary.main" sx={{textAlign:isMobile ?"center" : "left"}}>
           {displayedText}
         </Typography>
-        <Typography
+       {!isMobile ? <Typography
           variant="h3"
           color="primary.main"
           component={motion.span}
@@ -50,7 +53,7 @@ export default function TypewriterEffect({
           sx={{ fontWeight: "normal" }} // Always show cursor, animate opacity
         >
           |
-        </Typography>
+        </Typography> : null}
       </Stack>
     </motion.div>
   );

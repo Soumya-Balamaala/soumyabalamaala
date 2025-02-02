@@ -70,7 +70,7 @@ const LogoContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  padding: "12px",
+  padding: "26px",
 }));
 
 const Navlist = styled("ul")(({ theme }) => ({
@@ -78,6 +78,10 @@ const Navlist = styled("ul")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "center",
   padding: "18px",
+
+  [theme.breakpoints.between("xs", "md")]: {
+    top: "80px", display:"none"
+  }
 }));
 
 const Navitem = styled("li")(({ theme }) => ({
@@ -93,5 +97,16 @@ const Navlink = styled(Link)(({ theme }) => ({
 export const MainSection = styled("section")(({ theme, mainheight }) => ({
   width: "100%",
   height: mainheight,
-  backgroundColor: theme.palette.background.main,
+  // backgroundColor: theme.palette.background.main,
+  backdropFilter: "blur(8px)", // Blurring the background
+  backgroundColor: "transparent", // Fully transparent background
+  borderBottom: "1px solid rgba(255, 255, 255, 0.3)", // Subtle border for depth
+  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)", // Soft shadow for elevation
+  // padding: "0 20px",
+  transition: "all 0.3s ease-in-out",
+  backdropSaturation: "180%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent:"center"
+  
 }));
