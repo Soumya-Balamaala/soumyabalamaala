@@ -1,33 +1,51 @@
-// import React from 'react'
-
 "use client";
 
 import { Box, Stack, useMediaQuery } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import { NavData } from "@/mock/Navigations";
-
+import { useRef } from "react";
 import Link from "next/link";
 
-function Navbar() {
+function Navbar({ sectionrefs }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.between("xs", "sm"));
+
+  const handleScrollTo = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <Header>
-      {isMobile ? <Responsive>Responsive</Responsive> : null}
+      {isMobile && <Responsive>Responsive</Responsive>}
       <LogoContainer>Logo</LogoContainer>
       <Navlist>
-        {NavData.map((item) => {
-          if (!item.path) {
-            console.warn(`Missing path for navigation item: ${item.title}`);
-            return null; // Skip items without a path
-          }
+        {NavData?.length > 0 ? (
+          NavData.map((item) => {
+            if (!item.path) {
+              console.warn(`Missing path for navigation item: ${item.title}`);
+              return null; // Skip items without a path
+            }
 
-          return (
-            <Navitem key={item.id}>
-              <Navlink href={item.path}>{item.title}</Navlink>
-            </Navitem>
-          );
-        })}
+            return (
+              <Navitem key={item.id}>
+                <Navlink
+                  href="/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleScrollTo(item.aid);
+                  }}
+                >
+                  {item.title}
+                </Navlink>
+              </Navitem>
+            );
+          })
+        ) : (
+          <p>Loading...</p>
+        )}
       </Navlist>
     </Header>
   );
@@ -35,7 +53,7 @@ function Navbar() {
 
 export default Navbar;
 
-
+// Styled Components
 const Header = styled("nav")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -45,33 +63,27 @@ const Header = styled("nav")(({ theme }) => ({
   position: "fixed",
   top: 0,
   left: 0,
-  zIndex: 1000, // Ensure the navbar stays above other elements
-  backdropFilter: "blur(12px)", // Blurring the background
-  backgroundColor: "transparent", // Fully transparent background
-  borderBottom: "1px solid rgba(255, 255, 255, 0.3)", // Subtle border for depth
-  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)", // Soft shadow for elevation
+  zIndex: 1000,
+  backdropFilter: "blur(12px)",
+  backgroundColor: theme.palette.background.main || "rgba(0, 0, 0, 0.3)", // Default background
+  borderBottom: "1px solid rgba(255, 255, 255, 0.3)",
   padding: "0 20px",
   transition: "all 0.3s ease-in-out",
-  backdropSaturation: "180%", // Optional: Enhance saturation effect for more depth
 }));
 
-
-
-
-
-const Responsive = styled(Box)(({ theme }) => ({
+const Responsive = styled(Box)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   padding: "12px",
-}));
+});
 
-const LogoContainer = styled(Box)(({ theme }) => ({
+const LogoContainer = styled(Box)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   padding: "26px",
-}));
+});
 
 const Navlist = styled("ul")(({ theme }) => ({
   display: "flex",
@@ -80,33 +92,34 @@ const Navlist = styled("ul")(({ theme }) => ({
   padding: "18px",
 
   [theme.breakpoints.between("xs", "md")]: {
-    top: "80px", display:"none"
-  }
+    display: "none",
+  },
 }));
 
-const Navitem = styled("li")(({ theme }) => ({
+const Navitem = styled("li")({
   listStyle: "none",
   padding: "8px",
-}));
+});
 
 const Navlink = styled(Link)(({ theme }) => ({
   textDecoration: "none",
-  color: theme.palette.primary.main,
+  color: theme.palette.primary.main || "#fff",
+  cursor: "pointer",
+  "&:hover": {
+    textDecoration: "underline",
+  },
 }));
 
-export const MainSection = styled("section")(({ theme, mainheight }) => ({
+export const MainSection = styled("section")(({ mainheight ,theme}) => ({
   width: "100%",
-  height: mainheight,
-  // backgroundColor: theme.palette.background.main,
-  backdropFilter: "blur(8px)", // Blurring the background
-  backgroundColor: "transparent", // Fully transparent background
-  borderBottom: "1px solid rgba(255, 255, 255, 0.3)", // Subtle border for depth
-  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)", // Soft shadow for elevation
-  // padding: "0 20px",
+  height: mainheight || "100vh",
+  backdropFilter: "blur(8px)",
+  backgroundColor: theme.palette.background.main,
+  borderBottom: "1px solid rgba(255, 255, 255, 0.3)",
+  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
   transition: "all 0.3s ease-in-out",
-  backdropSaturation: "180%",
   display: "flex",
   alignItems: "center",
-  justifyContent:"center"
-  
+  justifyContent: "center",
+  flexDirection:'column'
 }));

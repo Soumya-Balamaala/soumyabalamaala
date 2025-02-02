@@ -14,15 +14,44 @@ import {
   useTheme,
 } from "@mui/material";
 import React from "react";
+import { motion } from "framer-motion";
 
-const commoncss = {};
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2, // Delay between each child animation
+    },
+  },
+};
 
-function MainHome() {
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
+
+const textVariants = {
+  hidden: {
+    opacity: 0,
+    y: 20, // Start slightly below
+  },
+  visible: {
+    opacity: 1,
+    y: 0, // Move to its normal position
+    transition: {
+      duration: 0.8, // Adjust duration as needed
+      ease: "easeInOut", // Adjust easing as needed
+    },
+  },
+};
+
+function MainHome({ ref, cref }) {
   const theme = useTheme();
 
   const isMobile = useMediaQuery(theme.breakpoints.between("xs", "md"));
   return (
-    <MainSection mainheight={isMobile ? "auto" : "100vh"}>
+    <MainSection mainheight={isMobile ? "auto" : "100vh"} id="home">
       {/* <Stack sx={{height:"60px"}} /> */}
       {isMobile ? <Stack sx={{ height: "80px" }} /> : null}
       <Grid
@@ -57,12 +86,35 @@ function MainHome() {
         >
           <Typography
             variant="body1"
+            component={motion.p}
+            initial={{ y: 25, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
             sx={{ textAlign: isMobile ? "center" : "left" }}
           >
             Hello, I'm
           </Typography>
-          <TypewriterEffect text="Soumya Balamaala" />
+          {/* <TypewriterEffect text="Soumya Balamaala" /> */}
           <Typography
+            component={motion.h2}
+            initial={{ y: 25, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            // viewport={{ once: true }}
+            variant="h3"
+            color="primary.main"
+            sx={{
+              textAlign: isMobile ? "center" : "left",
+              // fontSize: "40px",
+            }}
+          >
+            Soumya Balamaala
+          </Typography>
+          <Typography
+            component={isMobile ? motion.h5 : motion.h4}
+            initial={{ y: 25, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 2, ease: "easeInOut" }}
             variant={isMobile ? "h5" : "h4"}
             sx={{ textAlign: isMobile ? "center" : "left" }}
           >
@@ -70,6 +122,10 @@ function MainHome() {
           </Typography>
           <Typography
             variant="body1"
+            component={motion.p}
+            initial={{ y: 25, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 2.5, ease: "easeInOut" }}
             sx={{ textAlign: isMobile ? "justify" : "left" }}
           >
             I’m a React.js Developer with 3.4 years of experience in frontend
@@ -80,6 +136,10 @@ function MainHome() {
           <PrimaryButton type="button" buttonName="Hire Me" />
           <Grid
             item
+            component={motion.div} // Framer Motion wrapper for animation
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
             sx={{
               display: "flex",
               alignItems: "center",
@@ -91,6 +151,9 @@ function MainHome() {
           >
             {programmingLanguages.map((item) => (
               <Grid
+                key={item.id}
+                component={motion.div} // Animated item
+                variants={itemVariants}
                 sx={{
                   height: "auto",
                   width: "auto",

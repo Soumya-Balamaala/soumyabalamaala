@@ -15,7 +15,7 @@ export default function UserRootLayout({ children }) {
       </head>
       <body>
         <ThemeProvider theme={CustomTheme}>
-          <Navbar />
+        
           {children}
         </ThemeProvider>
       </body>

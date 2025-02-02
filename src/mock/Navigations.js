@@ -24,28 +24,25 @@ export const NavData = [
   },
   {
     id: 3,
-    title: "Skills",
-    path: "/skills",
-    aid: "expedu",
-  },
-  {
-    id: 4,
     title: "Experience & Education",
     path: "/experience-education",
     aid: "expedu",
   },
-
   {
-    id: 5,
+    id: 4,
     title: "Services",
     path: "/services",
     aid: "services",
   },
+
   {
-    id: 6,
+    id: 5,
     title: "Contact ",
     path: "/contact-me",
     aid: "contact",
+  },
+  {
+    id: 6,
   },
 ];
 
@@ -53,36 +50,36 @@ export const programmingLanguages = [
   {
     id: 1,
     icon: ReactImage,
-    title:"React"
+    title: "React",
   },
   {
     id: 2,
     icon: Javascript,
-    title:"JavaScript"
+    title: "JavaScript",
   },
   {
     id: 3,
     icon: MaterialUI,
-    title:"Material UI"
+    title: "Material UI",
   },
   {
     id: 4,
     icon: Nextjs,
-    title:"Next js"
+    title: "Next js",
   },
   {
     id: 5,
     icon: Typescript,
-    title:"TypeScript"
+    title: "TypeScript",
   },
   {
     id: 6,
     icon: Nodejs,
-    title:"Nodejs"
+    title: "Nodejs",
   },
   {
     id: 7,
     icon: Figma,
-    title:"Figma"
+    title: "Figma",
   },
 ];
