@@ -59,7 +59,7 @@ const Header = styled("nav")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "space-between",
   width: "100%",
-  height: "80px",
+  height: "60px",
   position: "fixed",
   top: 0,
   left: 0,

@@ -16,7 +16,7 @@ export const CustomTheme = createTheme({
     others: {
       c1: "#c58c6d",
       c2: "#ddbea9",
-      c3: "#b7b7a4",
+      c3: "#24AE70",
     },
   },
   typography: {

@@ -53,7 +53,7 @@ function MainHome({ ref, cref }) {
   return (
     <MainSection mainheight={isMobile ? "auto" : "100vh"} id="home">
       {/* <Stack sx={{height:"60px"}} /> */}
-      {isMobile ? <Stack sx={{ height: "80px" }} /> : null}
+      {isMobile ? <Stack sx={{ height: "60px" }} /> : null}
       <Grid
         container
         rowGap={2}
@@ -65,7 +65,7 @@ function MainHome({ ref, cref }) {
           alignItems: "left",
           justifyContent: "center",
           height: isMobile ? "auto" : "inherit",
-          flexDirection: isMobile ? "column-reverse" : "row",
+          flexDirection: isMobile ? "column" : "row",
         }}
       >
         <Grid
@@ -180,7 +180,7 @@ function MainHome({ ref, cref }) {
             justifyContent: "center",
             // border: "1px solid blue",
             height: "auto",
-            mt: "50px",
+            mt:isMobile ? null: "50px",
           }}
           xs={12}
           md={4}
@@ -195,7 +195,7 @@ function MainHome({ ref, cref }) {
               overflow: "hidder",
               bgcolor: "primary.main",
               borderRadius: "50%",
-              mt: "40px",
+              // mt:isMobile ? null :"40px",
             }}
           >
             Image

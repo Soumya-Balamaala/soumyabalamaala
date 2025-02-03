@@ -1,7 +1,7 @@
 "use client";
 
 import { MainSection } from "@/components/Navbar";
-import { experience } from "@/mock/Eduexp";
+import { education, experience } from "@/mock/Eduexp";
 import {
   Box,
   Grid,
@@ -10,6 +10,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { motion } from "framer-motion";
 import React from "react";
 
 function EduExp() {
@@ -21,9 +22,22 @@ function EduExp() {
       {isMobile ? (
         <Stack sx={{ height: "80px" }} />
       ) : (
-        <Stack sx={{ height: "80px" }} />
+        <Stack sx={{ height: "60px" }} />
       )}
-      <Typography variant="h4" color="primary.main">
+      <Typography
+        variant="h4"
+        color="primary.main"
+        component={motion.h4}
+        initial={{ y: 25, opacity: 0 }}
+        whileInView={{
+          y: 0,
+          opacity: 1,
+          transition: {
+            duration: 1,
+            ease: "easeInOut",
+          },
+        }}
+      >
         From Classroom to Code : My Journey
       </Typography>
 
@@ -35,8 +49,8 @@ function EduExp() {
           justifyContent: "center",
           flexDirection: isMobile ? "column" : "row",
           width: "100%",
-          height: "450px",
-          border: "1px solid blue",
+          height: isMobile ? "auto" : "450px",
+          // border: "1px solid blue",
         }}
       >
         <Grid
@@ -51,63 +65,97 @@ function EduExp() {
             padding: "10px",
             gap: "4px",
             position: "relative",
-            border: "1px solid blue",
+            // border: "1px solid blue",
           }}
         >
-          <Typography variant="h5">Experience</Typography>
+          <Typography
+            variant="h5"
+            color="others.c3"
+            component={motion.h5}
+            initial={{ y: 25, opacity: 0 }}
+            whileInView={{
+              y: 0,
+              opacity: 1,
+              transition: {
+                duration: 1,
+                ease: "easeInOut",
+              },
+            }}
+            sx={{ fontWeight: "bold" }}
+          >
+            Experience
+          </Typography>
 
-          {experience.map((item) => (
-            <Stack
-              direction="column"
-              alignItems="left"
-              justifyContent="left"
-              spacing={1}
-            >
-             
-
+          <Stack
+            direction="column"
+            alignItems="left"
+            justifyContent="left"
+            spacing={1.2}
+            sx={{ mt: "10px" }}
+            component={motion.div}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { staggerChildren: 0.3, ease: "easeInOut" },
+              },
+            }}
+          >
+            {experience.map((item) => (
               <Stack
+                key={item.id}
                 direction="column"
                 alignItems="left"
                 justifyContent="left"
                 spacing={0.5}
-                sx={{ width: "auto" }}
+                component={motion.div}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                }}
               >
-                 <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <Typography variant="h6">{item.company}</Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "left",
-                    justifyContent: "center",
-                    width: "auto",
-                    px: "10px",
-
-                    borderRadius: "40px",
-                    bgcolor: "primary.main",
-                    position: "relative",
-                  }}
+                <Stack
+                  direction={isMobile ? "column" : "row"}
+                  alignItems={isMobile ? "left" : "center"}
+                  justifyContent={isMobile ? "left" : "space-between"}
+                  sx={{ width: "100%" }}
                 >
-                  <Typography
-                    variant="body1"
-                    color="secondary.main"
-                    bgcolor="inherit"
-                  >
-                    {item.duration}
+                  <Typography variant="h6" color="primary.main">
+                    {item.company}
                   </Typography>
-                </Box>
-              </Stack>
-                {item.formerly ? (
-                  <Typography variant="subtitle">({item.formerly})</Typography>
-                ) : null}
+                  <Box
+                    sx={{
+                      width: "auto",
+                      height: "auto",
+                      padding: "5px",
+                      borderRadius: "10px",
+                      bgcolor: "primary.main",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Typography variant="body2" color="secondary.main">
+                      {item.duration}
+                    </Typography>
+                  </Box>
+                </Stack>
+
+                {item.formerly && (
+                  <Typography variant="body2" sx={{ fontStyle: "italic" }}>
+                    ({item.formerly})
+                  </Typography>
+                )}
                 <Typography variant="body1">{item.role}</Typography>
+                <Typography variant="body1">{item.duration}</Typography>
                 <Typography variant="body1">{item.location}</Typography>
               </Stack>
-            </Stack>
-          ))}
+            ))}
+          </Stack>
         </Grid>
         <Grid
           item
@@ -119,9 +167,116 @@ function EduExp() {
             justifyContent: "center",
             flexDirection: "column",
             padding: "16px",
+            height: isMobile ? "auto" : "450px",
           }}
         >
-          <Typography variant="h5">Education</Typography>
+          <Typography
+            variant="h5"
+            color="others.c3"
+            sx={{ fontWeight: "bold" }}
+            component={motion.h5}
+            initial={{ y: 25, opacity: 0 }}
+            whileInView={{
+              y: 0,
+              opacity: 1,
+              transition: {
+                duration: 1,
+                ease: "easeInOut",
+              },
+            }}
+          >
+            Education
+          </Typography>
+
+          <Stack
+            direction="column"
+            alignItems="left"
+            justifyContent="left"
+            spacing={1.2}
+            sx={{ mt: "10px" }}
+            component={motion.div}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { staggerChildren: 0.3, ease: "easeInOut" },
+              },
+            }}
+          >
+            {education.map((item) => (
+              <Stack
+                direction="column"
+                alignItems="left"
+                justifyContent="left"
+                spacing={0.5}
+                key={item.id}
+                component={motion.div}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                }}
+              >
+                <Stack
+                    direction={isMobile ? "column" : "row"}
+                    alignItems={isMobile ? "left" : "center"}
+                    justifyContent={isMobile ? "left" : "space-between"}
+                  sx={{ width: "100%" }}
+                  spacing={1}
+                >
+                  <Typography variant="h6" color="primary.main">
+                    {item.course}
+                  </Typography>
+                  <Box
+                    sx={{
+                      width:isMobile ? "100px" :"auto" ,
+                      height:"auto" ,
+                      padding: "5px",
+                      borderRadius: "10px",
+                      bgcolor: "primary.main",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "8px",
+                    }}
+                  >
+                    <Typography variant="body2" color="secondary.main">
+                      {item.year}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      width:isMobile ? "100px" :"auto" ,
+                      height:"auto" ,
+                      padding: "5px",
+                      borderRadius: "10px",
+                      bgcolor: "primary.main",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "8px",
+                    }}
+                  >
+                    <Typography variant="body2" color="secondary.main">
+                      {item.result}
+                    </Typography>
+                  </Box>
+                </Stack>
+
+                {item.branch ? (
+                  <Typography variant="body2" sx={{ fontStyle: "italic" }}>
+                    {item.branch}
+                  </Typography>
+                ) : null}
+                <Typography variant="body1">{item.college}</Typography>
+                <Typography variant="body1">{item.location}</Typography>
+                <Typography variant="body1">{item.year}</Typography>
+              </Stack>
+            ))}
+          </Stack>
         </Grid>
       </Grid>
     </MainSection>

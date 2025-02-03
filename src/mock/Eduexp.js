@@ -4,7 +4,8 @@ export const education = [
     {
         id: 1,
         year: "2016 - 2019",
-        course: "B-Tech in Electronics and Communication Engineering (ECE)",
+        course: "B-Tech",
+        branch:"Electronics and Communication Engineering (ECE)",
         college: "Lakireddy Balireddy College of Engineering (LBRCE)",
         location: "Mylavaram, Vijaywada - India",
         result:"6.41"
@@ -13,7 +14,9 @@ export const education = [
     {
         id: 2,
         year: "2013 - 2016",
-        course: "Diploma in Electronics and Communication Engineering (ECE)",
+        course: "Diploma",
+        branch:"Electronics and Communication Engineering (ECE)",
+
         college: "KES Polytechnic for Women",
         location: "Vijaywada - India",
         result:"75%"
@@ -34,7 +37,7 @@ export const experience = [
     {
         id: 1,
         company: "Kapil Technologies Pvt Ltd",
-        formerly:"formerly KCS Softeware Solutions Pvt Ltd",
+        formerly:"formerly KCS Software Solutions Pvt Ltd",
         duration: "May 2023 - August 2024",
         role: "Associate Developer (React js)",
         location:"Hyderabad - India"

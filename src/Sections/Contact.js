@@ -1,3 +1,5 @@
+"use client"
+
 import { MainSection } from "@/components/Navbar";
 import { Grid, Stack, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
