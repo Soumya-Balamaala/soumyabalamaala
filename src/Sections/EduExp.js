@@ -95,7 +95,7 @@ function EduExp() {
             component={motion.div}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+           
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: {
@@ -197,13 +197,12 @@ function EduExp() {
             component={motion.div}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: {
                 opacity: 1,
                 y: 0,
-                transition: { staggerChildren: 0.3, ease: "easeInOut" },
+                transition: { staggerChildren: 0.8, ease: "easeInOut" },
               },
             }}
           >
@@ -215,9 +214,10 @@ function EduExp() {
                 spacing={0.5}
                 key={item.id}
                 component={motion.div}
+                
                 variants={{
                   hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                  visible: { opacity: 1, y: 0, transition: { duration: 1,ease:'easeInOut' } },
                 }}
               >
                 <Stack

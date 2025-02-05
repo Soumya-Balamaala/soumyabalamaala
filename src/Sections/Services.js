@@ -111,6 +111,17 @@ function Services() {
           md={6.5}
           rowGap={1}
           columnGap={1}
+          component={motion.div}
+          initial="hidden"
+          whileInView="visible"
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { staggerChildren: 0.8, ease: "easeInOut" },
+            },
+          }}
           sx={{
             display: "flex",
             alignItems: "center",
@@ -134,6 +145,11 @@ function Services() {
                 p: 1,
                 gap: "4px",
               }}
+              component={motion.div}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 1,ease:"easeInOut" } },
+              }}
             >
               <Box
                 sx={{
@@ -142,7 +158,8 @@ function Services() {
                   bgcolor: "secondary.main",
                   width: "20px",
                   height: "20px",
-                  color: "others.c3",
+                  color: "primary.main",
+                  fontSize: "20px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -155,12 +172,6 @@ function Services() {
               </Typography>
 
               <Typography variant="body1">{item.text}</Typography>
-
-              {/* <PrimaryButton
-                  type="button"
-                  buttonName="Lets Talk !"
-                  color="secondary.main"
-                /> */}
 
               <Button
                 variant="contained"

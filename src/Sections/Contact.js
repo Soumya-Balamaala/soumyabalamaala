@@ -1,8 +1,10 @@
-"use client"
+"use client";
 
 import { MainSection } from "@/components/Navbar";
 import { Grid, Stack, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
+import Contactus from "@/assets/Illustations/contact.jpg";
+import Image from "next/image";
 
 function Contact() {
   const theme = useTheme();
@@ -12,41 +14,47 @@ function Contact() {
     <MainSection mainheight={isMobile ? "auto" : "100vh"} id="contact">
       {isMobile ? <Stack sx={{ height: "80px" }} /> : null}
 
-     <Grid
-            container
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: isMobile ? "column" : "row",
-              width: "100%",
-            }}
-          >
-            <Grid
-              item
-              xs={12}
-              md={5.5}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              1
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              md={5.5}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              2
+      <Grid
+        container
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: isMobile ? "column" : "row",
+          width: "100%",
+        }}
+      >
+        <Grid
+          item
+          xs={12}
+          md={3.6}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            border: "1px solid blue",
+          }}
+        >
+          <Image
+            src={Contactus}
+            alt="Soumya Balamaala"
+            width={380}
+            height={380}
+          />
         </Grid>
+        <Grid
+          item
+          xs={12}
+          md={5.5}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          2
         </Grid>
+      </Grid>
     </MainSection>
   );
 }
