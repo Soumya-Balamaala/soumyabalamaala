@@ -3,10 +3,12 @@
 import Navbar from "@/components/Navbar";
 import "../styles/global.css";
 
-
-  export const metadata = {
-    title: "Soumya Balamaala Portfolio",
-  };
+export const metadata = {
+  title: "Soumya Balamaala Portfolio",
+  viewport: "width=device-width, initial-scale=1",
+  description:
+    "I am Soumya, a React.js Developer with 3.4 years of experience in React.js, Material UI, and Next.js. I’m a beginner in Node.js, TypeScript, and React Native.",
+};
 
 export default function UserRootLayout({ children }) {
   return (

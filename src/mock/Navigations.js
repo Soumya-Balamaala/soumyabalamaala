@@ -4,9 +4,9 @@ import ReactImage from "@/assets/Logos/React.png";
 import Javascript from "@/assets/Logos/javascript.png";
 import MaterialUI from "@/assets/Logos/materialui.png"; // Corrected spelling
 import Nextjs from "@/assets/Logos/nextjs.png";
-import Typescript from "@/assets/Logos/typescript.png";
+import Typescript from "@/assets/Logos/typeScript.png";
 import Nodejs from "@/assets/Logos/nodejs.png";
-import Figma from "@/assets/Logos/figma.png";
+import Figma from "@/assets/Logos/Figma.png";
 // import ReactImage from "@/assets/Logos/React.png";
 
 export const NavData = [
