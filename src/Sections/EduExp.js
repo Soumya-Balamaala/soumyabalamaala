@@ -24,22 +24,6 @@ function EduExp() {
       ) : (
         <Stack sx={{ height: "60px" }} />
       )}
-      <Typography
-        variant="h4"
-        color="primary.main"
-        component={motion.h4}
-        initial={{ y: 25, opacity: 0 }}
-        whileInView={{
-          y: 0,
-          opacity: 1,
-          transition: {
-            duration: 1,
-            ease: "easeInOut",
-          },
-        }}
-      >
-        From Classroom to Code : My Journey
-      </Typography>
 
       <Grid
         container
@@ -95,7 +79,6 @@ function EduExp() {
             component={motion.div}
             initial="hidden"
             whileInView="visible"
-           
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: {
@@ -214,16 +197,19 @@ function EduExp() {
                 spacing={0.5}
                 key={item.id}
                 component={motion.div}
-                
                 variants={{
                   hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 1,ease:'easeInOut' } },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 1, ease: "easeInOut" },
+                  },
                 }}
               >
                 <Stack
-                    direction={isMobile ? "column" : "row"}
-                    alignItems={isMobile ? "left" : "center"}
-                    justifyContent={isMobile ? "left" : "space-between"}
+                  direction={isMobile ? "column" : "row"}
+                  alignItems={isMobile ? "left" : "center"}
+                  justifyContent={isMobile ? "left" : "space-between"}
                   sx={{ width: "100%" }}
                   spacing={1}
                 >
@@ -232,8 +218,8 @@ function EduExp() {
                   </Typography>
                   <Box
                     sx={{
-                      width:isMobile ? "100px" :"auto" ,
-                      height:"auto" ,
+                      width: isMobile ? "100px" : "auto",
+                      height: "auto",
                       padding: "5px",
                       borderRadius: "10px",
                       bgcolor: "primary.main",
@@ -249,8 +235,8 @@ function EduExp() {
                   </Box>
                   <Box
                     sx={{
-                      width:isMobile ? "100px" :"auto" ,
-                      height:"auto" ,
+                      width: isMobile ? "100px" : "auto",
+                      height: "auto",
                       padding: "5px",
                       borderRadius: "10px",
                       bgcolor: "primary.main",

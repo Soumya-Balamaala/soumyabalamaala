@@ -16,28 +16,28 @@ export const NavData = [
     path: "/",
     aid: "home",
   },
-  {
-    id: 2,
-    title: "About",
-    path: "/about",
-    aid: "about",
-  },
+  // {
+  //   id: 2,
+  //   title: "About Me",
+  //   path: "/about",
+  //   aid: "about",
+  // },
   {
     id: 3,
-    title: "Experience & Education",
+    title: "My Journey",
     path: "/experience-education",
     aid: "expedu",
   },
   {
     id: 4,
-    title: "Services",
+    title: " My Services",
     path: "/services",
     aid: "services",
   },
 
   {
     id: 5,
-    title: "Contact ",
+    title: "Contact Me ",
     path: "/contact-me",
     aid: "contact",
   },

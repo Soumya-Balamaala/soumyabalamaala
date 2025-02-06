@@ -1,6 +1,6 @@
 "use client";
 
-import { MainSection } from "@/components/Navbar";
+import { MainSection, StyledButton } from "@/components/Navbar";
 import { servicesdata } from "@/mock/ServicesData";
 import PrimaryButton from "@/styles/Buttons/PrimaryButton";
 import {
@@ -65,6 +65,7 @@ function Services() {
                 ease: "easeInOut",
               },
             }}
+            sx={{fontWeight:"bold"}}
           >
             Services I Provide
           </Typography>
@@ -81,7 +82,7 @@ function Services() {
                 ease: "easeInOut",
               },
             }}
-            sx={{ fontWeight: "bold" }}
+            // sx={{ fontWeight: "bold" }}
           >
             Crafting Superior Applications with My Premium Services !
           </Typography>
@@ -119,7 +120,7 @@ function Services() {
             visible: {
               opacity: 1,
               y: 0,
-              transition: { staggerChildren: 0.8, ease: "easeInOut" },
+              transition: { staggerChildren: 0.5, ease: "easeInOut" },
             },
           }}
           sx={{
@@ -173,12 +174,12 @@ function Services() {
 
               <Typography variant="body1">{item.text}</Typography>
 
-              <Button
+              <StyledButton
                 variant="contained"
                 sx={{ width: "120px", textTransform: "capitalize" }}
               >
                 Get Quote
-              </Button>
+              </StyledButton>
             </Card>
           ))}
         </Grid>

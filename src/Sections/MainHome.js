@@ -9,12 +9,14 @@ import {
   Button,
   Grid,
   Stack,
+  styled,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import React from "react";
 import { motion } from "framer-motion";
+import MyImage from "@/assets/MyImage.png";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -128,10 +130,11 @@ function MainHome({ ref, cref }) {
             transition={{ duration: 2.5, ease: "easeInOut" }}
             sx={{ textAlign: isMobile ? "justify" : "left" }}
           >
-            I’m a React.js Developer with 3.4 years of experience in frontend
-            development, specializing in React.js, Material UI, Next.js,
-            TypeScript, Node.js, and Express. I’m excited to transition to
-            full-stack development.
+            I am a professional React.js Developer with 3.4 years of experience,
+            specializing in frontend development using React.js, Material UI,
+            TypeScript and Next.js. I am also a beginner in Node.js, and React
+            Native, with a strong desire to expand my skills in full-stack
+            development.
           </Typography>
           <PrimaryButton type="button" buttonName="Hire Me" />
           <Grid
@@ -180,7 +183,7 @@ function MainHome({ ref, cref }) {
             justifyContent: "center",
             // border: "1px solid blue",
             height: "auto",
-            mt:isMobile ? null: "50px",
+            mt: isMobile ? null : "50px",
           }}
           xs={12}
           md={4}
@@ -195,10 +198,15 @@ function MainHome({ ref, cref }) {
               overflow: "hidder",
               bgcolor: "primary.main",
               borderRadius: "50%",
+              overflow: "hidden",
               // mt:isMobile ? null :"40px",
             }}
           >
-            Image
+            <Image
+              src={MyImage}
+              alt="Soumya Balamaala a React JS Developer"
+              layout="intrinsic"
+            />
           </Stack>
         </Grid>
       </Grid>

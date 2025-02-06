@@ -1,6 +1,7 @@
 // import { Metadata } from 'next'
 "use client";
 
+import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import About from "@/Sections/About";
 import Contact from "@/Sections/Contact";
@@ -18,10 +19,11 @@ export default function Home() {
     <ThemeProvider theme={CustomTheme}>
       <Navbar />
       <MainHome />
-      <About  />
+   
       <EduExp />
       <Services  />
       <Contact  />
+      <Footer />
     </ThemeProvider>
   );
 }

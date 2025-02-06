@@ -1,10 +1,12 @@
 "use client";
 
-import { Box, Stack, useMediaQuery } from "@mui/material";
+import { Box, Button, Stack, useMediaQuery } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import { NavData } from "@/mock/Navigations";
 import { useRef } from "react";
 import Link from "next/link";
+import Mylogo from "@/assets/MyLogo.png";
+import Image from "next/image";
 
 function Navbar({ sectionrefs }) {
   const theme = useTheme();
@@ -20,7 +22,14 @@ function Navbar({ sectionrefs }) {
   return (
     <Header>
       {isMobile && <Responsive>Responsive</Responsive>}
-      <LogoContainer>Logo</LogoContainer>
+      <LogoContainer>
+        <Image
+          src={Mylogo}
+          alt="Best React js developer in the Town : Soumya Balamaala"
+          width={80}
+          height={80}
+        />
+      </LogoContainer>
       <Navlist>
         {NavData?.length > 0 ? (
           NavData.map((item) => {
@@ -69,6 +78,7 @@ const Header = styled("nav")(({ theme }) => ({
   borderBottom: "1px solid rgba(255, 255, 255, 0.3)",
   padding: "0 20px",
   transition: "all 0.3s ease-in-out",
+  // border:'1px solid blue'
 }));
 
 const Responsive = styled(Box)({
@@ -105,12 +115,10 @@ const Navlink = styled(Link)(({ theme }) => ({
   textDecoration: "none",
   color: theme.palette.primary.main || "#fff",
   cursor: "pointer",
-  "&:hover": {
-    textDecoration: "underline",
-  },
+  
 }));
 
-export const MainSection = styled("section")(({ mainheight ,theme}) => ({
+export const MainSection = styled("section")(({ mainheight, theme }) => ({
   width: "100%",
   height: mainheight || "100vh",
   backdropFilter: "blur(8px)",
@@ -121,5 +129,9 @@ export const MainSection = styled("section")(({ mainheight ,theme}) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  flexDirection:'column'
+  flexDirection: "column",
+}));
+
+export const StyledButton = styled(Button)(({ theme }) => ({
+  textTransform: "capitalize",
 }));
