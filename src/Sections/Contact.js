@@ -55,16 +55,17 @@ function Contact() {
           }}
           sx={{
             display: "flex",
-            alignItems: "left",
+            alignItems:isMobile ? "center": "left",
             justifyContent: "space-between",
             // border: "1px solid blue",
             flexDirection: "column",
             p: 1,
-            gap: "10px",
+            gap: "12px",
+            textAlign:isMobile ? "center" :"left"
           }}
         >
           <Typography
-            variant="h5"
+            variant={isMobile ? "h6" :"h5"}
             color="primary.main"
             component={motion.h5}
             initial={{ y: 25, opacity: 0 }}
@@ -102,8 +103,9 @@ function Contact() {
             <Stack
               key={item.id}
               direction="column"
-              alignItems="left"
+              alignItems={isMobile ? "center" : "left "}
               justifyContent="center"
+              // spacing={2}
               component={motion.div}
               variants={{
                 hidden: { opacity: 0, y: 20 },
@@ -129,7 +131,7 @@ function Contact() {
             <Stack
               key={item.id}
               direction="column"
-              alignItems="left"
+              alignItems={isMobile ? "center" :"left"}
               justifyContent="center"
               component={motion.div}
               variants={{

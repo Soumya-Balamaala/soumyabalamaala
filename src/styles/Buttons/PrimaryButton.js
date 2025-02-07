@@ -4,10 +4,10 @@ import { Button, useMediaQuery, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import React from "react";
 
-function PrimaryButton({ buttonName, type }) {
+function PrimaryButton({ buttonName, type, handleClick }) {
   const theme = useTheme();
-
   const isMobile = useMediaQuery(theme.breakpoints.between("xs", "md"));
+
   return (
     <Button
       component={motion.button}
@@ -20,9 +20,10 @@ function PrimaryButton({ buttonName, type }) {
         textTransform: "capitalize",
         width: isMobile ? "auto" : "200px",
         "&:hover": {
-          backgroundColor:"primary.main"
-        }
+          backgroundColor: "primary.main",
+        },
       }}
+      onClick={handleClick}
     >
       {buttonName}
     </Button>

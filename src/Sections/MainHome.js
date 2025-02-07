@@ -14,7 +14,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import MyImage from "@/assets/MyImage.png";
 
@@ -48,10 +48,16 @@ const textVariants = {
   },
 };
 
-function MainHome({ ref, cref }) {
+function MainHome({ NavSection }) {
   const theme = useTheme();
 
   const isMobile = useMediaQuery(theme.breakpoints.between("xs", "md"));
+
+  const handleNav = (e, id) => {
+    e.prevantDefault();
+    console.log(id);
+  };
+
   return (
     <MainSection mainheight={isMobile ? "auto" : "100vh"} id="home">
       {/* <Stack sx={{height:"60px"}} /> */}
@@ -136,7 +142,16 @@ function MainHome({ ref, cref }) {
             Native, with a strong desire to expand my skills in full-stack
             development.
           </Typography>
-          <PrimaryButton type="button" buttonName="Hire Me" />
+          <PrimaryButton
+            buttonName="Hire Me"
+            type="button"
+            handleClick={() => {
+              const section = document.getElementById("contact");
+              if (section) {
+                section.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          />
           <Grid
             item
             component={motion.div} // Framer Motion wrapper for animation
@@ -201,6 +216,10 @@ function MainHome({ ref, cref }) {
               overflow: "hidden",
               // mt:isMobile ? null :"40px",
             }}
+            component={motion.div}
+            initial={{ y: 25, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 2.5, ease: "easeInOut" }}
           >
             <Image
               src={MyImage}

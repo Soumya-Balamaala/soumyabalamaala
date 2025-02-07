@@ -5,8 +5,8 @@ export const education = [
         id: 1,
         year: "2016 - 2019",
         course: "B-Tech",
-        branch:"Electronics and Communication Engineering (ECE)",
-        college: "Lakireddy Balireddy College of Engineering (LBRCE)",
+        branch:["Electronics and Communications"] ,
+        college:["Lakireddy Balireddy College of", <br key="1" />, "Engineering (LBRCE)"],
         location: "Mylavaram, Vijaywada - India",
         result:"6.41"
         
@@ -15,7 +15,7 @@ export const education = [
         id: 2,
         year: "2013 - 2016",
         course: "Diploma",
-        branch:"Electronics and Communication Engineering (ECE)",
+        branch:"Electronics and Communications",
 
         college: "KES Polytechnic for Women",
         location: "Vijaywada - India",

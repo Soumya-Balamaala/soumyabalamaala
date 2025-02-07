@@ -149,8 +149,115 @@ function EduExp() {
             alignItems: "left",
             justifyContent: "center",
             flexDirection: "column",
-            padding: "16px",
-            height: isMobile ? "auto" : "450px",
+            padding: "10px",
+            gap: "4px",
+            position: "relative",
+            // border: "1px solid blue",
+          }}
+        >
+          <Typography
+            variant="h5"
+            color="others.c3"
+            component={motion.h5}
+            initial={{ y: 25, opacity: 0 }}
+            whileInView={{
+              y: 0,
+              opacity: 1,
+              transition: {
+                duration: 1,
+                ease: "easeInOut",
+              },
+            }}
+            sx={{ fontWeight: "bold" }}
+          >
+            Education
+          </Typography>
+
+          <Stack
+            direction="column"
+            alignItems="left"
+            justifyContent="left"
+            spacing={1.2}
+            sx={{ mt: "10px" }}
+            component={motion.div}
+            initial="hidden"
+            whileInView="visible"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { staggerChildren: 0.3, ease: "easeInOut" },
+              },
+            }}
+          >
+            {education.map((item) => (
+              <Stack
+                key={item.id}
+                direction="column"
+                alignItems="left"
+                justifyContent="left"
+                spacing={0.5}
+                component={motion.div}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                }}
+              >
+                <Stack
+                  direction={isMobile ? "column" : "row"}
+                  alignItems={isMobile ? "left" : "center"}
+                  justifyContent={isMobile ? "left" : "space-between"}
+                  sx={{ width: "100%" }}
+                >
+                  <Typography variant="h6" color="primary.main">
+                    {item.course}
+                  </Typography>
+                  <Box
+                    sx={{
+                      width: "auto",
+                      height: "auto",
+                      padding: "5px",
+                      borderRadius: "10px",
+                      bgcolor: "primary.main",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap:"10px"
+                    }}
+                  >
+                    <Typography variant="body2" color="secondary.main">
+                      {item.year}
+                    </Typography>
+                    {!isMobile ?  <Typography variant="body2" color="secondary.main">
+                     |
+                    </Typography> : null }
+                    <Typography variant="body2" color="secondary.main">
+                      {item.result}
+                    </Typography>
+                  </Box>
+                </Stack>
+
+                <Typography variant="body1">{item.branch}</Typography>
+                <Typography variant="body1">{item.college}</Typography>
+                <Typography variant="body1">{item.location}</Typography>
+              </Stack>
+            ))}
+          </Stack>
+        </Grid>
+        {/* <Grid
+          item
+          xs={12}
+          md={5.5}
+          sx={{
+            display: "flex",
+            alignItems: "left",
+            justifyContent: "center",
+            flexDirection: "column",
+            padding: "10px",
+            gap: "4px",
+            position: "relative",
+            // border: "1px solid blue",
           }}
         >
           <Typography
@@ -173,7 +280,7 @@ function EduExp() {
 
           <Stack
             direction="column"
-            alignItems="left"
+            alignItems={isMobile ? "center" : "left"}
             justifyContent="left"
             spacing={1.2}
             sx={{ mt: "10px" }}
@@ -193,7 +300,7 @@ function EduExp() {
               <Stack
                 direction="column"
                 alignItems="left"
-                justifyContent="left"
+                justifyContent="center"
                 spacing={0.5}
                 key={item.id}
                 component={motion.div}
@@ -211,7 +318,6 @@ function EduExp() {
                   alignItems={isMobile ? "left" : "center"}
                   justifyContent={isMobile ? "left" : "space-between"}
                   sx={{ width: "100%" }}
-                  spacing={1}
                 >
                   <Typography variant="h6" color="primary.main">
                     {item.course}
@@ -263,7 +369,7 @@ function EduExp() {
               </Stack>
             ))}
           </Stack>
-        </Grid>
+        </Grid> */}
       </Grid>
     </MainSection>
   );

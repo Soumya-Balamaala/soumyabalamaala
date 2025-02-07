@@ -10,19 +10,27 @@ import MainHome from "@/Sections/MainHome";
 import Services from "@/Sections/Services";
 import { CustomTheme } from "@/styles/customTheme";
 import { ThemeProvider } from "@mui/material/styles";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 // import { CustomTheme } from "@/styles/customTheme";
 
 export default function Home() {
-  
+  const [toggle, setToggle] = useState(false);
+
+  const handleResponsiveMenu = () => setToggle(!toggle);
+
+  const handleCloseResponsiveMenu = () => setToggle(false);
+
   return (
     <ThemeProvider theme={CustomTheme}>
-      <Navbar />
+      <Navbar
+        click={toggle}
+        openMenu={handleResponsiveMenu}
+        closeMenu={handleCloseResponsiveMenu}
+      />
       <MainHome />
-   
       <EduExp />
-      <Services  />
-      <Contact  />
+      <Services />
+      <Contact />
       <Footer />
     </ThemeProvider>
   );

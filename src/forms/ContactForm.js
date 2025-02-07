@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Grid, Stack, Typography } from "@mui/material";
+import { Button, Grid, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -28,6 +28,9 @@ const validationSchema = yup.object({
 const defaultValues = {};
 
 function ContactForm() {
+  const theme = useTheme();
+
+  const isMobile = useMediaQuery(theme.breakpoints.between("xs", "md"));
   const methods = useForm({
     resolver: yupResolver(validationSchema),
     defaultValues,
@@ -66,6 +69,8 @@ function ContactForm() {
           justifyContent: "left",
           // flexDirection:"column",
           flexWrap: "wrap",
+          textAlign:isMobile ? "center" : "left"
+          
         }}
         component="form"
         onSubmit={handleSubmit(onSubmit)}

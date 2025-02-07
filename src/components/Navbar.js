@@ -7,8 +7,9 @@ import { useRef } from "react";
 import Link from "next/link";
 import Mylogo from "@/assets/MyLogo.png";
 import Image from "next/image";
+import { FiMenu, FiX } from "react-icons/fi";
 
-function Navbar({ sectionrefs }) {
+function Navbar({ click, openMenu, closeMenu }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.between("xs", "sm"));
 
@@ -21,16 +22,20 @@ function Navbar({ sectionrefs }) {
 
   return (
     <Header>
-      {isMobile && <Responsive>Responsive</Responsive>}
+      {isMobile && (
+        <Responsive onClick={openMenu}>
+          {click ? <FiX /> : <FiMenu />}
+        </Responsive>
+      )}
       <LogoContainer>
         <Image
           src={Mylogo}
           alt="Best React js developer in the Town : Soumya Balamaala"
-          width={80}
-          height={80}
+          width={65}
+          height={65}
         />
       </LogoContainer>
-      <Navlist>
+      <Navlist toggle={click}>
         {NavData?.length > 0 ? (
           NavData.map((item) => {
             if (!item.path) {
@@ -45,6 +50,7 @@ function Navbar({ sectionrefs }) {
                   onClick={(e) => {
                     e.preventDefault();
                     handleScrollTo(item.aid);
+                    closeMenu();
                   }}
                 >
                   {item.title}
@@ -81,28 +87,40 @@ const Header = styled("nav")(({ theme }) => ({
   // border:'1px solid blue'
 }));
 
-const Responsive = styled(Box)({
+const Responsive = styled("ul")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   padding: "12px",
-});
+  cursor: "pointer",
+  fontSize: "30px",
+  color: theme.palette.primary.main,
+}));
 
-const LogoContainer = styled(Box)({
+const LogoContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   padding: "26px",
-});
+}));
 
-const Navlist = styled("ul")(({ theme }) => ({
+const Navlist = styled("ul")(({ theme, toggle }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   padding: "18px",
 
   [theme.breakpoints.between("xs", "md")]: {
-    display: "none",
+    position: "fixed",
+    top: "60px",
+    flexDirection: "column",
+    backgroundColor: theme.palette.background.main,
+    left: toggle ? 0 : "-200%",
+    width: "100%",
+    height: "calc(100vh - 60px)",
+    alignItems: "flex-start",
+    justifyContent: "start",
+    transition: "1s all easeInOut",
   },
 }));
 
@@ -115,7 +133,6 @@ const Navlink = styled(Link)(({ theme }) => ({
   textDecoration: "none",
   color: theme.palette.primary.main || "#fff",
   cursor: "pointer",
-  
 }));
 
 export const MainSection = styled("section")(({ mainheight, theme }) => ({
@@ -130,6 +147,10 @@ export const MainSection = styled("section")(({ mainheight, theme }) => ({
   alignItems: "center",
   justifyContent: "center",
   flexDirection: "column",
+
+  [theme.breakpoints.between("md", "lg")]: {
+    height: "auto",
+  },
 }));
 
 export const StyledButton = styled(Button)(({ theme }) => ({

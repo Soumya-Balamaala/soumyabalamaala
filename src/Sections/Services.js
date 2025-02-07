@@ -44,12 +44,13 @@ function Services() {
           md={4}
           sx={{
             display: "flex",
-            alignItems: "left",
+            alignItems: isMobile ? "center" : "left",
             justifyContent: "center",
             flexDirection: "column",
             gap: "18px",
             // border: "1px solid blue",
             p: 2,
+            textAlign:isMobile ? "center" :"left"
           }}
         >
           <Typography
@@ -65,7 +66,7 @@ function Services() {
                 ease: "easeInOut",
               },
             }}
-            sx={{fontWeight:"bold"}}
+            sx={{ fontWeight: "bold" }}
           >
             Services I Provide
           </Typography>
@@ -104,7 +105,16 @@ function Services() {
             your needs.
           </Typography>
 
-          <PrimaryButton type="button" buttonName="Lets Talk !" />
+          <PrimaryButton
+            type="button"
+            buttonName="Lets Talk !"
+            handleClick={() => {
+              const section = document.getElementById("contact");
+              if (section) {
+                section.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          />
         </Grid>
         <Grid
           item
@@ -149,7 +159,11 @@ function Services() {
               component={motion.div}
               variants={{
                 hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 1,ease:"easeInOut" } },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 1, ease: "easeInOut" },
+                },
               }}
             >
               <Box
@@ -174,12 +188,12 @@ function Services() {
 
               <Typography variant="body1">{item.text}</Typography>
 
-              <StyledButton
+              {/* <StyledButton
                 variant="contained"
                 sx={{ width: "120px", textTransform: "capitalize" }}
               >
                 Get Quote
-              </StyledButton>
+              </StyledButton> */}
             </Card>
           ))}
         </Grid>
