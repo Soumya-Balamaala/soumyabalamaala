@@ -33,8 +33,8 @@ function Contact() {
         sx={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
-
+          justifyContent: "space-between",
+          // border: "1px solid blue",
           width: "90%",
         }}
       >
@@ -55,17 +55,17 @@ function Contact() {
           }}
           sx={{
             display: "flex",
-            alignItems:isMobile ? "center": "left",
+            alignItems: isMobile ? "center" : "left",
             justifyContent: "space-between",
             // border: "1px solid blue",
             flexDirection: "column",
             p: 1,
             gap: "12px",
-            textAlign:isMobile ? "center" :"left"
+            textAlign: isMobile ? "center" : "left",
           }}
         >
           <Typography
-            variant={isMobile ? "h6" :"h5"}
+            variant={isMobile ? "h6" : "h5"}
             color="primary.main"
             component={motion.h5}
             initial={{ y: 25, opacity: 0 }}
@@ -77,7 +77,7 @@ function Contact() {
                 ease: "easeInOut",
               },
             }}
-            sx={{fontWeight:"bold"}}
+            sx={{ fontWeight: "bold" }}
           >
             Your Next Project Starts Here!
           </Typography>
@@ -131,7 +131,7 @@ function Contact() {
             <Stack
               key={item.id}
               direction="column"
-              alignItems={isMobile ? "center" :"left"}
+              alignItems={isMobile ? "center" : "left"}
               justifyContent="center"
               component={motion.div}
               variants={{
@@ -179,8 +179,6 @@ function Contact() {
             justifyContent: "center",
             flexDirection: "column",
             // width: "100%",
-            p: 1,
-            gap: "8px",
             textAlign: "left",
           }}
         >
