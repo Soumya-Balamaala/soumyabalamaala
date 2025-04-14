@@ -47,7 +47,7 @@ function ContactForm() {
     defaultValues,
   });
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, reset } = methods;
 
   const onSubmit = (data) => {
     console.log("Form Data:", data);
@@ -55,6 +55,7 @@ function ContactForm() {
     apiUContact(data)
       .then((res) => {
         console.log(res);
+        reset()
       })
       .catch((err) => {
         console.log(err);
