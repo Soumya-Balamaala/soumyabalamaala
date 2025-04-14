@@ -3,8 +3,6 @@ import { StatusCodes } from "@/app/(server)/lib/StatusCodes";
 import { UserContact } from "@/app/(server)/lib/Queries/UserQueries";
 import dbConnection from "@/app/(server)/lib/db";
 
-import { sendContactEmail } from "@/app/(server)/lib/emails/Ethankyou";
-
 // -----------------------------------------------------------  Emails
 
 // -----------------------------------------------------------  Post
