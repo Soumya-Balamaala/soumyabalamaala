@@ -10,5 +10,11 @@ export const CurrentDB = HostedDBLink;
 
 //
 
-export const BASE_URL = process.env.NEXT_DOMAIN_URL || "http://localhost:3000";
+export const BASE_URL = process.env.NEXT_DOMAIN_URL
+
+export const LocalBaseURL = "http://localhost:3000"
+
+export const CurrentAPIUrl  = BASE_URL
+
+// export const CurrentAPIUrl  = LocalBaseURL
 

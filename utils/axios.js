@@ -1,9 +1,9 @@
 import axios from "axios";
-import { BASE_URL } from "./envconfigs";
+import {  CurrentAPIUrl } from "./envconfigs";
 
 // Create the instance
 const axiosInstance = axios.create({
-  baseURL: BASE_URL,
+  baseURL:  CurrentAPIUrl,
   headers: {
     Accept: "application/json",
   },
