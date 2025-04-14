@@ -12,4 +12,3 @@ export const CurrentDB = HostedDBLink;
 
 export const BASE_URL = process.env.NEXT_DOMAIN_URL || "http://localhost:3000";
 
-export const ThankyouEmail = process.env.NEXT_THANK_YOU_API_KEY;
