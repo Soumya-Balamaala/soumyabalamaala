@@ -8,18 +8,29 @@ function isEmpty(value) {
 }
 
 export const globaljsonResponse = {
-  success(data, responseMessage, statuscode) {
-    const cleanData = isEmpty(data) ? null : data;
+  success(responseMessage, statuscode, data) {
 
     return NextResponse.json(
       {
         success: true,
         message: responseMessage,
-        data: cleanData,
       },
       { status: statuscode }
     );
   },
+
+  // successwithdata(responseMessage, statuscode, data) {
+  //   const cleanData = isEmpty(data) ? null : data;
+
+  //   return NextResponse.json(
+  //     {
+  //       success: true,
+  //       message: responseMessage,
+  //       responsedata: cleanData,
+  //     },
+  //     { status: statuscode }
+  //   );
+  // },
 
   error(responseMessage, statuscode) {
     return NextResponse.json(

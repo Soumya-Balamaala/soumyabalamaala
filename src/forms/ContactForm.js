@@ -10,6 +10,7 @@ import TextInput from "@/formcomponents/Inputtext";
 import MultilineInput from "@/formcomponents/MultilineInput";
 import AutoCompleteInput from "@/formcomponents/AutoCompleteInput";
 import { motion } from "framer-motion";
+import { apiUContact } from "./api/UserApis";
 
 // Validation
 const validationSchema = yup.object({
@@ -32,8 +33,6 @@ const defaultValues = {
   fullname: "",
   email: "",
   cname: "",
-  // location: "",
-  // ccode:""
   phone: "",
   services: "",
   details: "",
@@ -52,6 +51,14 @@ function ContactForm() {
 
   const onSubmit = (data) => {
     console.log("Form Data:", data);
+
+    apiUContact(data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const containerVariants = {
