@@ -2,13 +2,10 @@ import { globaljsonResponse } from "@/app/(server)/lib/globaljsonResponse";
 import { StatusCodes } from "@/app/(server)/lib/StatusCodes";
 import { UserContact } from "@/app/(server)/lib/Queries/UserQueries";
 import dbConnection from "@/app/(server)/lib/db";
-import { Resend } from "resend";
-import { ThankyouEmail } from "../../../../../../utils/envconfigs";
+
 import { sendContactEmail } from "@/app/(server)/lib/emails/Ethankyou";
 
 // -----------------------------------------------------------  Emails
-
-const resend = new Resend(ThankyouEmail);
 
 // -----------------------------------------------------------  Post
 
