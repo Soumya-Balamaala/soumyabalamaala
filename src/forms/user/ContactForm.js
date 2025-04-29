@@ -10,7 +10,11 @@ import TextInput from "@/formcomponents/Inputtext";
 import MultilineInput from "@/formcomponents/MultilineInput";
 import AutoCompleteInput from "@/formcomponents/AutoCompleteInput";
 import { motion } from "framer-motion";
-import { apiUContact } from "./api/UserApis";
+import { apiUContact } from "../api/user/UserApis";
+import { useEffect, useState } from "react";
+import { getCountries } from "../api/global/global";
+import CountryCode, { Countries } from "@/formcomponents/CountriesComponent";
+import MultiSelectInput from "@/formcomponents/MultiSelectInput";
 
 // Validation
 const validationSchema = yup.object({
@@ -20,12 +24,13 @@ const validationSchema = yup.object({
     .email("Invalid email format")
     .required("Email is required"),
   cname: yup.string().required("Company Name is required"),
-  // location: yup.string().required("Location is required"),
-  // ccode: yup.string().required("Location is required"),
+  location: yup.string().required("Location is required"),
+  ccode: yup.string().required("Location is required"),
   phone: yup.string().required("Mobile Number is required"),
   services: yup
-    .string()
-    .required("Please fill in the field. If not applicable, enter 'NA'."),
+    .array()
+    .min(1, "Please select at least one service")
+    .required("Please select at least one service"),
   details: yup.string(),
 });
 
@@ -33,14 +38,28 @@ const defaultValues = {
   fullname: "",
   email: "",
   cname: "",
+  location: null,
+  ccode: null,
   phone: "",
-  services: "",
+  services: [],
   details: "",
 };
 
 function ContactForm() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.between("xs", "md"));
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    getCountries()
+      .then((res) => {
+        console.log(res);
+        setCountries(res.data.countries);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const methods = useForm({
     resolver: yupResolver(validationSchema),
@@ -52,10 +71,20 @@ function ContactForm() {
   const onSubmit = (data) => {
     console.log("Form Data:", data);
 
-    apiUContact(data)
+    const updateddata = {
+      fullname: data.fullname,
+      email: data.email,
+      cname: data.cname,
+      location: data.location,
+      phone: `${data.ccode} ${data.phone}`,
+      services: data.services,
+      details: data.details,
+    };
+
+    apiUContact(updateddata)
       .then((res) => {
         console.log(res);
-        reset()
+        reset(defaultValues);
       })
       .catch((err) => {
         console.log(err);
@@ -119,6 +148,27 @@ function ContactForm() {
                     label={form.label}
                     options={form.serviceslist || []}
                     rules={form.rules}
+                  />
+                ) : form.type === "country" ? (
+                  <Countries
+                    name="location"
+                    control={methods.control}
+                    label="Location"
+                    options={countries}
+                  />
+                ) : form.type === "code" ? (
+                  <CountryCode
+                    name="ccode"
+                    control={methods.control}
+                    label="Code"
+                    options={countries}
+                  />
+                ) : form.type === "multilist" ? (
+                  <MultiSelectInput
+                    name={form.name}
+                    control={methods.control}
+                    label={form.label}
+                    options={form.serviceslist || []}
                   />
                 ) : (
                   <TextInput

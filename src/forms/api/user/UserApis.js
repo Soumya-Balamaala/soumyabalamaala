@@ -1,16 +1,15 @@
-import axiosInstance from "../../../utils/axios";
-import { User } from "./Urls";
-
-
+import axiosInstance from "../../../../utils/axios";
+import { apiLinks } from "../Urls";
 
 export const apiUContact = async (data) => {
   const response = await axiosInstance.post(
-    User.Contact.post,
+    apiLinks.user.contact.post,
     JSON.stringify({
       fullname: data.fullname,
+      company: data.cname,
       email: data.email,
-      cname: data.cname,
-      phone: data.phone,
+      mobile: data.phone,
+      country: data.location,
       services: data.services,
       details: data.details,
     }),

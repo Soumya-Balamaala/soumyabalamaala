@@ -1,14 +1,11 @@
-import React from 'react'
+import React from "react";
 
 export const metadata = {
-  title:"Admin - Login"
-}
-
+  title: "Admin - Login",
+};
 
 function Login() {
-  return (
-    <div>Login</div>
-  )
+  return <div>Login</div>;
 }
 
-export default Login
+export default Login;

@@ -16,7 +16,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ContactData, SocialMedia } from "@/mock/Contact";
-import ContactForm from "@/forms/ContactForm";
+import ContactForm from "@/forms/user/ContactForm";
 
 function Contact() {
   const theme = useTheme();
