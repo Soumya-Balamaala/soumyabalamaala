@@ -39,7 +39,7 @@ export const EnquiryRaised = ({ user }) => {
                   <tr>
                     <td className="w-1/2 ">
                       <Text className="m-0  text-[18px] font-normal leading-[28px] text-gray-900">
-                        We have got a New Enquiry which is{" "}
+                        We have got a New Enquiry which is
                         <b>{user.enquiryid}</b>. Please find the details below
                       </Text>
                     </td>

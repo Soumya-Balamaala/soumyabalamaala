@@ -45,20 +45,20 @@ export async function AdminEnquiry(userdetails, logos) {
       });
     })
     .then((info) => {
-      console.log("Email sent successfully:", info.messageId);
+      console.log(" Admin Email sent successfully:", info.messageId);
       return {
         status: 200,
         success: true,
-        message: "Email sent successfully",
+        message: "Admin Email sent successfully",
         messageId: info.messageId,
       };
     })
     .catch((error) => {
-      console.error("Failed to send email:", error.message);
+      console.error("Failed to send Admin email:", error.message);
       return {
         status: 500,
         success: false,
-        message: "Failed to send email",
+        message: "Failed to send Admin email",
         error: error.message,
       };
     });

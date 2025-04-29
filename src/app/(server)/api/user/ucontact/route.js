@@ -62,19 +62,15 @@ export async function POST(request) {
                 .then((insertResult) => {
                   if (insertResult.rowCount !== 1) {
                     throw new Error("Failed to insert the new user.");
-                  }
-
-                  console.log("Inserted User:", insertResult.rows[0]);
-                  const user = insertResult.rows[0];
-                  return userEnquiryResponse(user).then(() => {
+                  } else {
+                    const user = insertResult.rows[0];
+                    userEnquiryResponse(user);
                     AdminEnquiry(user);
                     return globaljsonResponse.success(
                       "We have received your information. Our team will reach out to you within 24 business hours.",
                       StatusCodes.OK_200
                     );
-                  });
-
-                  // Fetch logos
+                  }
                 });
             });
         });

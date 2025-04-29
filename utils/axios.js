@@ -1,6 +1,6 @@
 import axios from "axios";
 import { CurrentAPIUrl } from "./envconfigs";
-console.log(CurrentAPIUrl)
+
 
 // Create the instance
 const axiosInstance = axios.create({
