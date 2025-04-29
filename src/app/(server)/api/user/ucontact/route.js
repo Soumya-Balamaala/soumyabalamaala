@@ -2,7 +2,10 @@ import { globaljsonResponse } from "@/app/(server)/lib/globaljsonResponse";
 import { StatusCodes } from "@/app/(server)/lib/StatusCodes";
 import { UserContact } from "@/app/(server)/lib/Queries/UserQueries";
 import dbConnection from "@/app/(server)/lib/db";
-import { userEnquiryResponse } from "@/app/(server)/lib/emails/Thankyouemail";
+import {
+  AdminEnquiry,
+  userEnquiryResponse,
+} from "@/app/(server)/lib/emails/Thankyouemail";
 import { contactTrackingID } from "@/app/(server)/lib/TrackingIds";
 import { globalQueries } from "@/app/(server)/lib/Queries/GlobalQueries";
 
@@ -64,6 +67,7 @@ export async function POST(request) {
                   console.log("Inserted User:", insertResult.rows[0]);
                   const user = insertResult.rows[0];
                   return userEnquiryResponse(user).then(() => {
+                    AdminEnquiry(user);
                     return globaljsonResponse.success(
                       "We have received your information. Our team will reach out to you within 24 business hours.",
                       StatusCodes.OK_200
