@@ -19,12 +19,12 @@ export const BASE_URL = "https://soumyabalamaala.vercel.app";
 
 // DB Current Usage
 
-// export const CurrentDB = HostedDBLink;
+export const CurrentDB = HostedDBLink;
 
-export const CurrentDB = LocalDBLink;
+// export const CurrentDB = LocalDBLink;
 
 // URL Current Usage
 
-// export const CurrentAPIUrl = BASE_URL;
+export const CurrentAPIUrl = BASE_URL;
 
-export const CurrentAPIUrl = LocalBaseURL;
+// export const CurrentAPIUrl = LocalBaseURL;
