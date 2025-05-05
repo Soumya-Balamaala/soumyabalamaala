@@ -1,0 +1,5 @@
+.primarybutton {
+  text-transform: capitalize;
+  background-color: var(--primary-color);
+  color: var(--white);
+}

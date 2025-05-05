@@ -1,7 +1,7 @@
 // "use client";
 
 import Navbar from "@/components/Navbar";
-import "../styles/global.css";
+import "../../../styles/global.css";
 
 export const metadata = {
   title: "Soumya Balamaala",

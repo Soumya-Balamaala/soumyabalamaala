@@ -1,0 +1,13 @@
+.title {
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+.subtitle{
+    font-weight: 600;
+    color:var(--color4);
+}
+
+.bodytext{
+    color:var(--primary-color)
+}

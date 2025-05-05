@@ -1,9 +1,43 @@
 * {
   margin: 0;
   padding: 0;
-  /* height:100% ; */
   font-family: "Poppins", serif;
-  /* background-color: #f9f3e3; */
+  box-sizing: border-box;
+}
+
+:root {
+  /* colors */
+  --primary-color: #193050;
+  --secondary-color: #8dc891;
+  --terinary-color: #ffd88a;
+  --color4: #00d8ff;
+  --gray-500: #aab4bc;
+  --gray-400: #bdc4cb;
+  --gray-200: #dde1e4;
+  --white: #ffffff;
+  --bgcolor: #d9f7ec;
+
+  /* mediqueries */
+
+  /* widths */
+  --xs: 0;
+  --sm: 600px;
+  --md: 900px;
+  --lg: 1250px;
+  --xl: 1520px;
+
+  /* paddings for main Container */
+
+  --padding-xs-sm: 24px;
+  --padding-sm-md: 48px;
+  --padding-md-lg: 82px;
+  --padding-lg-xl: 120px;
+  --padding-xl: 260px;
+
+  --p001: 4px;
+  --p002: 8px;
+  --p003: 16px;
+  --p004: 24px;
 }
 
 /* Custom Scrollbar */
@@ -24,4 +58,3 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #6b705c; /* Scrollbar color on hover */
 }
-

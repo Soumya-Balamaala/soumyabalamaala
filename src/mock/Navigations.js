@@ -23,26 +23,24 @@ export const NavData = [
   //   aid: "about",
   // },
   {
-    id: 3,
-    title: "My Journey",
-    path: "/experience-education",
-    aid: "expedu",
+    id: 2,
+    title: "Experience",
+    path: "/experience",
+    aid: "experience",
   },
+
   {
-    id: 4,
-    title: " My Services",
+    id: 3,
+    title: " Services",
     path: "/services",
     aid: "services",
   },
 
   {
-    id: 5,
-    title: "Contact Me ",
-    path: "/contact-me",
+    id: 4,
+    title: "Contact",
+    path: "/contact",
     aid: "contact",
-  },
-  {
-    id: 6,
   },
 ];
 
