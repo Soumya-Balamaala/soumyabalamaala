@@ -1,6 +1,9 @@
-// app/page.tsx (or page.js if using JS)
-import { redirect } from 'next/navigation';
+import React from 'react'
 
-export default function HomePage() {
-  redirect('/home');
+function MainPage() {
+  return (
+    <div>MainPage</div>
+  )
 }
+
+export default MainPage

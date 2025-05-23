@@ -13,33 +13,33 @@ export const NavData = [
   {
     id: 1,
     title: "Home",
-    path: "/",
+    // path: "/",
     aid: "home",
   },
   // {
   //   id: 2,
   //   title: "About Me",
-  //   path: "/about",
+    // path: "/about",
   //   aid: "about",
   // },
   {
     id: 2,
     title: "Experience",
-    path: "/experience",
+    // path: "/experience",
     aid: "experience",
   },
 
   {
     id: 3,
     title: " Services",
-    path: "/services",
+    // path: "/services",
     aid: "services",
   },
 
   {
     id: 4,
     title: "Contact",
-    path: "/contact",
+    // path: "/contact",
     aid: "contact",
   },
 ];
