@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --navy: #2A3969;
+    --navy-dark: #1e2a52;
+    --navy-light: #3a4d85;
+    --gold: #EFC873;
+    --gold-dark: #d9af3d;
+    --gold-light: #f5dfa0;
+    --sage: #6A9F8A;
+    --sage-dark: #4f7a68;
+    --sage-light: #8dbdac;
+    --slate: #4A5568;
+    --slate-light: #718096;
+    --slate-lighter: #a0aec0;
+
+    --background: 0 0% 100%;
+    --foreground: 225 37% 28%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 30%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 225 37% 28%;
+    --primary: 225 37% 28%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 225 37% 28%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 40 78% 69%;
+    --accent-foreground: 225 37% 28%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 225 37% 28%;
+    --radius: 0.5rem;
+    --chart-1: 225 37% 28%;
+    --chart-2: 40 78% 69%;
+    --chart-3: 154 20% 52%;
+    --chart-4: 215 16% 47%;
+    --chart-5: 0 84.2% 60.2%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white text-slate-700 antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-navy { color: #2A3969; }
+  .text-gold { color: #EFC873; }
+  .text-sage { color: #6A9F8A; }
+  .text-slate-text { color: #4A5568; }
+  .bg-navy { background-color: #2A3969; }
+  .bg-navy-dark { background-color: #1e2a52; }
+  .bg-navy-light { background-color: #3a4d85; }
+  .bg-gold { background-color: #EFC873; }
+  .bg-gold-light { background-color: #f5dfa0; }
+  .bg-sage { background-color: #6A9F8A; }
+  .bg-sage-light { background-color: #d4ebe3; }
+  .border-gold { border-color: #EFC873; }
+  .border-navy { border-color: #2A3969; }
+  .border-sage { border-color: #6A9F8A; }
+
+  .section-padding {
+    @apply px-6 py-16 md:px-12 md:py-20 lg:px-24;
+  }
+
+  .timeline-line {
+    background: linear-gradient(180deg, #EFC873 0%, #6A9F8A 100%);
+  }
+
+  .form-input {
+    @apply w-full rounded-card border border-slate-200 bg-white px-4 py-2.5 text-sm text-navy placeholder:text-slate-lighter transition-colors duration-150;
+    @apply focus:border-navy focus:outline-none focus:ring-2 focus:ring-slate-200;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
