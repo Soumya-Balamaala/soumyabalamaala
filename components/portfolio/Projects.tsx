@@ -10,7 +10,7 @@ export function Projects() {
     <section id="projects" className="section-padding bg-gradient-to-b from-sage-light/20 to-white">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <div className="mb-10 flex items-center gap-3">
+          <div className="mb-10 flex items-center justify-start gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-card bg-navy text-white">
               <FolderGit2 size={20} />
             </span>
@@ -20,16 +20,16 @@ export function Projects() {
 
         <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" staggerDelay={0.07}>
           {projectsData.map((project) => (
-            <StaggerItem key={project.name}>
+            <StaggerItem key={project.name} className="mx-auto w-full max-w-md sm:max-w-none">
               <motion.article
                 whileHover={{ y: -4 }}
                 transition={{ duration: 0.2 }}
-                className="group flex h-full flex-col rounded-card border border-slate-100 bg-white p-6 shadow-card hover:shadow-card-hover"
+                className="group flex flex-col rounded-card border border-slate-100 bg-white p-6 text-left shadow-card hover:shadow-card-hover"
               >
-                <div className="mb-3 flex items-start justify-between gap-3">
+                <div className="mb-4 flex w-full items-start justify-between gap-3">
                   <div>
-                    <h3 className="text-base font-bold text-navy">{project.name}</h3>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-sage-dark">
+                    <h3 className="text-base font-bold leading-snug text-navy">{project.name}</h3>
+                    <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-sage-dark">
                       {project.company}
                     </p>
                   </div>
@@ -39,20 +39,20 @@ export function Projects() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="Open project"
-                      className="text-slate-light transition-colors group-hover:text-gold"
+                      className="mt-0.5 shrink-0 text-slate-light transition-colors group-hover:text-gold"
                     >
                       <ExternalLink size={18} />
                     </a>
                   ) : (
-                    <FolderGit2 size={18} className="text-slate-lighter" />
+                    <FolderGit2 size={18} className="mt-0.5 shrink-0 text-slate-lighter" />
                   )}
                 </div>
 
-                <p className="mb-4 flex-1 text-sm leading-relaxed text-slate-text">
+                <p className="mb-5 text-sm leading-relaxed text-slate-text">
                   {project.description}
                 </p>
 
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap justify-start gap-2">
                   {project.skills.map((skill) => (
                     <span
                       key={skill}
