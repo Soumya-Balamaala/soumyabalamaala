@@ -173,7 +173,7 @@ export const contactInfo = {
 
 export const aboutInfo = [
   { label: 'Nationality', value: 'Indian' },
-  { label: 'Relocation', value: 'Open to UAE' },
+  { label: 'Relocation', value: 'Open to Hyderabad, Bangalore & UAE' },
   { label: 'Visa Status', value: 'Sponsorship required' },
   { label: 'Notice Period', value: 'Immediate joiner' },
 ];

@@ -3,17 +3,16 @@ import { ACCODE, getJson } from './shared';
 export interface Testimonial {
   id: string;
   authorName: string;
-  content: string;
-  role: string;
-  company: string;
-  initials: string;
+  authorTitle: string;
+  authorCompany: string;
   authorAvatarUrl?: string;
+  authorLinkedInUrl?: string;
+  relationshipType: string;
+  subjectLabel: string;
+  content: string;
+  initials: string;
 }
 
-// Best-effort field mapping — the public GET has returned an empty list so
-// far (no approved testimonials yet), so these fallbacks are unverified
-// against a real record. They mirror the field names used when submitting
-// a testimonial (see RecommendSoumya.tsx / POST /api/public/testimonials).
 function normalizeTestimonial(raw: Record<string, unknown>): Testimonial {
   const str = (...candidates: unknown[]): string => {
     const found = candidates.find((c) => typeof c === 'string' && c.length > 0);
@@ -31,11 +30,14 @@ function normalizeTestimonial(raw: Record<string, unknown>): Testimonial {
   return {
     id: str(raw.id, raw.trackId),
     authorName,
-    content: str(raw.content, raw.text),
-    role: str(raw.role),
-    company: str(raw.company),
-    initials,
+    authorTitle: str(raw.authorTitle, raw.role),
+    authorCompany: str(raw.authorCompany, raw.company),
     authorAvatarUrl: str(raw.authorAvatarUrl) || undefined,
+    authorLinkedInUrl: str(raw.authorLinkedInUrl) || undefined,
+    relationshipType: str(raw.relationshipType, raw.relationship),
+    subjectLabel: str(raw.subjectLabel),
+    content: str(raw.content, raw.text),
+    initials,
   };
 }
 

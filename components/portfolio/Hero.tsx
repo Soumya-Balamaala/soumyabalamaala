@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Download, Mail, MapPin, Linkedin, Github, Globe, Phone } from 'lucide-react';
 import { contactInfo } from '@/lib/portfolio-data';
 import { fetchTenantConfig } from '@/lib/api/tenant';
+import { resolveApiUrl } from '@/lib/utils';
 import { ResumeDialog } from './ResumeDialog';
 import Image from 'next/image';
 
@@ -34,7 +35,7 @@ export function Hero() {
       .then((config) => {
         const pic = config?.settings?.professionalPic;
         if (pic) {
-          setProfilePic(pic.startsWith('http') ? pic : `${process.env.NEXT_PUBLIC_API_URL ?? ''}${pic}`);
+          setProfilePic(resolveApiUrl(pic));
         }
       })
       .catch((error) => console.error('Failed to load tenant config:', error));
