@@ -1,25 +1,26 @@
 'use client';
 
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, CheckCircle2, Loader2 } from 'lucide-react';
+import PhoneInput, { formatPhoneNumberIntl, isValidPhoneNumber } from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
 import { Reveal, StaggerContainer, StaggerItem } from './motion';
 import { contactInfo } from '@/lib/portfolio-data';
+import { submitContactForm } from '@/lib/api/contact';
 
 const schema = z.object({
   name: z.string().min(2, 'Please enter your name'),
-  service: z.string().min(3, 'Please tell me a bit about how I can help'),
-  countryCode: z.string().min(1, 'Please enter your country code'),
+  company: z.string().optional(),
+  services: z.string().min(3, 'Please tell me a bit about how I can help'),
+  email: z.string().email('Please enter a valid email'),
   mobile: z
-    .string()
-    .min(7, 'Please enter a valid mobile number')
-    .regex(/^[0-9\s-]+$/, 'Only digits, spaces and hyphens allowed'),
-  country: z.string().min(2, 'Please enter your country'),
-  location: z.string().min(2, 'Please enter your location'),
-  message: z.string().min(10, 'Please enter a message (at least 10 characters)'),
+    .string({ required_error: 'Please enter your mobile number' })
+    .refine((v) => isValidPhoneNumber(v), 'Please enter a valid phone number'),
+  message: z.string().max(250, 'Please keep it under 250 characters').optional(),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -32,19 +33,36 @@ const contactCards = [
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
     reset,
+    control,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({ resolver: zodResolver(schema) });
 
+  const messageValue = watch('message') ?? '';
+
   const onSubmit = async (data: FormValues) => {
-    await new Promise((r) => setTimeout(r, 900));
-    console.log('Contact form submitted:', data);
-    setSubmitted(true);
-    reset();
+    setSubmitError(null);
+    try {
+      await submitContactForm({
+        name: data.name,
+        company: data.company,
+        services: data.services,
+        email: data.email,
+        mobile: formatPhoneNumberIntl(data.mobile) || data.mobile,
+        ...(data.message ? { description: data.message } : {}),
+      });
+      setSubmitted(true);
+      reset();
+    } catch (error) {
+      console.error('Failed to submit contact form:', error);
+      setSubmitError(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
+    }
   };
 
   return (
@@ -144,7 +162,7 @@ export function Contact() {
                     noValidate
                   >
                     <StaggerContainer className="space-y-4" staggerDelay={0.06}>
-                      {/* Row 1: Name + Service */}
+                      {/* Row 1: Name + Email */}
                       <div className="grid gap-4 sm:grid-cols-2">
                         <StaggerItem>
                           <Field label="Name" error={errors.name?.message}>
@@ -152,47 +170,59 @@ export function Contact() {
                           </Field>
                         </StaggerItem>
                         <StaggerItem>
-                          <Field label="How Can I Help You?" error={errors.service?.message}>
-                            <input {...register('service')} className="form-input" />
+                          <Field label="Email" error={errors.email?.message}>
+                            <input {...register('email')} type="email" className="form-input" />
                           </Field>
                         </StaggerItem>
                       </div>
 
-                      {/* Row 2: Country Code + Mobile Number */}
+                      {/* Row 2: Company + How Can I Help You */}
                       <div className="grid gap-4 sm:grid-cols-2">
                         <StaggerItem>
-                          <Field label="Country Code" error={errors.countryCode?.message}>
-                            <input {...register('countryCode')} className="form-input" />
+                          <Field label="Company" error={errors.company?.message}>
+                            <input {...register('company')} className="form-input" />
                           </Field>
                         </StaggerItem>
                         <StaggerItem>
-                          <Field label="Mobile Number" error={errors.mobile?.message}>
-                            <input {...register('mobile')} className="form-input" />
+                          <Field label="How Can I Help You?" error={errors.services?.message}>
+                            <input {...register('services')} className="form-input" />
                           </Field>
                         </StaggerItem>
                       </div>
 
-                      {/* Row 3: Country Name + Location */}
-                      <div className="grid gap-4 sm:grid-cols-2">
-                        <StaggerItem>
-                          <Field label="Country Name" error={errors.country?.message}>
-                            <input {...register('country')} className="form-input" />
-                          </Field>
-                        </StaggerItem>
-                        <StaggerItem>
-                          <Field label="Location" error={errors.location?.message}>
-                            <input {...register('location')} className="form-input" />
-                          </Field>
-                        </StaggerItem>
-                      </div>
+                      {/* Mobile Number: single field, flag + country picker + formatted number */}
+                      <StaggerItem>
+                        <Field label="Mobile Number" error={errors.mobile?.message}>
+                          <Controller
+                            name="mobile"
+                            control={control}
+                            render={({ field }) => (
+                              <PhoneInput
+                                international
+                                defaultCountry="IN"
+                                value={field.value}
+                                onChange={field.onChange}
+                                onBlur={field.onBlur}
+                                className="phone-input"
+                                placeholder="Enter your mobile number"
+                              />
+                            )}
+                          />
+                        </Field>
+                      </StaggerItem>
 
                       {/* Message */}
                       <StaggerItem>
-                        <Field label="Message" error={errors.message?.message}>
-                          <textarea {...register('message')} rows={4} className="form-input resize-none" />
+                        <Field label="Message (optional)" error={errors.message?.message}>
+                          <textarea {...register('message')} rows={4} maxLength={250} className="form-input resize-none" />
+                          <span className="mt-1 block text-right text-xs text-slate-light">{messageValue.length}/250</span>
                         </Field>
                       </StaggerItem>
                     </StaggerContainer>
+
+                    {submitError && (
+                      <p className="text-center text-sm font-medium text-red-600 md:text-left">{submitError}</p>
+                    )}
 
                     <motion.button
                       whileHover={{ scale: 1.02 }}
@@ -232,7 +262,7 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <label className="block text-center md:text-left">
+    <label className="block text-left">
       <span className="mb-1.5 block text-sm font-semibold text-navy">{label}</span>
       {children}
       {error && <span className="mt-1 block text-xs font-medium text-red-600">{error}</span>}

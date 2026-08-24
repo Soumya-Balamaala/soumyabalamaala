@@ -1,8 +1,10 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Download, Mail, MapPin, Linkedin, Github, Globe, Phone } from 'lucide-react';
 import { contactInfo } from '@/lib/portfolio-data';
+import { fetchTenantConfig } from '@/lib/api/tenant';
 import { ResumeDialog } from './ResumeDialog';
 import Image from 'next/image';
 
@@ -25,6 +27,18 @@ const socials = [
 ];
 
 export function Hero() {
+  const [profilePic, setProfilePic] = useState('/Soumya.png');
+
+  useEffect(() => {
+    fetchTenantConfig()
+      .then((config) => {
+        if (config?.settings?.professionalPic) {
+          setProfilePic(config.settings.professionalPic);
+        }
+      })
+      .catch((error) => console.error('Failed to load tenant config:', error));
+  }, []);
+
   return (
     <section
       id="hero"
@@ -116,11 +130,11 @@ export function Hero() {
           <div className="relative h-80 w-80 overflow-hidden rounded-full bg-gradient-to-br from-navy via-navy-light to-sage p-1 shadow-card-hover lg:h-96 lg:w-96">
             <div className="relative h-full w-full overflow-hidden rounded-full bg-white">
               <Image
-                src="/Soumya.png"
-                alt="Profile"
+                src={profilePic}
+                alt="Soumya Balamaala — Frontend Developer"
                 fill
                 priority
-                className="object-cover object-top scale-125"
+                className={`object-cover object-top ${profilePic === '/Soumya.png' ? 'scale-125' : ''}`}
               />
             </div>
           </div>

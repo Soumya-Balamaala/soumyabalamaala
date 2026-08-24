@@ -8,162 +8,40 @@ recommendations wall, and a shareable "recommend me" form.
 
 Live site: https://soumyabalamaala.vercel.app
 
----
 
-## Tech Stack
 
-| Layer | Choice |
-|---|---|
-| Framework | [Next.js 16](https://nextjs.org/) (App Router, React 19) |
-| Language | TypeScript |
-| Styling | Tailwind CSS 3 + a small custom design system (`navy` / `gold` / `sage` palette, `rounded-card`, `rounded-pill` utilities) |
-| Animation | [Framer Motion](https://www.framer.com/motion/) (scroll reveals, stagger lists, page transitions) |
-| Forms | [react-hook-form](https://react-hook-form.com/) + [zod](https://zod.dev/) validation |
-| UI primitives | [Radix UI](https://www.radix-ui.com/) + [shadcn/ui](https://ui.shadcn.com/)-style components in `components/ui/` |
-| Icons | [lucide-react](https://lucide.dev/) |
-| HTTP | [axios](https://axios-http.com/) (`lib/axios.ts`) |
-| Hosting | Vercel (primary) / Netlify (`netlify.toml` included) |
+### v2.1.0 — Recommendation form field fixes (2026-08-24)
 
----
+- Corrected the testimonial submission payload to match the live API's
+  actual field names (`authorTitle`, `authorCompany`, `relationshipType`)
+  after they drifted from what was originally wired up.
+- Added a new required "Project We Worked On" field (`subjectLabel`) to
+  the Recommend Soumya form, capturing what specifically the
+  recommendation is about.
 
-## Application Overview
+### v2.0.0 — Live API integration & SEO overhaul (2026-08-24)
 
-### 1. Home page (`app/page.tsx`)
-
-A single-page portfolio composed of these sections, in order:
-
-- **Navbar** — sticky/blurred on scroll, in-page anchor links + route links, mobile hamburger menu, "Hire Me" CTA that opens the résumé dialog.
-- **Hero** — name, title, summary, download-résumé + contact CTAs, social links, profile photo.
-- **About** — bio summary and quick facts (nationality, relocation, visa status, notice period).
-- **Skills** — categorized skill groups (frontend, backend, mobile, state management, UI frameworks, databases, hosting, version control).
-- **Experience ("My Story")** — an animated vertical timeline of work history and education, alternating left/right on desktop.
-- **Projects** — a card grid of notable projects with tech-stack tags and external links.
-- **Recommendations** — a preview grid of the 3 most recent testimonials with a "View More" link to the full `/recommendations` page.
-- **Contact** — a validated contact form (name, service needed, phone, country/location, message).
-- **Footer** — links and closing info.
-
-### 2. `/recommendations` — Recommendations page
-
-Lists every testimonial in `recommendationsData` as cards, plus a
-"Recommend Soumya" button that links out to `/recommend`.
-
-### 3. `/recommend` — Recommend Soumya (shareable)
-
-A standalone page containing just the recommendation form (name, role,
-company, relationship, testimonial text). Kept on its own route/URL so it
-can be shared directly with former managers/teammates without sending them
-to the full portfolio.
-
-### 4. `/referral-hub` — Referral Hub
-
-- Lists open roles Soumya can refer candidates for (`referralJobsData`).
-- A "join my network" signup form (name, email, role of interest) for people
-  who want to be referred when a matching opening appears.
-
-### 5. `/referral-hub/jobs/[jobId]` — Job detail + application
-
-A dynamically generated page per job (via `generateStaticParams`) showing
-the full description, responsibilities, and requirements, followed by a
-job application form (name, email, phone, resume link, relevant experience).
-
-### Shared building blocks
-
-- `components/portfolio/motion.tsx` — `Reveal`, `StaggerContainer`,
-  `StaggerItem`, `ScalePop`: reusable scroll-triggered animation wrappers
-  built on Framer Motion's `useInView`.
-- `components/portfolio/ResumeDialog.tsx` — a Radix dialog offering
-  region-specific résumé downloads (Indian / UAE versions).
-- `components/portfolio/SubpageHeader.tsx` — the shared header for every
-  non-home route, with a "Back to Portfolio" link.
-- `components/ui/*` — a full shadcn/ui-derived primitive library
-  (dialog, dropdown, tabs, toast, etc.) available for future features,
-  even where not all of it is currently used.
-- `lib/portfolio-data.ts` — the single source of truth for all portfolio
-  content: skills, timeline, projects, contact info, about facts,
-  recommendations, and referral jobs. Editing site content mostly means
-  editing this file.
-
-### Forms & data
-
-All forms (`Contact`, `RecommendSoumya`, `ReferralHub`, `JobApplicationForm`)
-follow the same pattern: `react-hook-form` + a `zod` schema for validation,
-a shared `Field` wrapper for label/error display, and an animated
-submit → success state. **Submissions are currently only logged to the
-console** (`console.log(...)`) — there is no backend persistence or email
-delivery wired up yet; `lib/axios.ts` is in place for when a real API
-endpoint is ready.
-
----
-
-## Project Structure
-
-```
-app/
-  page.tsx                        Home page (all one-page sections)
-  layout.tsx                      Root layout, fonts, metadata
-  globals.css                     Tailwind base + design tokens
-  recommendations/page.tsx        Recommendations list
-  recommend/page.tsx               Shareable "Recommend Soumya" form page
-  referral-hub/page.tsx           Referral Hub (jobs + join-network form)
-  referral-hub/jobs/[jobId]/page.tsx   Job detail + application form
-components/
-  portfolio/                      Site-specific sections & forms
-  ui/                              Reusable shadcn/ui-style primitives
-lib/
-  portfolio-data.ts               All portfolio content (single source of truth)
-  axios.ts                        Configured axios instance
-  utils.ts                        Class-merging helpers (cn, etc.)
-hooks/
-  use-toast.ts                    Toast notification hook
-public/                           Images, logo, résumé PDFs
-```
-
----
-
-## Getting Started
-
-```bash
-npm install
-npm run dev        # start the dev server (http://localhost:3000)
-npm run build       # production build
-npm run start        # serve the production build
-npm run lint          # ESLint
-npm run typecheck      # tsc --noEmit
-```
-
-### Environment variables
-
-| Variable | Used by | Required |
-|---|---|---|
-| `NEXT_PUBLIC_API_URL` | `lib/axios.ts` base URL | Optional — only needed once form submissions are wired to a real API |
-
----
-
-## Deployment
-
-- **Vercel** (primary): zero-config for Next.js.
-- **Netlify**: `netlify.toml` runs `npx next build` via `@netlify/plugin-nextjs`.
-
----
-
-## Release Notes
-
-### Unreleased — UI/UX polish pass
-
-- **Story & Projects**: card containers stay centered on mobile, but all
-  text inside cards (headings, body copy, tags, meta rows) is now
-  left-aligned instead of centered, for readability.
-- **Project cards**: fixed inconsistent card heights — cards no longer
-  stretch to match the tallest card in the row, removing large empty gaps
-  under short descriptions. Improved title line-height and spacing between
-  title/company/description/tags.
-- **Forms**: removed placeholder text from every input across the Contact,
-  Referral Hub, Job Application, and Recommend Soumya forms.
-- **Recommendations page**: replaced the generic subtitle with new copy,
-  and added a "Recommend Soumya" call-to-action button in the page header.
-- **New page — `/recommend`**: the recommendation form was split out of
-  `/recommendations` into its own standalone, shareable route so it can be
-  sent directly to former colleagues.
+- Replaced static placeholder content with live data across the site:
+  job postings, testimonials/recommendations, resumes, and tenant
+  profile info (photo, logo) are now fetched from the backend API.
+- Referral Hub: jobs are now backed by real postings, each with a
+  dynamic application form built from the posting's own custom
+  questions; added a résumé-download-tracking and a direct
+  résumé-submission flow. Route restructured to
+  `/referral-hub/{postingCode}/apply`. Removed the old static
+  "join my network" signup form.
+- Recommend Soumya form now submits real testimonials (with photo
+  upload/crop) instead of a placeholder submission; the Recommendations
+  wall only renders once there's at least one live testimonial.
+- Contact form now submits real leads to the backend and collects a
+  proper international phone number (flag + country code + formatted
+  number), reused across every form that collects a phone number.
+- Added site-wide visitor-page-view tracking.
+- SEO: per-page Open Graph and Twitter Card metadata, plus a dynamic
+  `sitemap.xml` and `robots.txt` that include live job-posting routes.
+- Performance/cleanup: removed an unused shadcn/ui component scaffold
+  (45 files) and ~26 orphaned dependencies that were never imported.
+- Various mobile-layout and alignment fixes across forms and sections.
 
 ### v1.0.0 — Initial release (2026-07-26)
 

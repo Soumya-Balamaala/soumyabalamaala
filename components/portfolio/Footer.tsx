@@ -6,6 +6,7 @@ import Image from 'next/image';
 import NextLink from 'next/link';
 import { Reveal } from './motion';
 import { contactInfo } from '@/lib/portfolio-data';
+import { APP_VERSION } from '@/config';
 
 const quickLinks = [
   { label: 'About', href: '#about' },
@@ -98,7 +99,7 @@ export function Footer() {
             Made with <Heart size={14} className="text-gold" /> by Soumya Balamaala
           </p>
           <p className="text-xs text-white/40">
-            &copy; {new Date().getFullYear()} Soumya Balamaala. All rights reserved.
+            &copy; {new Date().getFullYear()} Soumya Balamaala. All rights reserved. · v{APP_VERSION}
           </p>
         </div>
       </footer>

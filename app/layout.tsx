@@ -8,11 +8,29 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
-export const metadata: Metadata = {
-  title: 'Soumya Balamaala — Frontend Developer',
-  description:
-    'Strategic Frontend Developer with 4.5+ years of expertise in React.js and Material UI, expanding into Full Stack development with Node.js and Express.js.',
+const title = 'Soumya Balamaala — Frontend Developer';
+const description =
+  'Strategic Frontend Developer with 4.5+ years of expertise in React.js and Material UI, expanding into Full Stack development with Node.js and Express.js.';
 
+export const metadata: Metadata = {
+  metadataBase: new URL('https://soumyabalamaala.vercel.app'),
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    url: '/',
+    siteName: 'Soumya Balamaala',
+    images: [{ url: '/Soumya.png', width: 1200, height: 1200, alt: 'Soumya Balamaala' }],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title,
+    description,
+    images: ['/Soumya.png'],
+  },
 };
 
 export default function RootLayout({

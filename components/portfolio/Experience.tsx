@@ -18,7 +18,7 @@ export function Experience() {
     <section id="experience" className="section-padding bg-white">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <div className="mb-12 flex items-center justify-start gap-3">
+          <div className="mb-12 flex items-center justify-center gap-3 md:justify-start">
             <span className="flex h-10 w-10 items-center justify-center rounded-card bg-gold text-navy">
               <Briefcase size={20} />
             </span>
@@ -46,7 +46,7 @@ export function Experience() {
               const onLeft = i % 2 === 0;
 
               return (
-                <li key={`${entry.title}-${i}`} className="relative flex flex-col items-center md:block">
+                <li key={`${entry.title}-${i}`} className="relative flex flex-col items-start md:block">
                   {/* node dot */}
                   <span
                     className={`relative z-10 mb-3 flex h-8 w-8 items-center justify-center rounded-full ${accent} ring-4 ${ring} md:absolute md:left-1/2 md:top-1.5 md:mb-0 md:-translate-x-1/2`}

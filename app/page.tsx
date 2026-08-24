@@ -1,4 +1,5 @@
 import { Navbar } from '@/components/portfolio/Navbar';
+import { VisitorTracker } from '@/components/portfolio/VisitorTracker';
 import { Hero } from '@/components/portfolio/Hero';
 import { About } from '@/components/portfolio/About';
 import { Skills } from '@/components/portfolio/Skills';
@@ -12,6 +13,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-white">
+      <VisitorTracker page="home" />
       <Navbar />
       <Hero />
       <About />

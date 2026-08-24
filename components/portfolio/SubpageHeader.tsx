@@ -20,7 +20,7 @@ export function SubpageHeader() {
           href="/"
           className="inline-flex items-center gap-2 rounded-pill border-2 border-navy px-4 py-2 text-sm font-semibold text-navy transition-colors hover:bg-navy hover:text-white"
         >
-          <ArrowLeft size={16} /> Back to Portfolio
+          <ArrowLeft size={16} /> Go Back
         </Link>
       </div>
     </header>

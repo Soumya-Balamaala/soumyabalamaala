@@ -1,12 +1,25 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Quote, ArrowRight } from 'lucide-react';
 import { Reveal, StaggerContainer, StaggerItem } from './motion';
-import { recommendationsData } from '@/lib/portfolio-data';
+import { fetchTestimonials, Testimonial } from '@/lib/api/testimonials';
 
 export function Recommendations() {
-  const preview = recommendationsData.slice(0, 3);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    fetchTestimonials()
+      .then(setTestimonials)
+      .catch((error) => console.error('Failed to load testimonials:', error))
+      .finally(() => setLoaded(true));
+  }, []);
+
+  if (!loaded || testimonials.length === 0) return null;
+
+  const preview = testimonials.slice(0, 3);
 
   return (
     <section id="recommendations" className="section-padding bg-gradient-to-b from-white to-sage-light/20">
@@ -22,18 +35,18 @@ export function Recommendations() {
 
         <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" staggerDelay={0.08}>
           {preview.map((rec) => (
-            <StaggerItem key={rec.name}>
+            <StaggerItem key={rec.id}>
               <div className="flex h-full flex-col rounded-card border border-slate-100 bg-white p-6 text-center shadow-card md:text-left">
                 <Quote size={22} className="mx-auto mb-3 text-gold md:mx-0" />
-                <p className="flex-1 text-sm leading-relaxed text-slate-text">&ldquo;{rec.text}&rdquo;</p>
+                <p className="flex-1 text-sm leading-relaxed text-slate-text">&ldquo;{rec.content}&rdquo;</p>
                 <div className="mt-5 flex items-center justify-center gap-3 md:justify-start">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-navy/10 text-sm font-bold text-navy">
                     {rec.initials}
                   </span>
                   <div>
-                    <p className="text-sm font-bold text-navy">{rec.name}</p>
+                    <p className="text-sm font-bold text-navy">{rec.authorName}</p>
                     <p className="text-xs text-slate-light">
-                      {rec.role} · {rec.company}
+                      {[rec.role, rec.company].filter(Boolean).join(' · ')}
                     </p>
                   </div>
                 </div>
