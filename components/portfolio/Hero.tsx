@@ -32,8 +32,9 @@ export function Hero() {
   useEffect(() => {
     fetchTenantConfig()
       .then((config) => {
-        if (config?.settings?.professionalPic) {
-          setProfilePic(config.settings.professionalPic);
+        const pic = config?.settings?.professionalPic;
+        if (pic) {
+          setProfilePic(pic.startsWith('http') ? pic : `${process.env.NEXT_PUBLIC_API_URL ?? ''}${pic}`);
         }
       })
       .catch((error) => console.error('Failed to load tenant config:', error));
