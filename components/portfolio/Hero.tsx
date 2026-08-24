@@ -1,8 +1,11 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Download, Mail, MapPin, Linkedin, Github, Globe, Phone } from 'lucide-react';
 import { contactInfo } from '@/lib/portfolio-data';
+import { fetchTenantConfig } from '@/lib/api/tenant';
+import { ResumeDialog } from './ResumeDialog';
 import Image from 'next/image';
 
 const container = {
@@ -24,6 +27,18 @@ const socials = [
 ];
 
 export function Hero() {
+  const [profilePic, setProfilePic] = useState('/Soumya.png');
+
+  useEffect(() => {
+    fetchTenantConfig()
+      .then((config) => {
+        if (config?.settings?.professionalPic) {
+          setProfilePic(config.settings.professionalPic);
+        }
+      })
+      .catch((error) => console.error('Failed to load tenant config:', error));
+  }, []);
+
   return (
     <section
       id="hero"
@@ -33,7 +48,7 @@ export function Hero() {
       <div className="pointer-events-none absolute -left-32 bottom-0 h-96 w-96 rounded-full bg-sage/20 blur-3xl" />
 
       <div className="mx-auto grid w-full max-w-7xl items-center gap-10 px-6 md:px-12 lg:grid-cols-2 lg:gap-8">
-        <motion.div variants={container} initial="hidden" animate="visible" className="min-w-0">
+        <motion.div variants={container} initial="hidden" animate="visible" className="min-w-0 text-center lg:text-left">
           <motion.p
             variants={item}
             className="mb-3 inline-flex items-center gap-2 rounded-pill border border-sage/30 bg-sage-light/40 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-sage-dark"
@@ -63,27 +78,19 @@ export function Hero() {
             expanding into Full Stack development with Node.js and Express.js.
           </motion.p>
 
-          <motion.div variants={item} className="mt-8 flex flex-wrap gap-3">
-            <motion.a
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.15 }}
-              href="/SoumyaB_4.8YOE.pdf"
-              download="SoumyaB_4.8YOE.pdf"
-              className="inline-flex items-center gap-2 rounded-pill bg-navy px-6 py-3 font-semibold text-white shadow-card transition-shadow hover:shadow-card-hover"
-            >
-              <Download size={18} /> Indian Resume
-            </motion.a>
-            <motion.a
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.15 }}
-              href="/SoumyaB_UAE_4.8YOE.pdf"
-              download="SoumyaB_UAE_4.8YOE.pdf"
-              className="inline-flex items-center gap-2 rounded-pill bg-navy px-6 py-3 font-semibold text-white shadow-card transition-shadow hover:shadow-card-hover"
-            >
-              <Download size={18} /> UAE Resume
-            </motion.a>
+          <motion.div variants={item} className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
+            <ResumeDialog
+              trigger={
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.15 }}
+                  className="inline-flex items-center gap-2 rounded-pill bg-navy px-6 py-3 font-semibold text-white shadow-card transition-shadow hover:shadow-card-hover"
+                >
+                  <Download size={18} /> Download Resume
+                </motion.button>
+              }
+            />
             <motion.a
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
@@ -95,7 +102,7 @@ export function Hero() {
             </motion.a>
           </motion.div>
 
-          <motion.div variants={item} className="mt-8 flex items-center gap-4">
+          <motion.div variants={item} className="mt-8 flex items-center justify-center gap-4 lg:justify-start">
             {socials.map(({ icon: Icon, href, label }) => (
               <motion.a
                 key={label}
@@ -123,11 +130,11 @@ export function Hero() {
           <div className="relative h-80 w-80 overflow-hidden rounded-full bg-gradient-to-br from-navy via-navy-light to-sage p-1 shadow-card-hover lg:h-96 lg:w-96">
             <div className="relative h-full w-full overflow-hidden rounded-full bg-white">
               <Image
-                src="/Soumya.png"
-                alt="Profile"
+                src={profilePic}
+                alt="Soumya Balamaala — Frontend Developer"
                 fill
                 priority
-                className="object-cover object-top scale-125"
+                className={`object-cover object-top ${profilePic === '/Soumya.png' ? 'scale-125' : ''}`}
               />
             </div>
           </div>

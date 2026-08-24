@@ -1,44 +1,27 @@
 'use client';
 
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, CheckCircle2, Loader2 } from 'lucide-react';
+import PhoneInput, { formatPhoneNumberIntl, isValidPhoneNumber } from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
 import { Reveal, StaggerContainer, StaggerItem } from './motion';
-import { contactInfo, servicesData } from '@/lib/portfolio-data';
+import { contactInfo } from '@/lib/portfolio-data';
+import { submitContactForm } from '@/lib/api/contact';
 
 const schema = z.object({
   name: z.string().min(2, 'Please enter your name'),
-  service: z.string().min(1, 'Please select a service'),
-  countryCode: z.string().min(1, 'Please select a country code'),
+  company: z.string().optional(),
+  services: z.string().min(3, 'Please tell me a bit about how I can help'),
+  email: z.string().email('Please enter a valid email'),
   mobile: z
-    .string()
-    .min(7, 'Please enter a valid mobile number')
-    .regex(/^[0-9\s-]+$/, 'Only digits, spaces and hyphens allowed'),
-  country: z.string().min(2, 'Please enter your country'),
-  location: z.string().min(2, 'Please enter your location'),
-  message: z.string().min(10, 'Please enter a message (at least 10 characters)'),
+    .string({ required_error: 'Please enter your mobile number' })
+    .refine((v) => isValidPhoneNumber(v), 'Please enter a valid phone number'),
+  message: z.string().max(250, 'Please keep it under 250 characters').optional(),
 });
-
-const countryCodes = [
-  { code: '+91', label: 'India (+91)' },
-  { code: '+971', label: 'UAE (+971)' },
-  { code: '+1', label: 'USA / Canada (+1)' },
-  { code: '+44', label: 'UK (+44)' },
-  { code: '+61', label: 'Australia (+61)' },
-  { code: '+966', label: 'Saudi Arabia (+966)' },
-  { code: '+965', label: 'Kuwait (+965)' },
-  { code: '+974', label: 'Qatar (+974)' },
-  { code: '+968', label: 'Oman (+968)' },
-  { code: '+973', label: 'Bahrain (+973)' },
-  { code: '+65', label: 'Singapore (+65)' },
-  { code: '+60', label: 'Malaysia (+60)' },
-  { code: '+49', label: 'Germany (+49)' },
-  { code: '+33', label: 'France (+33)' },
-  { code: '+81', label: 'Japan (+81)' },
-];
 
 type FormValues = z.infer<typeof schema>;
 
@@ -50,26 +33,43 @@ const contactCards = [
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
     reset,
+    control,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({ resolver: zodResolver(schema) });
 
+  const messageValue = watch('message') ?? '';
+
   const onSubmit = async (data: FormValues) => {
-    await new Promise((r) => setTimeout(r, 900));
-    console.log('Contact form submitted:', data);
-    setSubmitted(true);
-    reset();
+    setSubmitError(null);
+    try {
+      await submitContactForm({
+        name: data.name,
+        company: data.company,
+        services: data.services,
+        email: data.email,
+        mobile: formatPhoneNumberIntl(data.mobile) || data.mobile,
+        ...(data.message ? { description: data.message } : {}),
+      });
+      setSubmitted(true);
+      reset();
+    } catch (error) {
+      console.error('Failed to submit contact form:', error);
+      setSubmitError(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
+    }
   };
 
   return (
     <section id="contact" className="section-padding bg-gradient-to-b from-white to-sage-light/20">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <div className="mb-10 flex items-center gap-3">
+          <div className="mb-10 flex items-center justify-center gap-3 md:justify-start">
             <span className="flex h-10 w-10 items-center justify-center rounded-card bg-navy text-white">
               <Mail size={20} />
             </span>
@@ -80,7 +80,7 @@ export function Contact() {
         <div className="grid gap-10 lg:grid-cols-5">
           {/* contact details */}
           <Reveal className="lg:col-span-2" delay={0.1}>
-            <div className="flex h-full flex-col gap-4">
+            <div className="flex h-full flex-col gap-4 text-center md:text-left">
               <p className="text-base leading-relaxed text-slate-text">
                 Have a project in mind or looking for a dedicated developer? I&apos;m available for
                 new opportunities and open to relocation. Let&apos;s build something great together.
@@ -91,7 +91,7 @@ export function Contact() {
                     <motion.div
                       whileHover={{ y: -3 }}
                       transition={{ duration: 0.2 }}
-                      className="flex items-center gap-3 rounded-card border border-slate-100 bg-white p-4 shadow-card"
+                      className="flex items-center justify-center gap-3 rounded-card border border-slate-100 bg-white p-4 shadow-card md:justify-start"
                     >
                       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sage-light/40 text-sage-dark">
                         <Icon size={18} />
@@ -162,98 +162,67 @@ export function Contact() {
                     noValidate
                   >
                     <StaggerContainer className="space-y-4" staggerDelay={0.06}>
-                      {/* Row 1: Name + Service */}
+                      {/* Row 1: Name + Email */}
                       <div className="grid gap-4 sm:grid-cols-2">
                         <StaggerItem>
                           <Field label="Name" error={errors.name?.message}>
-                            <input
-                              {...register('name')}
-                              className="form-input"
-                              placeholder="Your full name"
-                            />
+                            <input {...register('name')} className="form-input" />
                           </Field>
                         </StaggerItem>
                         <StaggerItem>
-                          <Field label="Service Interested In" error={errors.service?.message}>
-                            <select {...register('service')} className="form-input" defaultValue="">
-                              <option value="" disabled>
-                                Select a service
-                              </option>
-                              {servicesData.map((s) => (
-                                <option key={s.title} value={s.title}>
-                                  {s.title}
-                                </option>
-                              ))}
-                            </select>
+                          <Field label="Email" error={errors.email?.message}>
+                            <input {...register('email')} type="email" className="form-input" />
                           </Field>
                         </StaggerItem>
                       </div>
 
-                      {/* Row 2: Country Code + Mobile Number */}
+                      {/* Row 2: Company + How Can I Help You */}
                       <div className="grid gap-4 sm:grid-cols-2">
                         <StaggerItem>
-                          <Field label="Country Code" error={errors.countryCode?.message}>
-                            <select
-                              {...register('countryCode')}
-                              className="form-input"
-                              defaultValue=""
-                            >
-                              <option value="" disabled>
-                                Select code
-                              </option>
-                              {countryCodes.map((c) => (
-                                <option key={c.code} value={c.code}>
-                                  {c.label}
-                                </option>
-                              ))}
-                            </select>
+                          <Field label="Company" error={errors.company?.message}>
+                            <input {...register('company')} className="form-input" />
                           </Field>
                         </StaggerItem>
                         <StaggerItem>
-                          <Field label="Mobile Number" error={errors.mobile?.message}>
-                            <input
-                              {...register('mobile')}
-                              className="form-input"
-                              placeholder="Your mobile number"
-                            />
+                          <Field label="How Can I Help You?" error={errors.services?.message}>
+                            <input {...register('services')} className="form-input" />
                           </Field>
                         </StaggerItem>
                       </div>
 
-                      {/* Row 3: Country Name + Location */}
-                      <div className="grid gap-4 sm:grid-cols-2">
-                        <StaggerItem>
-                          <Field label="Country Name" error={errors.country?.message}>
-                            <input
-                              {...register('country')}
-                              className="form-input"
-                              placeholder="e.g. India"
-                            />
-                          </Field>
-                        </StaggerItem>
-                        <StaggerItem>
-                          <Field label="Location" error={errors.location?.message}>
-                            <input
-                              {...register('location')}
-                              className="form-input"
-                              placeholder="e.g. Hyderabad, Telangana"
-                            />
-                          </Field>
-                        </StaggerItem>
-                      </div>
-
-                      {/* Message */}
+                      {/* Mobile Number: single field, flag + country picker + formatted number */}
                       <StaggerItem>
-                        <Field label="Message" error={errors.message?.message}>
-                          <textarea
-                            {...register('message')}
-                            rows={4}
-                            className="form-input resize-none"
-                            placeholder="Tell me about your project..."
+                        <Field label="Mobile Number" error={errors.mobile?.message}>
+                          <Controller
+                            name="mobile"
+                            control={control}
+                            render={({ field }) => (
+                              <PhoneInput
+                                international
+                                defaultCountry="IN"
+                                value={field.value}
+                                onChange={field.onChange}
+                                onBlur={field.onBlur}
+                                className="phone-input"
+                                placeholder="Enter your mobile number"
+                              />
+                            )}
                           />
                         </Field>
                       </StaggerItem>
+
+                      {/* Message */}
+                      <StaggerItem>
+                        <Field label="Message (optional)" error={errors.message?.message}>
+                          <textarea {...register('message')} rows={4} maxLength={250} className="form-input resize-none" />
+                          <span className="mt-1 block text-right text-xs text-slate-light">{messageValue.length}/250</span>
+                        </Field>
+                      </StaggerItem>
                     </StaggerContainer>
+
+                    {submitError && (
+                      <p className="text-center text-sm font-medium text-red-600 md:text-left">{submitError}</p>
+                    )}
 
                     <motion.button
                       whileHover={{ scale: 1.02 }}
@@ -293,7 +262,7 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <label className="block">
+    <label className="block text-left">
       <span className="mb-1.5 block text-sm font-semibold text-navy">{label}</span>
       {children}
       {error && <span className="mt-1 block text-xs font-medium text-red-600">{error}</span>}

@@ -15,7 +15,7 @@ export function About() {
     <section id="about" className="section-padding bg-white">
       <div className="mx-auto max-w-5xl">
         <Reveal>
-          <div className="mb-10 flex items-center gap-3">
+          <div className="mb-10 flex items-center justify-center gap-3 md:justify-start">
             <span className="flex h-10 w-10 items-center justify-center rounded-card bg-navy text-white">
               <User size={20} />
             </span>
@@ -24,7 +24,7 @@ export function About() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <p className="text-lg leading-relaxed text-slate-text">{summary}</p>
+          <p className="text-center text-lg leading-relaxed text-slate-text md:text-left">{summary}</p>
         </Reveal>
 
         <StaggerContainer className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -35,12 +35,12 @@ export function About() {
                 <motion.div
                   whileHover={{ y: -4 }}
                   transition={{ duration: 0.2 }}
-                  className="flex items-center gap-3 rounded-card border border-slate-100 bg-sage-light/30 p-4 shadow-card"
+                  className="flex items-center justify-center gap-3 rounded-card border border-slate-100 bg-sage-light/30 p-4 shadow-card md:justify-start"
                 >
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-sage-dark shadow-sm">
                     <Icon size={18} />
                   </span>
-                  <div>
+                  <div className="text-center md:text-left">
                     <p className="text-xs font-semibold uppercase tracking-wide text-slate-light">
                       {info.label}
                     </p>

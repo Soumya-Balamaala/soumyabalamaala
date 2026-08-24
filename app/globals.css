@@ -88,6 +88,45 @@
   }
 }
 
+/* react-phone-number-input, styled to match .form-input */
+.phone-input {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  padding: 0.625rem 1rem;
+  transition: border-color 150ms, box-shadow 150ms;
+}
+.phone-input:focus-within {
+  border-color: #2A3969;
+  outline: none;
+  box-shadow: 0 0 0 2px #e2e8f0;
+}
+.phone-input .PhoneInputCountry {
+  margin-right: 0.625rem;
+}
+.phone-input .PhoneInputCountryIcon {
+  width: 1.25rem;
+  box-shadow: none;
+}
+.phone-input .PhoneInputCountrySelectArrow {
+  opacity: 0.5;
+}
+.phone-input .PhoneInputInput {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.875rem;
+  color: #2A3969;
+}
+.phone-input .PhoneInputInput::placeholder {
+  color: #a0aec0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

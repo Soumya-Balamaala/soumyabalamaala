@@ -1,4 +1,4 @@
-export interface SkillCategory {
+﻿export interface SkillCategory {
   category: string;
   skills: string[];
 }
@@ -32,7 +32,7 @@ export const timelineData: TimelineEntry[] = [
     title: 'Solution Engineer (Full Time)',
     organization: 'M2P Fintech',
     location: 'Hyderabad, India',
-    duration: 'Jun 2025 – Present',
+    duration: 'Jun 2025 â€“ Present',
     bullets: [
       'Spearheaded development and delivery of new features for VKYC and OCAC projects, resolving 100+ critical production incidents while maintaining 100% uptime and zero unplanned downtime',
       'Delivered 20+ change requests across VKYC and OCAC modules with consistently on-time turnaround',
@@ -45,7 +45,7 @@ export const timelineData: TimelineEntry[] = [
     title: 'React Developer (Consultant)',
     organization: 'Solaiera.ai',
     location: 'Hyderabad, India',
-    duration: 'Mar 2025 – May 2025',
+    duration: 'Mar 2025 â€“ May 2025',
     bullets: [
       'Translated wireframes into reusable, scalable React JS components for Dost AI, a product designed to enhance daily routines for children with autism',
       'Led design-to-code implementation, ensuring a seamless user experience and efficient front-end architecture',
@@ -59,7 +59,7 @@ export const timelineData: TimelineEntry[] = [
     title: 'Associate Consultant (React JS)',
     organization: 'Kapil Technologies Pvt Ltd',
     location: 'Hyderabad, India',
-    duration: 'May 2023 – Aug 2024',
+    duration: 'May 2023 â€“ Aug 2024',
     bullets: [
       "Spearheaded the transformation of the company's static website into an interactive platform, enabling file uploads via the admin portal and real-time application status tracking",
       'Developed a robust admin panel to manage media files, update career portal data, and monitor website traffic through custom API integrations',
@@ -71,7 +71,7 @@ export const timelineData: TimelineEntry[] = [
     title: 'Frontend Developer',
     organization: 'VMax e-Solution Pvt Ltd',
     location: 'Hyderabad, India',
-    duration: 'Jan 2023 – Mar 2023',
+    duration: 'Jan 2023 â€“ Mar 2023',
     bullets: [
       'Transformed UI wireframes into scalable, reusable React components, enhancing development efficiency and code maintainability',
       'Led API integration for the ProhealthI Admin Panel project, ensuring seamless functionality and on-time deployment',
@@ -83,7 +83,7 @@ export const timelineData: TimelineEntry[] = [
     title: 'Jr. Frontend Developer',
     organization: 'Talentkind Solutions LLP',
     location: 'Hyderabad, India',
-    duration: 'Jan 2021 – Sep 2022',
+    duration: 'Jan 2021 â€“ Sep 2022',
     bullets: [
       "Transformed UI wireframes into scalable, reusable React components, enhancing development efficiency and code maintainability",
       "Led API integration across Talentkind's Admin, Talent, Trainer, and Employer modules, ensuring smooth functionality and on-time end-of-day deployment",
@@ -95,21 +95,21 @@ export const timelineData: TimelineEntry[] = [
     type: 'education',
     title: 'B.Tech, Electronics & Communication Engineering',
     organization: 'Lakireddy Balireddy College of Engineering, JNTUK',
-    duration: '2016 – 2019',
+    duration: '2016 â€“ 2019',
     bullets: ['CGPA: 6.71'],
   },
   {
     type: 'education',
     title: 'Diploma, Electronics & Communication Engineering',
     organization: 'KES Polytechnic College for Women, AP-SBTET',
-    duration: '2013 – 2016',
+    duration: '2013 â€“ 2016',
     bullets: ['Percentage: 74.99%'],
   },
   {
     type: 'education',
     title: 'Class X',
     organization: "St. Anne's High School, Guntupalli, AP-BSE",
-    duration: '2012 – 2013',
+    duration: '2012 â€“ 2013',
     bullets: ['CGPA: 7.8'],
   },
 ];
@@ -160,23 +160,6 @@ export const projectsData: Project[] = [
     description: 'Admin, Talent, Trainer, and Employer modules built in React with integrated APIs',
     skills: ['React.js', 'REST API', 'Redux'],
   },
-];
-
-export interface Service {
-  title: string;
-  description: string;
-  iconName: string;
-}
-
-export const servicesData: Service[] = [
-  { title: 'Web and Mobile Development', description: 'Responsive web and mobile apps tailored to meet your business goals and user needs.', iconName: 'Code' },
-  { title: 'Branding and Designing', description: 'Creative branding and design solutions to elevate your business identity and appeal.', iconName: 'Palette' },
-  { title: 'Content Writing', description: 'SEO-friendly content that engages users and strengthens your online presence effectively.', iconName: 'PenLine' },
-  { title: 'Social Media Marketing', description: 'Grow your brand on social media with targeted content and audience engagement strategies.', iconName: 'Share2' },
-  { title: 'Paid Campaigns (PPC & Ads)', description: 'Data-driven paid ad campaigns designed to maximize reach, conversions, and ROI.', iconName: 'Megaphone' },
-  { title: 'Backend Development', description: 'Secure and scalable backend solutions to power your apps and manage core functionality.', iconName: 'Server' },
-  { title: 'SEO (Search Engine Optimization)', description: 'Improve your search visibility and drive traffic with expert SEO techniques and tools.', iconName: 'Search' },
-  { title: 'End-to-End Accounting & Tax Solutions', description: 'Complete accounting and tax services for compliance, clarity, and financial efficiency.', iconName: 'Calculator' },
 ];
 
 export const contactInfo = {

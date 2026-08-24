@@ -3,14 +3,17 @@
 import { motion } from 'framer-motion';
 import { Linkedin, Github, Globe, Heart } from 'lucide-react';
 import Image from 'next/image';
+import NextLink from 'next/link';
 import { Reveal } from './motion';
 import { contactInfo } from '@/lib/portfolio-data';
+import { APP_VERSION } from '@/config';
 
 const quickLinks = [
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
-  { label: 'Experience', href: '#experience' },
+  { label: 'My Story', href: '#experience' },
   { label: 'Projects', href: '#projects' },
+  { label: 'Referral Hub', href: '/referral-hub' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -45,16 +48,27 @@ export function Footer() {
           <div className="flex flex-col items-center gap-3">
             <h4 className="text-xs font-bold uppercase tracking-widest text-gold">Quick Links</h4>
             <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2">
-              {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-white/70 transition-colors hover:text-gold"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+              {quickLinks.map((link) =>
+                link.href.startsWith('/') ? (
+                  <li key={link.href}>
+                    <NextLink
+                      href={link.href}
+                      className="text-sm text-white/70 transition-colors hover:text-gold"
+                    >
+                      {link.label}
+                    </NextLink>
+                  </li>
+                ) : (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-white/70 transition-colors hover:text-gold"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                )
+              )}
             </ul>
           </div>
 
@@ -85,7 +99,7 @@ export function Footer() {
             Made with <Heart size={14} className="text-gold" /> by Soumya Balamaala
           </p>
           <p className="text-xs text-white/40">
-            &copy; {new Date().getFullYear()} Soumya Balamaala. All rights reserved.
+            &copy; {new Date().getFullYear()} Soumya Balamaala. All rights reserved. · v{APP_VERSION}
           </p>
         </div>
       </footer>

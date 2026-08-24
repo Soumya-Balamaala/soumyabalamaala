@@ -4,19 +4,22 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { ResumeDialog } from './ResumeDialog';
 
 const links = [
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
-  { label: 'Experience', href: '#experience' },
+  { label: 'My Story', href: '#experience' },
   { label: 'Projects', href: '#projects' },
-  { label: 'Services', href: '#services' },
+  { label: 'Referral Hub', href: '/referral-hub' },
   { label: 'Contact', href: '#contact' },
 ];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [mobileResumeOpen, setMobileResumeOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -50,25 +53,39 @@ export function Navbar() {
         </a>
 
         <ul className="hidden items-center gap-8 md:flex">
-          {links.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="group relative text-sm font-medium text-slate-text transition-colors hover:text-navy"
-              >
-                {link.label}
-                <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-gold transition-all duration-200 group-hover:w-full" />
-              </a>
-            </li>
-          ))}
+          {links.map((link) => {
+            const isRoute = link.href.startsWith('/');
+            return (
+              <li key={link.href}>
+                {isRoute ? (
+                  <Link
+                    href={link.href}
+                    className="group relative text-sm font-medium text-slate-text transition-colors hover:text-navy"
+                  >
+                    {link.label}
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-gold transition-all duration-200 group-hover:w-full" />
+                  </Link>
+                ) : (
+                  <a
+                    href={link.href}
+                    className="group relative text-sm font-medium text-slate-text transition-colors hover:text-navy"
+                  >
+                    {link.label}
+                    <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-gold transition-all duration-200 group-hover:w-full" />
+                  </a>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
-        <a
-          href="#contact"
-          className="hidden rounded-pill bg-navy px-5 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-navy-light hover:shadow-card md:inline-block"
-        >
-          Hire Me
-        </a>
+        <ResumeDialog
+          trigger={
+            <button className="hidden rounded-pill bg-navy px-5 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-navy-light hover:shadow-card md:inline-block">
+              Hire Me
+            </button>
+          }
+        />
 
         <button
           onClick={() => setOpen(!open)}
@@ -89,30 +106,47 @@ export function Navbar() {
             className="overflow-hidden bg-white border-t border-slate-100 md:hidden"
           >
             <ul className="flex flex-col px-6 py-4">
-              {links.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="block py-2 text-slate-text hover:text-navy"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+              {links.map((link) => {
+                const isRoute = link.href.startsWith('/');
+                return (
+                  <li key={link.href}>
+                    {isRoute ? (
+                      <Link
+                        href={link.href}
+                        onClick={() => setOpen(false)}
+                        className="block py-2 text-center text-slate-text hover:text-navy"
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={link.href}
+                        onClick={() => setOpen(false)}
+                        className="block py-2 text-center text-slate-text hover:text-navy"
+                      >
+                        {link.label}
+                      </a>
+                    )}
+                  </li>
+                );
+              })}
               <li>
-                <a
-                  href="#contact"
-                  onClick={() => setOpen(false)}
-                  className="mt-2 block rounded-pill bg-navy px-5 py-2 text-center font-semibold text-white"
+                <button
+                  onClick={() => {
+                    setOpen(false);
+                    setMobileResumeOpen(true);
+                  }}
+                  className="mt-2 block w-full rounded-pill bg-navy px-5 py-2 text-center font-semibold text-white"
                 >
                   Hire Me
-                </a>
+                </button>
               </li>
             </ul>
           </motion.div>
         )}
       </AnimatePresence>
+
+      <ResumeDialog open={mobileResumeOpen} onOpenChange={setMobileResumeOpen} />
     </motion.header>
   );
 }
