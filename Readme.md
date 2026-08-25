@@ -10,6 +10,22 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.2.0 — Recommendation form & testimonial ordering (2026-08-25)
+
+- Recommend Soumya form: the "Company" field is now a dropdown of the
+  companies Soumya has actually worked at (sourced from the experience
+  timeline) instead of free text, and its label was changed to "During
+  our collaboration, your role was..." for the role field / "Company We
+  Worked At" for the company field to better guide recommenders.
+- Recommendations now render in the backend-defined `displayOrder`
+  (both the homepage preview and the full `/recommendations` wall)
+  instead of raw API fetch order; entries missing an order value sort
+  to the end.
+- Fixed garbled en-dash characters and a company-name typo
+  ("VMax e-Solution" → "VMax e-Solutions") across the experience
+  timeline and projects data, and updated the M2P Fintech project name
+  to "VKYC, DKYC & OCAC Modules".
+
 ### v2.1.0 — Recommendation form field fixes (2026-08-24)
 
 - Corrected the testimonial submission payload to match the live API's
