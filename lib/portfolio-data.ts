@@ -29,10 +29,10 @@ export interface TimelineEntry {
 export const timelineData: TimelineEntry[] = [
   {
     type: 'work',
-    title: 'Solution Engineer (Full Time)',
+    title: 'Solution Engineer',
     organization: 'M2P Fintech',
     location: 'Hyderabad, India',
-    duration: 'Jun 2025 â€“ Present',
+    duration: 'Jun 2025 to Present',
     bullets: [
       'Spearheaded development and delivery of new features for VKYC and OCAC projects, resolving 100+ critical production incidents while maintaining 100% uptime and zero unplanned downtime',
       'Delivered 20+ change requests across VKYC and OCAC modules with consistently on-time turnaround',
@@ -45,7 +45,7 @@ export const timelineData: TimelineEntry[] = [
     title: 'React Developer (Consultant)',
     organization: 'Solaiera.ai',
     location: 'Hyderabad, India',
-    duration: 'Mar 2025 â€“ May 2025',
+    duration: 'Mar 2025 to May 2025',
     bullets: [
       'Translated wireframes into reusable, scalable React JS components for Dost AI, a product designed to enhance daily routines for children with autism',
       'Led design-to-code implementation, ensuring a seamless user experience and efficient front-end architecture',
@@ -59,7 +59,7 @@ export const timelineData: TimelineEntry[] = [
     title: 'Associate Consultant (React JS)',
     organization: 'Kapil Technologies Pvt Ltd',
     location: 'Hyderabad, India',
-    duration: 'May 2023 â€“ Aug 2024',
+    duration: 'May 2023 to Aug 2024',
     bullets: [
       "Spearheaded the transformation of the company's static website into an interactive platform, enabling file uploads via the admin portal and real-time application status tracking",
       'Developed a robust admin panel to manage media files, update career portal data, and monitor website traffic through custom API integrations',
@@ -69,9 +69,9 @@ export const timelineData: TimelineEntry[] = [
   {
     type: 'work',
     title: 'Frontend Developer',
-    organization: 'VMax e-Solution Pvt Ltd',
+    organization: 'VMax e-Solutions Pvt Ltd',
     location: 'Hyderabad, India',
-    duration: 'Jan 2023 â€“ Mar 2023',
+    duration: 'Jan 2023 to Mar 2023',
     bullets: [
       'Transformed UI wireframes into scalable, reusable React components, enhancing development efficiency and code maintainability',
       'Led API integration for the ProhealthI Admin Panel project, ensuring seamless functionality and on-time deployment',
@@ -83,7 +83,7 @@ export const timelineData: TimelineEntry[] = [
     title: 'Jr. Frontend Developer',
     organization: 'Talentkind Solutions LLP',
     location: 'Hyderabad, India',
-    duration: 'Jan 2021 â€“ Sep 2022',
+    duration: 'Jan 2021 to Sep 2022',
     bullets: [
       "Transformed UI wireframes into scalable, reusable React components, enhancing development efficiency and code maintainability",
       "Led API integration across Talentkind's Admin, Talent, Trainer, and Employer modules, ensuring smooth functionality and on-time end-of-day deployment",
@@ -95,21 +95,21 @@ export const timelineData: TimelineEntry[] = [
     type: 'education',
     title: 'B.Tech, Electronics & Communication Engineering',
     organization: 'Lakireddy Balireddy College of Engineering, JNTUK',
-    duration: '2016 â€“ 2019',
+    duration: '2016 to 2019',
     bullets: ['CGPA: 6.71'],
   },
   {
     type: 'education',
     title: 'Diploma, Electronics & Communication Engineering',
     organization: 'KES Polytechnic College for Women, AP-SBTET',
-    duration: '2013 â€“ 2016',
+    duration: '2013 to 2016',
     bullets: ['Percentage: 74.99%'],
   },
   {
     type: 'education',
     title: 'Class X',
     organization: "St. Anne's High School, Guntupalli, AP-BSE",
-    duration: '2012 â€“ 2013',
+    duration: '2012 to 2013',
     bullets: ['CGPA: 7.8'],
   },
 ];
@@ -131,7 +131,7 @@ export const projectsData: Project[] = [
     link: 'https://soumyabalamaala.vercel.app',
   },
   {
-    name: 'VKYC & OCAC Modules',
+    name: 'VKYC, DKYC & OCAC Modules',
     company: 'M2P Fintech',
     description: 'Production fintech features delivered with 100% uptime and zero unplanned downtime',
     skills: ['React.js', 'Node.js', 'REST API', 'GCP'],
@@ -150,7 +150,7 @@ export const projectsData: Project[] = [
   },
   {
     name: 'ProhealthI Admin Panel',
-    company: 'VMax e-Solution Pvt Ltd',
+    company: 'VMax e-Solutions Pvt Ltd',
     description: 'React-based admin panel with full API integration',
     skills: ['React.js', 'REST API', 'Material UI'],
   },

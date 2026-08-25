@@ -10,7 +10,7 @@ import { PenLine, Send, CheckCircle2, Loader2, ImagePlus, X } from 'lucide-react
 import { Reveal, StaggerContainer, StaggerItem } from './motion';
 import { api } from '@/lib/axios';
 import { getCroppedImageDataUrl } from '@/lib/cropImage';
-import { projectsData } from '@/lib/portfolio-data';
+import { projectsData, timelineData } from '@/lib/portfolio-data';
 
 // Fixed for every submission from this form — not user-editable.
 const ACCODE = 'SOU';
@@ -18,6 +18,11 @@ const TESTIMONIAL_TYPE = 'recommendation';
 
 // Only real client/employer engagements — exclude personal projects.
 const projectOptions = projectsData.filter((p) => p.company !== 'Personal Project');
+
+// Companies Soumya has worked at, in reverse-chronological order, de-duplicated.
+const companyOptions = Array.from(
+  new Set(timelineData.filter((entry) => entry.type === 'work').map((entry) => entry.organization))
+);
 
 interface TestimonialOptions {
   authorTypes: string[];
@@ -259,8 +264,17 @@ export function RecommendSoumya() {
                     </div>
                     <div className="grid gap-4 sm:grid-cols-2">
                       <StaggerItem>
-                        <Field label="Company" error={errors.company?.message}>
-                          <input {...register('company')} className="form-input" />
+                        <Field label="Company We Worked At" error={errors.company?.message}>
+                          <select {...register('company')} defaultValue="" className="form-input">
+                            <option value="" disabled>
+                              Select a company
+                            </option>
+                            {companyOptions.map((company) => (
+                              <option key={company} value={company}>
+                                {company}
+                              </option>
+                            ))}
+                          </select>
                         </Field>
                       </StaggerItem>
                       <StaggerItem>
