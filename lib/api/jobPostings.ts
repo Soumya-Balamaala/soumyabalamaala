@@ -10,6 +10,10 @@ export interface CustomField {
   type: CustomFieldType;
   required: boolean;
   options?: string[];
+  // When set, this field only applies (and is only actually required) once
+  // the field named by dependsOnFieldId holds dependsOnValue.
+  dependsOnFieldId?: string;
+  dependsOnValue?: string;
 }
 
 export interface JobPosting {
@@ -58,6 +62,8 @@ function normalizeJobPosting(raw: Record<string, unknown>): JobPosting {
           type: (str(f.type) || 'text') as CustomFieldType,
           required: f.required === true,
           options: Array.isArray(f.options) ? f.options.map(String) : undefined,
+          dependsOnFieldId: str(f.dependsOnFieldId) || undefined,
+          dependsOnValue: f.dependsOnValue !== undefined ? str(f.dependsOnValue) : undefined,
         })
       )
     : [];

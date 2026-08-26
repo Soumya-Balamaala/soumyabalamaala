@@ -14,17 +14,32 @@ import { ACCODE, CustomField } from '@/lib/api/jobPostings';
 function buildCustomFieldsSchema(fields: CustomField[]) {
   const shape: Record<string, z.ZodTypeAny> = {};
   for (const field of fields) {
+    // A dependent field is only actually required once its controlling
+    // field matches dependsOnValue — enforced below in superRefine, since
+    // that can't be expressed as a static per-field schema.
+    const staticallyRequired = field.required && !field.dependsOnFieldId;
     if (field.type === 'checkbox') {
-      shape[field.id] = field.required
+      shape[field.id] = staticallyRequired
         ? z.boolean({ required_error: `Please answer: ${field.label}` })
         : z.boolean().optional();
     } else {
-      shape[field.id] = field.required
+      shape[field.id] = staticallyRequired
         ? z.string().min(1, `${field.label} is required`)
         : z.string().optional();
     }
   }
-  return z.object(shape);
+  return z.object(shape).superRefine((values, ctx) => {
+    for (const field of fields) {
+      if (!field.required || !field.dependsOnFieldId) continue;
+      const isActive = String(values[field.dependsOnFieldId]) === field.dependsOnValue;
+      if (!isActive) continue;
+      const value = values[field.id];
+      const isEmpty = field.type === 'checkbox' ? value === undefined : !value;
+      if (isEmpty) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: `${field.label} is required`, path: [field.id] });
+      }
+    }
+  });
 }
 
 function buildSchema(fields: CustomField[]) {
@@ -82,6 +97,10 @@ export function JobApplicationForm({
   });
 
   const messageValue = watch('message') ?? '';
+  const customValues = watch('custom');
+
+  const isFieldVisible = (field: CustomField) =>
+    !field.dependsOnFieldId || String(customValues?.[field.dependsOnFieldId]) === field.dependsOnValue;
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? null;
@@ -104,7 +123,16 @@ export function JobApplicationForm({
     formData.append('phone', formatPhoneNumberIntl(data.phone) || data.phone);
     if (data.message) formData.append('message', data.message);
     formData.append('resume', resumeFile);
-    formData.append('customFieldResponses', JSON.stringify(data.custom ?? {}));
+
+    // The API expects string values for every custom field response (e.g.
+    // "true", not a JSON boolean) — matters for checkbox fields especially,
+    // since dependsOnValue is itself compared as a string server-side.
+    const customFieldResponses: Record<string, string> = {};
+    for (const [id, value] of Object.entries(data.custom ?? {})) {
+      if (value === undefined || value === '') continue;
+      customFieldResponses[id] = String(value);
+    }
+    formData.append('customFieldResponses', JSON.stringify(customFieldResponses));
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL ?? ''}/api/public/job-postings/${jobId}/apply`, {
@@ -213,7 +241,7 @@ export function JobApplicationForm({
                 </Field>
               </StaggerItem>
 
-              {customFields.map((field) => (
+              {customFields.filter(isFieldVisible).map((field) => (
                 <StaggerItem key={field.id}>
                   <Field
                     label={field.label}

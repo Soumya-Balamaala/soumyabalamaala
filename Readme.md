@@ -10,6 +10,22 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.9.0 — Dependent job application fields, tracking & alignment fixes (2026-08-27)
+
+- Job application custom fields now support conditional visibility: a
+  field with `dependsOnFieldId`/`dependsOnValue` only appears (and is
+  only actually required) once its controlling field matches that
+  value, e.g. a funding-amount question that only shows up after
+  answering "yes" to a self-funding checkbox.
+- Fixed the submitted `customFieldResponses` payload to send every
+  value as a string (matching the API's contract) instead of a JSON
+  boolean for checkbox fields — this also matters for dependsOnValue
+  matching server-side, which compares as a string.
+- Recommendation cards are now left-aligned at every width instead of
+  centered on mobile.
+- Job apply page visits are now tracked by posting code instead of the
+  internal numeric job id.
+
 ### v2.8.0 — Card centering, responsive timeline animation & subpage reveals (2026-08-27)
 
 - Fixed a layout bug where a leftover card in the last row of the
