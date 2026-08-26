@@ -14,7 +14,7 @@ export default function RecommendPage() {
   return (
     <main className="min-h-screen bg-white">
       <VisitorTracker page="recommend" />
-      <SubpageHeader />
+      <SubpageHeader backHref="/peer-recommendations" />
       <RecommendSoumya />
       <Footer />
     </main>

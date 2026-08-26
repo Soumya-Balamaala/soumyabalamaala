@@ -44,7 +44,7 @@ export function Recommendations() {
 
         <Reveal className="mt-10 flex justify-center" delay={0.1}>
           <Link
-            href="/recommendations"
+            href="/peer-recommendations"
             className="inline-flex items-center gap-2 rounded-pill border-2 border-navy px-6 py-3 font-semibold text-navy transition-colors hover:bg-navy hover:text-white"
           >
             View More <ArrowRight size={18} />

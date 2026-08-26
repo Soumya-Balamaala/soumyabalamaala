@@ -5,7 +5,11 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 
-export function SubpageHeader() {
+interface SubpageHeaderProps {
+  backHref?: string;
+}
+
+export function SubpageHeader({ backHref }: SubpageHeaderProps = {}) {
   const router = useRouter();
 
   return (
@@ -23,7 +27,7 @@ export function SubpageHeader() {
         </Link>
         <button
           type="button"
-          onClick={() => router.back()}
+          onClick={() => (backHref ? router.push(backHref) : router.back())}
           className="inline-flex items-center gap-2 rounded-pill border-2 border-navy px-4 py-2 text-sm font-semibold text-navy transition-colors hover:bg-navy hover:text-white"
         >
           <ArrowLeft size={16} /> Go Back

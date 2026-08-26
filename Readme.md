@@ -10,6 +10,20 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.6.0 — Page-specific Go Back targets (2026-08-26)
+
+- `SubpageHeader` now accepts a `backHref` to send "Go Back" to a fixed
+  route instead of browser history: the Recommend Soumya form goes
+  back to `/peer-recommendations`, and a job's apply page goes back to
+  `/referral-hub`. Other subpages keep the default `router.back()`.
+
+### v2.5.0 — Recommendations route rename (2026-08-26)
+
+- Renamed the full recommendations wall route from `/recommendations`
+  to `/peer-recommendations` (updated the "View More" link, sitemap
+  entry, and page metadata); its visitor-tracking record now logs as
+  `peer-recommendations` instead of `recommendations`.
+
 ### v2.4.0 — Scroll animations, nav & resume-download tracking (2026-08-26)
 
 - Each home page section (About, Skills, My Story, Projects,
