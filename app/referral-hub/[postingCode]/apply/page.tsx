@@ -34,7 +34,7 @@ export default async function JobDetailPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-white">
-      <VisitorTracker page={`job-${job.id}`} />
+      <VisitorTracker page={`apply - ${job.postingCode}`} />
       <SubpageHeader backHref="/referral-hub" />
 
       <section className="section-padding">
