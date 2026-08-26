@@ -2,12 +2,12 @@
 
 import { motion } from 'framer-motion';
 import { FolderGit2, ExternalLink } from 'lucide-react';
-import { Reveal, StaggerContainer, StaggerItem } from './motion';
+import { Reveal, SectionReveal, StaggerContainer, StaggerItem } from './motion';
 import { projectsData } from '@/lib/portfolio-data';
 
 export function Projects() {
   return (
-    <section id="projects" className="section-padding bg-gradient-to-b from-sage-light/20 to-white">
+    <SectionReveal id="projects" className="section-padding bg-gradient-to-b from-sage-light/20 to-white">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <div className="mb-10 flex items-center justify-start gap-3">
@@ -67,6 +67,6 @@ export function Projects() {
           ))}
         </StaggerContainer>
       </div>
-    </section>
+    </SectionReveal>
   );
 }

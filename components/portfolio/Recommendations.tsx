@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Quote, ArrowRight } from 'lucide-react';
-import { Reveal, StaggerContainer, StaggerItem } from './motion';
+import { Reveal, SectionReveal, StaggerContainer, StaggerItem } from './motion';
 import { TestimonialCard } from './TestimonialCard';
 import { fetchTestimonials, Testimonial } from '@/lib/api/testimonials';
 
@@ -23,7 +23,7 @@ export function Recommendations() {
   const preview = testimonials.slice(0, 3);
 
   return (
-    <section id="recommendations" className="section-padding bg-gradient-to-b from-white to-sage-light/20">
+    <SectionReveal id="recommendations" className="section-padding bg-gradient-to-b from-white to-sage-light/20">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <div className="mb-10 flex items-center justify-center gap-3 md:justify-start">
@@ -51,6 +51,6 @@ export function Recommendations() {
           </Link>
         </Reveal>
       </div>
-    </section>
+    </SectionReveal>
   );
 }

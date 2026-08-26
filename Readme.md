@@ -10,6 +10,33 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.4.0 — Scroll animations, nav & resume-download tracking (2026-08-26)
+
+- Each home page section (About, Skills, My Story, Projects,
+  Recommendations, Contact) now fades/slides in as a whole block when
+  scrolled into view, on top of the existing per-card/per-field
+  animations.
+- Navbar: added a "Recommendations" link, and fixed anchor-link
+  scrolling so a section's heading no longer lands hidden behind the
+  fixed navbar after a nav click.
+- Résumé downloads now also record a visitor entry per region
+  (`resume-download-indian` / `resume-download-uae`) alongside the
+  existing download-tracking call.
+
+### v2.3.0 — Testimonial layout, geolocated download tracking & nav fixes (2026-08-26)
+
+- Testimonial cards: LinkedIn icon moved to the top-right corner of the
+  card, and the author's company now renders on its own line beneath
+  their role instead of joined inline with a "·" separator.
+- Résumé downloads now capture the visitor's city/state/country via the
+  browser's Geolocation API (reverse-geocoded client-side) and send it
+  along with the download-tracking event.
+- Job-posting visitor tracking now records which specific job was
+  viewed (`job-{id}`) instead of a single generic "job-apply" page
+  value.
+- Subpage header's "Go Back" control now navigates browser history
+  (`router.back()`) instead of always returning to the homepage.
+
 ### v2.2.0 — Recommendation form & testimonial ordering (2026-08-25)
 
 - Recommend Soumya form: the "Company" field is now a dropdown of the

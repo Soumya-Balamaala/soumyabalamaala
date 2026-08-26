@@ -2,12 +2,12 @@
 
 import { motion } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
-import { Reveal, StaggerContainer, StaggerItem, ScalePop } from './motion';
+import { Reveal, SectionReveal, StaggerContainer, StaggerItem, ScalePop } from './motion';
 import { skillsData } from '@/lib/portfolio-data';
 
 export function Skills() {
   return (
-    <section id="skills" className="section-padding bg-gradient-to-b from-white to-sage-light/20">
+    <SectionReveal id="skills" className="section-padding bg-gradient-to-b from-white to-sage-light/20">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <div className="mb-10 flex items-center justify-center gap-3 md:justify-start">
@@ -47,6 +47,6 @@ export function Skills() {
           ))}
         </StaggerContainer>
       </div>
-    </section>
+    </SectionReveal>
   );
 }

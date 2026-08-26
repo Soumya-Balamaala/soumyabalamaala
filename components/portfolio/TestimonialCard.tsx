@@ -7,7 +7,18 @@ export function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
     testimonial;
 
   return (
-    <div className="flex h-full min-w-0 flex-col rounded-card border border-slate-100 bg-white p-6 text-center shadow-card md:text-left">
+    <div className="relative flex h-full min-w-0 flex-col rounded-card border border-slate-100 bg-white p-6 text-center shadow-card md:text-left">
+      {authorLinkedInUrl && (
+        <a
+          href={authorLinkedInUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${authorName} on LinkedIn`}
+          className="absolute right-5 top-5 text-slate-light transition-colors hover:text-navy"
+        >
+          <Linkedin size={16} />
+        </a>
+      )}
       <Quote size={22} className="mx-auto mb-3 text-gold md:mx-0" />
       <p className="flex-1 break-words text-sm leading-relaxed text-slate-text">&ldquo;{content}&rdquo;</p>
 
@@ -25,21 +36,9 @@ export function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
           )}
         </span>
         <div>
-          <div className="flex items-center justify-center gap-1.5 md:justify-start">
-            <p className="text-sm font-bold text-navy">{authorName}</p>
-            {authorLinkedInUrl && (
-              <a
-                href={authorLinkedInUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${authorName} on LinkedIn`}
-                className="text-slate-light transition-colors hover:text-navy"
-              >
-                <Linkedin size={14} />
-              </a>
-            )}
-          </div>
-          <p className="text-xs text-slate-light">{[authorTitle, authorCompany].filter(Boolean).join(' · ')}</p>
+          <p className="text-sm font-bold text-navy">{authorName}</p>
+          {authorTitle && <p className="text-xs text-slate-light">{authorTitle}</p>}
+          {authorCompany && <p className="text-xs text-slate-light">{authorCompany}</p>}
           {relationshipType && (
             <p className="text-[11px] font-medium uppercase tracking-wide text-slate-light/70">
               {labelize(relationshipType)}

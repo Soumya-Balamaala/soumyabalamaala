@@ -51,6 +51,7 @@
   }
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
   }
   body {
     @apply bg-white text-slate-700 antialiased;

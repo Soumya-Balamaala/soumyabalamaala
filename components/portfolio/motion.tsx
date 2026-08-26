@@ -47,6 +47,29 @@ interface StaggerContainerProps {
   staggerDelay?: number;
 }
 
+interface SectionRevealProps {
+  children: ReactNode;
+  id?: string;
+  className?: string;
+}
+
+// Fades/slides the whole <section> in as it scrolls into view, on top of
+// whatever finer-grained Reveal/StaggerContainer animations live inside it.
+export function SectionReveal({ children, id, className }: SectionRevealProps) {
+  return (
+    <motion.section
+      id={id}
+      className={className}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-120px' }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+    >
+      {children}
+    </motion.section>
+  );
+}
+
 export function StaggerContainer({ children, className, staggerDelay = 0.07 }: StaggerContainerProps) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-60px' });

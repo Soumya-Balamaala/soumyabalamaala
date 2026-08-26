@@ -12,6 +12,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { fetchResumes, trackResumeDownload, Resume } from '@/lib/api/resumes';
+import { getBrowserLocation } from '@/lib/geolocation';
+import { trackVisitor } from '@/lib/api/visitors';
 
 interface ResumeDialogProps {
   trigger?: ReactNode;
@@ -34,12 +36,18 @@ export function ResumeDialog({ trigger, open, onOpenChange }: ResumeDialogProps)
       .finally(() => setLoading(false));
   }, []);
 
-  const handleDownload = (resumeType: string, resumeId: number) => {
+  const handleDownload = async (resumeType: string, resumeId: number) => {
+    const { city, state, country } = await getBrowserLocation();
     trackResumeDownload({
       resumeType,
       resumeId,
       contextType: 'portfolio',
+      city,
+      state,
+      country,
     }).catch((err) => console.error('Failed to track resume download:', err));
+
+    trackVisitor(`resume-download-${resumeType.toLowerCase()}`, window.location.href);
   };
 
   return (

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { User, Globe2, Plane, FileCheck, Zap } from 'lucide-react';
-import { Reveal, StaggerContainer, StaggerItem } from './motion';
+import { Reveal, SectionReveal, StaggerContainer, StaggerItem } from './motion';
 import { aboutInfo } from '@/lib/portfolio-data';
 
 const icons = [Globe2, Plane, FileCheck, Zap];
@@ -12,7 +12,7 @@ const summary =
 
 export function About() {
   return (
-    <section id="about" className="section-padding bg-white">
+    <SectionReveal id="about" className="section-padding bg-white">
       <div className="mx-auto max-w-5xl">
         <Reveal>
           <div className="mb-10 flex items-center justify-center gap-3 md:justify-start">
@@ -52,6 +52,6 @@ export function About() {
           })}
         </StaggerContainer>
       </div>
-    </section>
+    </SectionReveal>
   );
 }

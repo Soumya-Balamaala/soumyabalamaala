@@ -3,7 +3,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { Briefcase, GraduationCap, MapPin } from 'lucide-react';
-import { Reveal } from './motion';
+import { Reveal, SectionReveal } from './motion';
 import { timelineData } from '@/lib/portfolio-data';
 
 export function Experience() {
@@ -15,7 +15,7 @@ export function Experience() {
   const lineScale = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
 
   return (
-    <section id="experience" className="section-padding bg-white">
+    <SectionReveal id="experience" className="section-padding bg-white">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <div className="mb-12 flex items-center justify-center gap-3 md:justify-start">
@@ -98,6 +98,6 @@ export function Experience() {
           </ul>
         </div>
       </div>
-    </section>
+    </SectionReveal>
   );
 }

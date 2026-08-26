@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, CheckCircle2, Loader2 } from 'lucide-react';
 import PhoneInput, { formatPhoneNumberIntl, isValidPhoneNumber } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
-import { Reveal, StaggerContainer, StaggerItem } from './motion';
+import { Reveal, SectionReveal, StaggerContainer, StaggerItem } from './motion';
 import { contactInfo } from '@/lib/portfolio-data';
 import { submitContactForm } from '@/lib/api/contact';
 
@@ -66,7 +66,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="section-padding bg-gradient-to-b from-white to-sage-light/20">
+    <SectionReveal id="contact" className="section-padding bg-gradient-to-b from-white to-sage-light/20">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <div className="mb-10 flex items-center justify-center gap-3 md:justify-start">
@@ -248,7 +248,7 @@ export function Contact() {
           </Reveal>
         </div>
       </div>
-    </section>
+    </SectionReveal>
   );
 }
 
