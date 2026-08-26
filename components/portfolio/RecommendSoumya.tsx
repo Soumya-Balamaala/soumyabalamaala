@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
 import Cropper, { Area, Point } from 'react-easy-crop';
 import { PenLine, Send, CheckCircle2, Loader2, ImagePlus, X } from 'lucide-react';
-import { Reveal, StaggerContainer, StaggerItem } from './motion';
+import { Reveal, SectionReveal, StaggerContainer, StaggerItem } from './motion';
 import { api } from '@/lib/axios';
 import { getCroppedImageDataUrl } from '@/lib/cropImage';
 import { projectsData, timelineData } from '@/lib/portfolio-data';
@@ -165,7 +165,8 @@ export function RecommendSoumya() {
   };
 
   return (
-    <section className="section-padding bg-gradient-to-b from-white to-sage-light/20">
+    <>
+    <SectionReveal className="section-padding bg-gradient-to-b from-white to-sage-light/20">
       <div className="mx-auto max-w-3xl">
         <Reveal>
           <div className="mb-8 flex items-center justify-center gap-3 md:justify-start">
@@ -379,81 +380,88 @@ export function RecommendSoumya() {
           </div>
         </Reveal>
       </div>
+    </SectionReveal>
 
-      <AnimatePresence>
-        {rawImageSrc && (
+    {/*
+      Rendered outside SectionReveal: framer-motion applies its scroll
+      animation to <section> via a CSS transform, and any transform on an
+      ancestor turns fixed-position descendants into ancestor-relative ones
+      — which would break this modal's fixed inset-0 full-viewport overlay.
+    */}
+    <AnimatePresence>
+      {rawImageSrc && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-navy/60 p-4"
+        >
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-navy/60 p-4"
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            className="w-full max-w-md rounded-card bg-white p-5 shadow-card"
           >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="w-full max-w-md rounded-card bg-white p-5 shadow-card"
-            >
-              <div className="mb-3 flex items-center justify-between">
-                <h3 className="text-sm font-bold text-navy">Crop Photo</h3>
-                <button
-                  type="button"
-                  onClick={handleCancelCrop}
-                  className="text-slate-light transition-colors hover:text-navy"
-                  aria-label="Cancel"
-                >
-                  <X size={20} />
-                </button>
-              </div>
+            <div className="mb-3 flex items-center justify-between">
+              <h3 className="text-sm font-bold text-navy">Crop Photo</h3>
+              <button
+                type="button"
+                onClick={handleCancelCrop}
+                className="text-slate-light transition-colors hover:text-navy"
+                aria-label="Cancel"
+              >
+                <X size={20} />
+              </button>
+            </div>
 
-              <div className="relative h-72 w-full overflow-hidden rounded-card bg-slate-100">
-                <Cropper
-                  image={rawImageSrc}
-                  crop={crop}
-                  zoom={zoom}
-                  aspect={1}
-                  cropShape="round"
-                  showGrid={false}
-                  onCropChange={setCrop}
-                  onZoomChange={setZoom}
-                  onCropComplete={onCropComplete}
-                />
-              </div>
+            <div className="relative h-72 w-full overflow-hidden rounded-card bg-slate-100">
+              <Cropper
+                image={rawImageSrc}
+                crop={crop}
+                zoom={zoom}
+                aspect={1}
+                cropShape="round"
+                showGrid={false}
+                onCropChange={setCrop}
+                onZoomChange={setZoom}
+                onCropComplete={onCropComplete}
+              />
+            </div>
 
-              <label className="mt-4 block">
-                <span className="mb-1.5 block text-xs font-semibold text-navy">Zoom</span>
-                <input
-                  type="range"
-                  min={1}
-                  max={3}
-                  step={0.1}
-                  value={zoom}
-                  onChange={(e) => setZoom(Number(e.target.value))}
-                  className="w-full"
-                />
-              </label>
+            <label className="mt-4 block">
+              <span className="mb-1.5 block text-xs font-semibold text-navy">Zoom</span>
+              <input
+                type="range"
+                min={1}
+                max={3}
+                step={0.1}
+                value={zoom}
+                onChange={(e) => setZoom(Number(e.target.value))}
+                className="w-full"
+              />
+            </label>
 
-              <div className="mt-5 flex justify-end gap-3">
-                <button
-                  type="button"
-                  onClick={handleCancelCrop}
-                  className="rounded-pill border-2 border-navy px-5 py-2 text-sm font-semibold text-navy transition-colors hover:bg-navy hover:text-white"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  onClick={handleConfirmCrop}
-                  className="rounded-pill bg-navy px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-navy-light"
-                >
-                  Save Crop
-                </button>
-              </div>
-            </motion.div>
+            <div className="mt-5 flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={handleCancelCrop}
+                className="rounded-pill border-2 border-navy px-5 py-2 text-sm font-semibold text-navy transition-colors hover:bg-navy hover:text-white"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmCrop}
+                className="rounded-pill bg-navy px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-navy-light"
+              >
+                Save Crop
+              </button>
+            </div>
           </motion.div>
-        )}
-      </AnimatePresence>
-    </section>
+        </motion.div>
+      )}
+    </AnimatePresence>
+    </>
   );
 }
 

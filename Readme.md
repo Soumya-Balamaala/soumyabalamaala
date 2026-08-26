@@ -10,6 +10,27 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.8.0 — Card centering, responsive timeline animation & subpage reveals (2026-08-27)
+
+- Fixed a layout bug where a leftover card in the last row of the
+  Skills and Recommendations grids (both the homepage preview and the
+  full peer-recommendations wall) sat flush left instead of centered
+  whenever the item count didn't evenly divide the column count —
+  switched those grids from CSS Grid to a wrapping flexbox layout,
+  which centers an incomplete row regardless of how many cards there
+  are.
+- My Story timeline: entries now animate in from the side only on
+  desktop (where they alternate left/right); on mobile, where the
+  layout collapses to a single left-aligned stack, they now rise from
+  the bottom instead so the slide-in animation no longer shifts them
+  out of alignment.
+- Applied the same whole-section scroll-reveal animation used on the
+  home page to the Recommend Soumya form and the Peer Recommendations
+  wall page. (The crop-photo modal in Recommend Soumya was moved
+  outside the animated wrapper — a CSS transform on an ancestor breaks
+  `position: fixed` children, which would have broken the modal's
+  full-viewport overlay.)
+
 ### v2.7.0 — Reliable hash-scroll on back navigation (2026-08-26)
 
 - Recommend Soumya's "Go Back" now returns to `/peer-recommendations`'s

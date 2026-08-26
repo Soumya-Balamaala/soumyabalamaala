@@ -18,9 +18,9 @@ export function Skills() {
           </div>
         </Reveal>
 
-        <StaggerContainer className="grid gap-6 md:grid-cols-2 lg:grid-cols-3" staggerDelay={0.08}>
+        <StaggerContainer className="flex flex-wrap justify-center gap-6" staggerDelay={0.08}>
           {skillsData.map((group) => (
-            <StaggerItem key={group.category}>
+            <StaggerItem key={group.category} className="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
               <motion.div
                 whileHover={{ y: -4, boxShadow: '0 8px 30px 0 rgba(42,57,105,0.16)' }}
                 transition={{ duration: 0.2 }}

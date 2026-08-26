@@ -43,9 +43,9 @@ export function Recommendations() {
           </div>
         </Reveal>
 
-        <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" staggerDelay={0.08}>
+        <StaggerContainer className="flex flex-wrap justify-center gap-6" staggerDelay={0.08}>
           {preview.map((rec) => (
-            <StaggerItem key={rec.id}>
+            <StaggerItem key={rec.id} className="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
               <TestimonialCard testimonial={rec} />
             </StaggerItem>
           ))}

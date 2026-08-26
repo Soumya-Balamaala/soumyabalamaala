@@ -4,7 +4,7 @@ import { SubpageHeader } from '@/components/portfolio/SubpageHeader';
 import { Footer } from '@/components/portfolio/Footer';
 import { VisitorTracker } from '@/components/portfolio/VisitorTracker';
 import { TestimonialCard } from '@/components/portfolio/TestimonialCard';
-import { Reveal, StaggerContainer, StaggerItem } from '@/components/portfolio/motion';
+import { Reveal, SectionReveal, StaggerContainer, StaggerItem } from '@/components/portfolio/motion';
 import { fetchTestimonials } from '@/lib/api/testimonials';
 import { buildMetadata } from '@/lib/seo';
 
@@ -24,7 +24,7 @@ export default async function RecommendationsPage() {
     <main className="min-h-screen bg-white">
       <VisitorTracker page="peer-recommendations" />
       <SubpageHeader backHref="/#recommendations" />
-      <section className="section-padding">
+      <SectionReveal className="section-padding">
         <div className="mx-auto max-w-6xl">
           <Reveal>
             <div className="mb-12 flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:items-end sm:text-left">
@@ -49,16 +49,16 @@ export default async function RecommendationsPage() {
               No recommendations yet — check back soon.
             </p>
           ) : (
-            <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" staggerDelay={0.06}>
+            <StaggerContainer className="flex flex-wrap justify-center gap-6" staggerDelay={0.06}>
               {testimonials.map((rec) => (
-                <StaggerItem key={rec.id}>
+                <StaggerItem key={rec.id} className="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
                   <TestimonialCard testimonial={rec} />
                 </StaggerItem>
               ))}
             </StaggerContainer>
           )}
         </div>
-      </section>
+      </SectionReveal>
       <Footer />
     </main>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { Briefcase, GraduationCap, MapPin } from 'lucide-react';
 import { Reveal, SectionReveal } from './motion';
@@ -13,6 +13,19 @@ export function Experience() {
     offset: ['start center', 'end center'],
   });
   const lineScale = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+
+  // Desktop alternates entries left/right, so they slide in from the side;
+  // mobile collapses to a single left-aligned stack, so sliding in from the
+  // side would shift each card out of alignment — rise from the bottom
+  // instead, matching the fixed layout below the md breakpoint.
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)');
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
 
   return (
     <SectionReveal id="experience" className="section-padding bg-white">
@@ -55,7 +68,11 @@ export function Experience() {
                   </span>
 
                   <motion.div
-                    initial={{ opacity: 0, x: onLeft ? -30 : 30, y: 10 }}
+                    initial={
+                      isDesktop
+                        ? { opacity: 0, x: onLeft ? -30 : 30, y: 10 }
+                        : { opacity: 0, x: 0, y: 30 }
+                    }
                     whileInView={{ opacity: 1, x: 0, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.45, ease: 'easeOut' }}
