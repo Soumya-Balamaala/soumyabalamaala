@@ -10,6 +10,21 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.7.0 — Reliable hash-scroll on back navigation (2026-08-26)
+
+- Recommend Soumya's "Go Back" now returns to `/peer-recommendations`'s
+  recommendations section (`/#recommendations`) instead of just the
+  page root.
+- Added `HashScrollHandler` to the home page: scrolls to the section
+  matching the URL hash on load and on browser back/forward
+  (`popstate`), fixing cases where Next.js keeps the home page's
+  component instance cached across a back navigation and a mount-only
+  scroll effect would otherwise never re-fire — e.g. navigating
+  `/#contact` → Referral Hub → Go Back now lands back on the Contact
+  section instead of the page top.
+- Recommendations section gained its own retry effect for the same
+  issue, since it only mounts once its testimonials finish loading.
+
 ### v2.6.0 — Page-specific Go Back targets (2026-08-26)
 
 - `SubpageHeader` now accepts a `backHref` to send "Go Back" to a fixed

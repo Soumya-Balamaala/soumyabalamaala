@@ -18,6 +18,15 @@ export function Recommendations() {
       .finally(() => setLoaded(true));
   }, []);
 
+  // The section only mounts once testimonials finish loading, so the
+  // browser's automatic hash-scroll (e.g. arriving via /#recommendations)
+  // can fire before this exists in the DOM — retry it once we're mounted.
+  useEffect(() => {
+    if (loaded && testimonials.length > 0 && window.location.hash === '#recommendations') {
+      document.getElementById('recommendations')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [loaded, testimonials.length]);
+
   if (!loaded || testimonials.length === 0) return null;
 
   const preview = testimonials.slice(0, 3);

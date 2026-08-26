@@ -1,5 +1,6 @@
 import { Navbar } from '@/components/portfolio/Navbar';
 import { VisitorTracker } from '@/components/portfolio/VisitorTracker';
+import { HashScrollHandler } from '@/components/portfolio/HashScrollHandler';
 import { Hero } from '@/components/portfolio/Hero';
 import { About } from '@/components/portfolio/About';
 import { Skills } from '@/components/portfolio/Skills';
@@ -14,6 +15,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white">
       <VisitorTracker page="home" />
+      <HashScrollHandler />
       <Navbar />
       <Hero />
       <About />

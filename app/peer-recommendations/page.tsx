@@ -23,7 +23,7 @@ export default async function RecommendationsPage() {
   return (
     <main className="min-h-screen bg-white">
       <VisitorTracker page="peer-recommendations" />
-      <SubpageHeader />
+      <SubpageHeader backHref="/#recommendations" />
       <section className="section-padding">
         <div className="mx-auto max-w-6xl">
           <Reveal>
