@@ -7,7 +7,7 @@ export function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
     testimonial;
 
   return (
-    <div className="relative flex h-full min-w-0 flex-col rounded-card border border-slate-100 bg-white p-6 text-center shadow-card md:text-left">
+    <div className="relative flex h-full min-w-0 flex-col rounded-card border border-slate-100 bg-white p-6 text-left shadow-card">
       {authorLinkedInUrl && (
         <a
           href={authorLinkedInUrl}
@@ -19,14 +19,14 @@ export function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
           <Linkedin size={16} />
         </a>
       )}
-      <Quote size={22} className="mx-auto mb-3 text-gold md:mx-0" />
+      <Quote size={22} className="mb-3 text-gold" />
       <p className="flex-1 break-words text-sm leading-relaxed text-slate-text">&ldquo;{content}&rdquo;</p>
 
       {subjectLabel && (
         <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-sage-dark">{subjectLabel}</p>
       )}
 
-      <div className="mt-5 flex items-center justify-center gap-3 md:justify-start">
+      <div className="mt-5 flex items-center gap-3">
         <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-navy/10 text-sm font-bold text-navy">
           {authorAvatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
