@@ -10,6 +10,28 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.14.0 — Backend-driven filenames, shared & persisted data stores (2026-08-27)
+
+- Removed the same-origin résumé proxy added in v2.13.0: the backend
+  now sends the correct filename itself, via a new `downloadFileName`
+  field on each résumé record whose value matches the file's own
+  `Content-Disposition` header exactly (and now sends proper CORS
+  headers too) — so the frontend just links to the backend file
+  directly again and trusts `downloadFileName` for the `download`
+  attribute, no proxy needed.
+- Résumé downloads are now triggered from a button (no `href` exposed
+  in markup) via a temporary, programmatically-created link, so the
+  download starts immediately without waiting on the visit-tracking
+  calls that fire right alongside it.
+- Added a shared, `sessionStorage`-persisted Zustand store per
+  GET-based API (résumés, testimonials, job postings, tenant config).
+  Previously every component fetched independently — e.g. three
+  separate `<ResumeDialog>` instances (Hero, desktop Navbar, mobile
+  Navbar) each called `/api/public/resumes` on mount. Now the first
+  component to mount fetches once and every consumer shares the same
+  cached result, which also survives page reloads/back-forward
+  navigation within a tab.
+
 ### v2.13.0 — Reliable résumé filename via a same-origin proxy (2026-08-27)
 
 - Both résumé downloads were coming through with the same wrong

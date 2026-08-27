@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Download, Mail, MapPin, Linkedin, Github, Globe, Phone } from 'lucide-react';
 import { contactInfo } from '@/lib/portfolio-data';
-import { fetchTenantConfig } from '@/lib/api/tenant';
+import { useTenantStore } from '@/lib/stores/tenantStore';
 import { resolveApiUrl } from '@/lib/utils';
 import { ResumeDialog } from './ResumeDialog';
 import Image from 'next/image';
@@ -28,18 +28,14 @@ const socials = [
 ];
 
 export function Hero() {
-  const [profilePic, setProfilePic] = useState('/Soumya.png');
+  const { data: tenantConfig, load } = useTenantStore();
 
   useEffect(() => {
-    fetchTenantConfig()
-      .then((config) => {
-        const pic = config?.settings?.professionalPic;
-        if (pic) {
-          setProfilePic(resolveApiUrl(pic));
-        }
-      })
-      .catch((error) => console.error('Failed to load tenant config:', error));
-  }, []);
+    load();
+  }, [load]);
+
+  const pic = tenantConfig?.settings?.professionalPic;
+  const profilePic = pic ? resolveApiUrl(pic) : '/Soumya.png';
 
   return (
     <section

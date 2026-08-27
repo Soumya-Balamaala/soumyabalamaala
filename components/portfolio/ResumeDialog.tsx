@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Download, FileText } from 'lucide-react';
 import {
   Dialog,
@@ -11,9 +11,11 @@ import {
   DialogDescription,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { fetchResumes, trackResumeDownload, Resume } from '@/lib/api/resumes';
+import { trackResumeDownload, Resume } from '@/lib/api/resumes';
 import { getBrowserLocation } from '@/lib/geolocation';
 import { trackVisitor } from '@/lib/api/visitors';
+import { resolveApiUrl } from '@/lib/utils';
+import { useResumeStore } from '@/lib/stores/resumeStore';
 
 interface ResumeDialogProps {
   trigger?: ReactNode;
@@ -22,32 +24,40 @@ interface ResumeDialogProps {
 }
 
 export function ResumeDialog({ trigger, open, onOpenChange }: ResumeDialogProps) {
-  const [resumes, setResumes] = useState<Resume[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const { data: resumes, status, load } = useResumeStore();
+  const loading = status === 'idle' || status === 'loading';
+  const error = status === 'error';
 
   useEffect(() => {
-    fetchResumes()
-      .then(setResumes)
-      .catch((err) => {
-        console.error('Failed to load resumes:', err);
-        setError(true);
-      })
-      .finally(() => setLoading(false));
-  }, []);
+    load();
+  }, [load]);
 
-  const handleDownload = async (resume: Resume) => {
-    const { city, state, country } = await getBrowserLocation();
-    trackResumeDownload({
-      resumeType: resume.resumeType,
-      resumeId: resume.id,
-      contextType: 'portfolio',
-      city,
-      state,
-      country,
-    }).catch((err) => console.error('Failed to track resume download:', err));
+  const handleDownload = (resume: Resume) => {
+    if (!resume.resume) return;
 
+    // Trigger the download via a temporary, programmatically-created link
+    // (never rendered/exposed as a static href) so it starts immediately,
+    // without waiting on the tracking calls below.
+    const link = document.createElement('a');
+    link.href = resolveApiUrl(resume.resume);
+    if (resume.downloadFileName) link.download = resume.downloadFileName;
+    link.rel = 'noopener';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    // Record the visit right as the download starts, not before.
     trackVisitor(`resume-download-${resume.resumeType.toLowerCase()}`, window.location.href);
+    getBrowserLocation().then(({ city, state, country }) => {
+      trackResumeDownload({
+        resumeType: resume.resumeType,
+        resumeId: resume.id,
+        contextType: 'portfolio',
+        city,
+        state,
+        country,
+      }).catch((err) => console.error('Failed to track resume download:', err));
+    });
   };
 
   return (
@@ -69,11 +79,11 @@ export function ResumeDialog({ trigger, open, onOpenChange }: ResumeDialogProps)
             <p className="py-4 text-center text-sm text-slate-light">No resumes available right now.</p>
           ) : (
             resumes.map((r) => (
-              <a
+              <button
                 key={r.id}
-                href={r.resume ? `/api/resume/${r.id}` : undefined}
+                type="button"
                 onClick={() => handleDownload(r)}
-                className="flex items-center justify-between gap-3 rounded-card border border-slate-100 bg-white p-4 shadow-card transition-shadow hover:shadow-card-hover"
+                className="flex items-center justify-between gap-3 rounded-card border border-slate-100 bg-white p-4 text-left shadow-card transition-shadow hover:shadow-card-hover"
               >
                 <span className="flex items-center gap-3">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-navy/10 text-navy">
@@ -82,7 +92,7 @@ export function ResumeDialog({ trigger, open, onOpenChange }: ResumeDialogProps)
                   <span className="text-sm font-bold text-navy">{r.label ?? r.resumeType}</span>
                 </span>
                 <Download size={18} className="text-sage-dark" />
-              </a>
+              </button>
             ))
           )}
         </div>

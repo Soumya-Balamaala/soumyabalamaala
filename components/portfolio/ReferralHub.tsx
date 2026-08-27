@@ -1,27 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Briefcase, MapPin, UserPlus } from 'lucide-react';
 import { Reveal, StaggerContainer, StaggerItem } from './motion';
-import { fetchJobPostings, JobPosting } from '@/lib/api/jobPostings';
+import { useJobPostingsStore } from '@/lib/stores/jobPostingsStore';
 import { ReferralUploadForm } from './ReferralUploadForm';
 
 export function ReferralHub() {
-  const [jobs, setJobs] = useState<JobPosting[]>([]);
-  const [jobsLoading, setJobsLoading] = useState(true);
-  const [jobsError, setJobsError] = useState(false);
+  const { data: jobs, status, load } = useJobPostingsStore();
+  const jobsLoading = status === 'idle' || status === 'loading';
+  const jobsError = status === 'error';
 
   useEffect(() => {
-    fetchJobPostings()
-      .then(setJobs)
-      .catch((error) => {
-        console.error('Failed to load job postings:', error);
-        setJobsError(true);
-      })
-      .finally(() => setJobsLoading(false));
-  }, []);
+    load();
+  }, [load]);
 
   return (
     <section className="section-padding bg-gradient-to-b from-white to-sage-light/20">

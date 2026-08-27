@@ -1,22 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { Quote, ArrowRight } from 'lucide-react';
 import { Reveal, SectionReveal, StaggerContainer, StaggerItem } from './motion';
 import { TestimonialCard } from './TestimonialCard';
-import { fetchTestimonials, Testimonial } from '@/lib/api/testimonials';
+import { useTestimonialsStore } from '@/lib/stores/testimonialsStore';
 
 export function Recommendations() {
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [loaded, setLoaded] = useState(false);
+  const { data: testimonials, status, load } = useTestimonialsStore();
+  const loaded = status === 'loaded' || status === 'error';
 
   useEffect(() => {
-    fetchTestimonials()
-      .then(setTestimonials)
-      .catch((error) => console.error('Failed to load testimonials:', error))
-      .finally(() => setLoaded(true));
-  }, []);
+    load();
+  }, [load]);
 
   // The section only mounts once testimonials finish loading, so the
   // browser's automatic hash-scroll (e.g. arriving via /#recommendations)

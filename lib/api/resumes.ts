@@ -6,6 +6,7 @@ export interface Resume {
   label?: string;
   // The live API returns the file path under `resume`, not `fileUrl`.
   resume?: string;
+  downloadFileName?: string;
   [key: string]: unknown;
 }
 
