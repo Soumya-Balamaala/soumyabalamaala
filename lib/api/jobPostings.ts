@@ -2,7 +2,7 @@ import { ACCODE, getJson } from './shared';
 
 export { ACCODE };
 
-export type CustomFieldType = 'select' | 'checkbox' | 'date' | 'number' | 'text' | 'textarea';
+export type CustomFieldType = 'select' | 'checkbox' | 'date' | 'number' | 'text' | 'textarea' | 'file';
 
 export interface CustomField {
   id: string;

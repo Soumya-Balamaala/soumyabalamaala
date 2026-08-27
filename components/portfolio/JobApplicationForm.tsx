@@ -11,9 +11,18 @@ import 'react-phone-number-input/style.css';
 import { StaggerContainer, StaggerItem } from './motion';
 import { ACCODE, CustomField } from '@/lib/api/jobPostings';
 
+// Some postings leave dependsOnValue blank rather than specifying e.g. "true"
+// — treat that as "show once the controlling field has any answer at all"
+// instead of an impossible-to-match exact comparison against "".
+function isDependencyMet(dependsOnValue: string | undefined, controllingValue: unknown): boolean {
+  if (!dependsOnValue) return controllingValue !== undefined && controllingValue !== '';
+  return String(controllingValue) === dependsOnValue;
+}
+
 function buildCustomFieldsSchema(fields: CustomField[]) {
   const shape: Record<string, z.ZodTypeAny> = {};
   for (const field of fields) {
+    if (field.type === 'file') continue; // handled outside the zod-tracked object, like the resume upload
     // A dependent field is only actually required once its controlling
     // field matches dependsOnValue — enforced below in superRefine, since
     // that can't be expressed as a static per-field schema.
@@ -30,9 +39,8 @@ function buildCustomFieldsSchema(fields: CustomField[]) {
   }
   return z.object(shape).superRefine((values, ctx) => {
     for (const field of fields) {
-      if (!field.required || !field.dependsOnFieldId) continue;
-      const isActive = String(values[field.dependsOnFieldId]) === field.dependsOnValue;
-      if (!isActive) continue;
+      if (!field.required || !field.dependsOnFieldId || field.type === 'file') continue;
+      if (!isDependencyMet(field.dependsOnValue, values[field.dependsOnFieldId])) continue;
       const value = values[field.id];
       const isEmpty = field.type === 'checkbox' ? value === undefined : !value;
       if (isEmpty) {
@@ -76,6 +84,8 @@ export function JobApplicationForm({
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [resumeError, setResumeError] = useState<string | null>(null);
+  const [customFiles, setCustomFiles] = useState<Record<string, File | null>>({});
+  const [customFileErrors, setCustomFileErrors] = useState<Record<string, string>>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const schema = buildSchema(customFields);
@@ -100,12 +110,21 @@ export function JobApplicationForm({
   const customValues = watch('custom');
 
   const isFieldVisible = (field: CustomField) =>
-    !field.dependsOnFieldId || String(customValues?.[field.dependsOnFieldId]) === field.dependsOnValue;
+    !field.dependsOnFieldId || isDependencyMet(field.dependsOnValue, customValues?.[field.dependsOnFieldId]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? null;
     setResumeFile(file);
     setResumeError(null);
+  };
+
+  const handleCustomFileChange = (fieldId: string, file: File | null) => {
+    setCustomFiles((prev) => ({ ...prev, [fieldId]: file }));
+    setCustomFileErrors((prev) => ({ ...prev, [fieldId]: '' }));
+  };
+
+  const handleCustomFileError = (fieldId: string, message: string) => {
+    setCustomFileErrors((prev) => ({ ...prev, [fieldId]: message }));
   };
 
   const onSubmit = async (data: FormValues) => {
@@ -116,6 +135,17 @@ export function JobApplicationForm({
       return;
     }
 
+    const fileErrors: Record<string, string> = {};
+    for (const field of customFields.filter(isFieldVisible)) {
+      if (field.type === 'file' && field.required && !customFiles[field.id]) {
+        fileErrors[field.id] = `Please attach: ${field.label}`;
+      }
+    }
+    if (Object.keys(fileErrors).length > 0) {
+      setCustomFileErrors(fileErrors);
+      return;
+    }
+
     const formData = new FormData();
     formData.append('accode', ACCODE);
     formData.append('name', data.name);
@@ -123,6 +153,15 @@ export function JobApplicationForm({
     formData.append('phone', formatPhoneNumberIntl(data.phone) || data.phone);
     if (data.message) formData.append('message', data.message);
     formData.append('resume', resumeFile);
+    for (const field of customFields) {
+      if (field.type === 'file' && customFiles[field.id]) {
+        // Server contract: a file-type custom field's multipart part name
+        // must be exactly `customField_{id}` — any other name is silently
+        // dropped (no error), so a bare field.id here would look like a
+        // successful submit while the file never actually arrives.
+        formData.append(`customField_${field.id}`, customFiles[field.id] as File);
+      }
+    }
 
     // The API expects string values for every custom field response (e.g.
     // "true", not a JSON boolean) — matters for checkbox fields especially,
@@ -144,6 +183,8 @@ export function JobApplicationForm({
       if (response.status === 201) {
         setSubmitted(true);
         setResumeFile(null);
+        setCustomFiles({});
+        setCustomFileErrors({});
         reset();
         return;
       }
@@ -245,9 +286,20 @@ export function JobApplicationForm({
                 <StaggerItem key={field.id}>
                   <Field
                     label={field.label}
-                    error={(errors.custom as Record<string, { message?: string }> | undefined)?.[field.id]?.message}
+                    error={
+                      field.type === 'file'
+                        ? customFileErrors[field.id] || undefined
+                        : (errors.custom as Record<string, { message?: string }> | undefined)?.[field.id]?.message
+                    }
                   >
-                    <CustomFieldInput field={field} register={register} control={control} />
+                    <CustomFieldInput
+                      field={field}
+                      register={register}
+                      control={control}
+                      fileValue={customFiles[field.id] ?? null}
+                      onFileChange={(file) => handleCustomFileChange(field.id, file)}
+                      onFileError={(message) => handleCustomFileError(field.id, message)}
+                    />
                   </Field>
                 </StaggerItem>
               ))}
@@ -314,12 +366,28 @@ function CustomFieldInput({
   field,
   register,
   control,
+  fileValue,
+  onFileChange,
+  onFileError,
 }: {
   field: CustomField;
   register: ReturnType<typeof useForm<FormValues>>['register'];
   control: ReturnType<typeof useForm<FormValues>>['control'];
+  fileValue?: File | null;
+  onFileChange?: (file: File | null) => void;
+  onFileError?: (message: string) => void;
 }) {
   const name = `custom.${field.id}` as const;
+
+  if (field.type === 'file') {
+    return (
+      <CustomFileField
+        value={fileValue ?? null}
+        onChange={onFileChange ?? (() => {})}
+        onError={onFileError ?? (() => {})}
+      />
+    );
+  }
 
   if (field.type === 'select') {
     return (
@@ -382,6 +450,52 @@ function CustomFieldInput({
   }
 
   return <input {...register(name)} type="text" className="form-input" />;
+}
+
+const MAX_CUSTOM_FILE_SIZE = 1.5 * 1024 * 1024; // 1.5MB
+
+function CustomFileField({
+  value,
+  onChange,
+  onError,
+}: {
+  value: File | null;
+  onChange: (file: File | null) => void;
+  onError: (message: string) => void;
+}) {
+  const ref = useRef<HTMLInputElement>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    e.target.value = '';
+    if (!file) return;
+    if (file.type !== 'application/pdf') {
+      onError('Please upload a PDF file');
+      return;
+    }
+    if (file.size > MAX_CUSTOM_FILE_SIZE) {
+      onError('File must be 1.5MB or smaller');
+      return;
+    }
+    onChange(file);
+  };
+
+  return (
+    <div>
+      <div className="flex items-center gap-3">
+        <input ref={ref} type="file" accept=".pdf,application/pdf" onChange={handleChange} className="hidden" />
+        <button
+          type="button"
+          onClick={() => ref.current?.click()}
+          className="inline-flex items-center gap-2 rounded-pill border-2 border-navy px-4 py-1.5 text-sm font-semibold text-navy transition-colors hover:bg-navy hover:text-white"
+        >
+          <Paperclip size={14} /> {value ? 'Change File' : 'Attach File'}
+        </button>
+        {value && <span className="truncate text-xs text-slate-light">{value.name}</span>}
+      </div>
+      <span className="mt-1 block text-xs text-slate-light">PDF only, up to 1.5MB</span>
+    </div>
+  );
 }
 
 function Field({

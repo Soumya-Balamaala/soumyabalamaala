@@ -10,6 +10,23 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.10.0 — Custom file-upload fields for job applications (2026-08-27)
+
+- Job application custom fields of type `file` (e.g. an uploaded
+  certification) now actually render as a file picker instead of a
+  plain text box, and submit as their own multipart part named
+  `customField_{id}` — the contract the backend expects; a bare field
+  id is silently ignored server-side, which would have looked like a
+  successful submission while the file never arrived.
+- Fixed dependent-field visibility for postings that leave
+  `dependsOnValue` blank: it's now treated as "show once the
+  controlling field has any answer" instead of an impossible exact
+  match against `""`, which had kept a required upload field from ever
+  appearing regardless of the user's answer.
+- Custom file uploads are restricted to PDF only, capped at 1.5MB
+  (validated on selection, not just on submit), with the limit shown
+  upfront next to the upload button.
+
 ### v2.9.0 — Dependent job application fields, tracking & alignment fixes (2026-08-27)
 
 - Job application custom fields now support conditional visibility: a
