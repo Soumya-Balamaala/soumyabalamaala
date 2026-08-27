@@ -10,6 +10,22 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.13.0 — Reliable résumé filename via a same-origin proxy (2026-08-27)
+
+- Both résumé downloads were coming through with the same wrong
+  filename — the browser's cross-origin `download` attribute isn't
+  reliably honored, so the server's own `Content-Disposition` filename
+  won out instead (both files are correctly named differently on the
+  backend; this was purely a browser cross-origin quirk).
+- Removed the View action and the blob-`fetch()` download attempt from
+  the previous release, since the backend's file endpoint sends no
+  CORS headers at all, silently breaking that approach.
+- Added a same-origin proxy route (`/api/resume/{id}`) that fetches
+  the file server-side (no CORS involved) and re-serves it from this
+  app's own domain with the exact filename set —
+  `SoumyaB_React_4.8YOE.pdf` for both résumé variants, guaranteed
+  regardless of browser behavior.
+
 ### v2.12.0 — Fixed résumé downloads, added View, custom filename (2026-08-27)
 
 - Fixed résumé downloads doing nothing: the code read `r.fileUrl`, a
