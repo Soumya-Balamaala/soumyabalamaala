@@ -10,6 +10,21 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.12.0 — Fixed résumé downloads, added View, custom filename (2026-08-27)
+
+- Fixed résumé downloads doing nothing: the code read `r.fileUrl`, a
+  field the API has never actually returned (it's `resume`) — so the
+  download links had no destination at all.
+- Downloads now fetch the file as a blob and save it through a
+  same-origin `blob:` URL instead of linking directly to the
+  cross-origin backend file, since the `download` attribute isn't
+  reliably honored across origins; both résumé variants now save as
+  `SoumyaB_React_4.8YOE.pdf`.
+- Added a separate "View" action (eye icon) that opens the résumé in a
+  new tab without downloading, tracked as its own visitor event
+  (`resume-view-indian` / `resume-view-uae`) alongside the existing
+  download tracking.
+
 ### v2.11.0 — Fixed Recommend Soumya's dropdown options (2026-08-27)
 
 - The "How We Worked Together" and "You Are A" dropdowns on the

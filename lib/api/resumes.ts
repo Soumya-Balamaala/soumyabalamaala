@@ -4,7 +4,8 @@ export interface Resume {
   id: number;
   resumeType: string;
   label?: string;
-  fileUrl?: string;
+  // The live API returns the file path under `resume`, not `fileUrl`.
+  resume?: string;
   [key: string]: unknown;
 }
 
