@@ -24,16 +24,14 @@ const companyOptions = Array.from(
   new Set(timelineData.filter((entry) => entry.type === 'work').map((entry) => entry.organization))
 );
 
-interface TestimonialOptions {
-  authorTypes: string[];
-  relationshipTypes: string[];
+interface TestimonialOptionEntry {
+  key: string;
+  value: string;
 }
 
-function labelize(value: string) {
-  return value
-    .split('_')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+interface TestimonialOptions {
+  authorTypes: TestimonialOptionEntry[];
+  relationshipTypes: TestimonialOptionEntry[];
 }
 
 function dataUrlToFile(dataUrl: string, filename: string): File {
@@ -103,8 +101,17 @@ export function RecommendSoumya() {
 
   useEffect(() => {
     api
-      .get('/api/public/options/testimonials')
-      .then((res) => setOptions(res.data?.data ?? null))
+      .get('/api/master-options?category=testimonials')
+      .then((res) => {
+        const masterOptions: { key: string; subOptions?: TestimonialOptionEntry[] }[] =
+          res.data?.data?.options ?? [];
+        const subOptionsFor = (key: string) =>
+          masterOptions.find((option) => option.key === key)?.subOptions ?? [];
+        setOptions({
+          authorTypes: subOptionsFor('authorType'),
+          relationshipTypes: subOptionsFor('relationshipType'),
+        });
+      })
       .catch((error) => console.error('Failed to load testimonial options:', error));
   }, []);
 
@@ -289,9 +296,9 @@ export function RecommendSoumya() {
                             <option value="" disabled>
                               {options ? 'Select one' : 'Loading...'}
                             </option>
-                            {options?.relationshipTypes.map((value) => (
-                              <option key={value} value={value}>
-                                {labelize(value)}
+                            {options?.relationshipTypes.map(({ key, value }) => (
+                              <option key={key} value={key}>
+                                {value}
                               </option>
                             ))}
                           </select>
@@ -310,9 +317,9 @@ export function RecommendSoumya() {
                             <option value="" disabled>
                               {options ? 'Select one' : 'Loading...'}
                             </option>
-                            {options?.authorTypes.map((value) => (
-                              <option key={value} value={value}>
-                                {labelize(value)}
+                            {options?.authorTypes.map(({ key, value }) => (
+                              <option key={key} value={key}>
+                                {value}
                               </option>
                             ))}
                           </select>

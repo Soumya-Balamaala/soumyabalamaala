@@ -10,6 +10,16 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.11.0 — Fixed Recommend Soumya's dropdown options (2026-08-27)
+
+- The "How We Worked Together" and "You Are A" dropdowns on the
+  Recommend Soumya form were stuck on "Loading..." forever — the
+  endpoint they called (`/api/public/options/testimonials`) has been
+  removed from the backend. Switched them to
+  `/api/master-options?category=testimonials`, which also now returns
+  proper display labels directly, so the local guess-the-label
+  fallback (`labelize()`) was removed in favor of the API's own text.
+
 ### v2.10.0 — Custom file-upload fields for job applications (2026-08-27)
 
 - Job application custom fields of type `file` (e.g. an uploaded
