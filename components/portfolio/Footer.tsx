@@ -15,6 +15,7 @@ const quickLinks = [
   { label: 'Projects', href: '#projects' },
   { label: 'Referral Hub', href: '/referral-hub' },
   { label: 'Contact', href: '#contact' },
+  { label: 'Report a Vulnerability', href: '/report-vulnerability' },
 ];
 
 const socials = [

@@ -9,6 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/recommend`, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE_URL}/peer-recommendations`, changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/referral-hub`, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${BASE_URL}/report-vulnerability`, changeFrequency: 'yearly', priority: 0.3 },
   ];
 
   const jobs = await fetchJobPostings().catch(() => []);

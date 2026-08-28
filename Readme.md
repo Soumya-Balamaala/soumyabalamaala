@@ -10,6 +10,17 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.15.0 — Public vulnerability report form (2026-08-27)
+
+- Added `/report-vulnerability`, a public form for responsibly
+  disclosing security issues (reporter details, title, vulnerability
+  type, severity, affected URL, description, steps to reproduce,
+  impact), submitting to the backend's `/api/vulnerability-reports`
+  endpoint. Severity options are fetched live from
+  `/api/master-options?category=vulnerability_severity` rather than
+  hardcoded.
+- Linked from the footer's Quick Links, and added to the sitemap.
+
 ### v2.14.0 — Backend-driven filenames, shared & persisted data stores (2026-08-27)
 
 - Removed the same-origin résumé proxy added in v2.13.0: the backend
