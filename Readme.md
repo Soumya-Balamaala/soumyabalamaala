@@ -10,6 +10,22 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.17.0 — Fixed cropped social share preview (2026-08-31)
+
+- Link previews on WhatsApp, LinkedIn, Slack, etc. were cropping the
+  profile photo (cutting off the top of the head) — the metadata
+  declared it as `1200x1200` when the actual file is a `1254x1354`
+  portrait, so platforms miscalculated the crop for their standard
+  `1200x630` landscape preview box.
+- Added a generated `1200x630` branded OG image (navy gradient
+  background, name/title/summary, full photo shown as a circular
+  avatar) so the whole thing renders correctly everywhere instead of
+  being cropped.
+- Also fixed `buildMetadata()`, used by every subpage: it no longer
+  forces fake `1200x1200` dimensions onto custom images either (e.g. a
+  job posting's company logo, whose real size isn't known) and now
+  defaults to the new generated image instead of the raw photo.
+
 ### v2.16.0 — Title rebrand & updated bio (2026-08-31)
 
 - Retitled "Frontend Developer" to "Frontend Engineer" site-wide (page
