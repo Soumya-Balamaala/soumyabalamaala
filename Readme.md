@@ -10,6 +10,13 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.18.0 — Photo-only social share image (2026-08-31)
+
+- Simplified the generated share-preview image to just the photo,
+  filling the full 1200x630 card edge-to-edge (no name/title text
+  overlay, no letterbox bars) — cropped and positioned to keep the
+  face and shoulders well-framed.
+
 ### v2.17.0 — Fixed cropped social share preview (2026-08-31)
 
 - Link previews on WhatsApp, LinkedIn, Slack, etc. were cropping the
