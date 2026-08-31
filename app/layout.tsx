@@ -8,9 +8,9 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
-const title = 'Soumya Balamaala — Frontend Developer';
+const title = 'Soumya Balamaala — Frontend Engineer';
 const description =
-  'Strategic Frontend Developer with 4.5+ years of expertise in React.js and Material UI, expanding into Full Stack development with Node.js and Express.js.';
+  'Frontend Engineer with 4.9 years building scalable UI in React.js, Next.js & TypeScript, expanding into Full Stack with Node.js, PostgreSQL & MongoDB. Delivered fintech features at M2P with 100% uptime. Actively open to new opportunities.';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://soumyabalamaala.vercel.app'),

@@ -65,14 +65,14 @@ export function Hero() {
             variants={item}
             className="mt-3 text-lg font-bold text-sage-dark sm:text-xl"
           >
-            Frontend Developer | React.js &amp; Full Stack Development
+            Frontend Engineer | React.js &amp; Full Stack Development
           </motion.h2>
 
           <motion.p
             variants={item}
             className="mt-4 max-w-xl text-base leading-relaxed text-slate-text"
           >
-            Strategic Frontend Developer with 4.5+ years of expertise in React.js and Material UI,
+            Strategic Frontend Engineer with 4.5+ years of expertise in React.js and Material UI,
             expanding into Full Stack development with Node.js and Express.js.
           </motion.p>
 
@@ -129,7 +129,7 @@ export function Hero() {
             <div className="relative h-full w-full overflow-hidden rounded-full bg-white">
               <Image
                 src={profilePic}
-                alt="Soumya Balamaala — Frontend Developer"
+                alt="Soumya Balamaala — Frontend Engineer"
                 fill
                 priority
                 className={`object-cover object-top ${profilePic === '/Soumya.png' ? 'scale-125' : ''}`}

@@ -7,8 +7,10 @@ import { aboutInfo } from '@/lib/portfolio-data';
 
 const icons = [Globe2, Plane, FileCheck, Zap];
 
-const summary =
-  'Strategic Frontend Developer with 4.5+ years of expertise in React.js and Material UI, architecting scalable, cross-platform UI/UX solutions across fintech, healthcare-tech, and enterprise product environments. Currently expanding into Full Stack development with Node.js and Express.js to deliver end-to-end technical excellence and drive seamless product integration. Skilled in translating wireframes into reusable, high-performance components, integrating REST APIs, and deploying applications on cloud platforms such as Google Cloud Platform, Firebase, and Vercel.';
+const summary = [
+  "Frontend Engineer with 4.9 years of experience architecting scalable, cross-platform UI/UX solutions using React.js and its ecosystem — including Next.js and TypeScript — currently expanding into Full Stack development with Node.js. I translate wireframes into reusable, high-performance components with Redux Toolkit, Tailwind CSS, and Material UI, integrating REST APIs and working across PostgreSQL, MongoDB, and Prisma on the backend.",
+  "At M2P Fintech, I've resolved 100+ critical production incidents and delivered 20+ change requests across VKYC, DKYC, and OCAC modules while maintaining 100% uptime. Earlier, I built Dost AI at Solaiera.ai and led SPA transformations at Kapil Technologies and VMax, deploying on GCP, Firebase, and Vercel.",
+];
 
 export function About() {
   return (
@@ -24,7 +26,11 @@ export function About() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <p className="text-center text-lg leading-relaxed text-slate-text md:text-left">{summary}</p>
+          <div className="space-y-4 text-center text-lg leading-relaxed text-slate-text md:text-left">
+            {summary.map((paragraph, i) => (
+              <p key={i}>{paragraph}</p>
+            ))}
+          </div>
         </Reveal>
 
         <StaggerContainer className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

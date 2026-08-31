@@ -10,6 +10,19 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.16.0 — Title rebrand & updated bio (2026-08-31)
+
+- Retitled "Frontend Developer" to "Frontend Engineer" site-wide (page
+  title/meta, Hero tagline, image alt text, About summary) — left the
+  two historical job titles in the work timeline unchanged, since
+  those reflect the actual title held at each company.
+- Rewrote the About section bio into two paragraphs covering current
+  stack (React.js ecosystem, Next.js, TypeScript, Redux Toolkit,
+  PostgreSQL/MongoDB/Prisma) and recent highlights (M2P Fintech,
+  Solaiera.ai, Kapil Technologies, VMax), updated to 4.9 years of
+  experience; also refreshed the page meta description to match.
+- Updated the profile photo.
+
 ### v2.15.0 — Public vulnerability report form (2026-08-27)
 
 - Added `/report-vulnerability`, a public form for responsibly
