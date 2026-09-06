@@ -10,19 +10,12 @@ import { PenLine, Send, CheckCircle2, Loader2, ImagePlus, X } from 'lucide-react
 import { Reveal, SectionReveal, StaggerContainer, StaggerItem } from './motion';
 import { api } from '@/lib/axios';
 import { getCroppedImageDataUrl } from '@/lib/cropImage';
-import { projectsData, timelineData } from '@/lib/portfolio-data';
+import { useJourneysStore } from '@/lib/stores/journeysStore';
+import { usePortfolioProjectsStore } from '@/lib/stores/portfolioProjectsStore';
 
 // Fixed for every submission from this form — not user-editable.
 const ACCODE = 'SOU';
 const TESTIMONIAL_TYPE = 'recommendation';
-
-// Only real client/employer engagements — exclude personal projects.
-const projectOptions = projectsData.filter((p) => p.company !== 'Personal Project');
-
-// Companies Soumya has worked at, in reverse-chronological order, de-duplicated.
-const companyOptions = Array.from(
-  new Set(timelineData.filter((entry) => entry.type === 'work').map((entry) => entry.organization))
-);
 
 interface TestimonialOptionEntry {
   key: string;
@@ -88,6 +81,27 @@ export function RecommendSoumya() {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [options, setOptions] = useState<TestimonialOptions | null>(null);
+
+  const { data: journeys, load: loadJourneys } = useJourneysStore();
+  const { data: portfolioProjects, load: loadPortfolioProjects } = usePortfolioProjectsStore();
+
+  useEffect(() => {
+    loadJourneys();
+    loadPortfolioProjects();
+  }, [loadJourneys, loadPortfolioProjects]);
+
+  // Companies Soumya has worked at, in reverse-chronological order, de-duplicated.
+  const companyOptions = Array.from(
+    new Set(
+      journeys
+        .filter((entry) => entry.type === 'experience')
+        .map((entry) => entry.companyName)
+        .filter((name): name is string => Boolean(name))
+    )
+  );
+
+  // Only real client/employer engagements — exclude personal projects.
+  const projectOptions = portfolioProjects.filter((p) => p.associatedWith !== 'Personal');
 
   const {
     register,
@@ -343,8 +357,8 @@ export function RecommendSoumya() {
                             Select a project
                           </option>
                           {projectOptions.map((p) => (
-                            <option key={p.name} value={`${p.name} (${p.company})`}>
-                              {p.name} ({p.company})
+                            <option key={p.id} value={p.projectName}>
+                              {p.projectName}
                             </option>
                           ))}
                         </select>

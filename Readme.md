@@ -10,6 +10,26 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.19.0 — Live API integration for Timeline, Skills & Projects (2026-09-06)
+
+- Replaced the static timeline, skills, and projects data with live
+  fetches from the backend (`/api/journeys`, `/api/skills`,
+  `/api/projects`), each cached in a shared, persisted store like the
+  other API-backed sections. The Recommend Soumya form's "Company We
+  Worked At" and "Project We Worked On" dropdowns now read from the
+  same live data instead of the old static arrays.
+- The My Story (Timeline) section now records a visit the moment it's
+  actually scrolled into view, rather than relying on the page-load
+  visit alone.
+- **Known issue**: `/api/journeys`, `/api/skills`, and `/api/projects`
+  currently don't send CORS headers, so browsers block the requests
+  and these three sections fall back to their "couldn't load" state
+  live — confirmed via real browser testing, not just `curl` (which
+  isn't subject to CORS). Needs a backend fix (the same
+  `Access-Control-Allow-Origin` headers `/api/public/testimonials`,
+  `/api/master-options`, and `/api/files/{id}` already have) before
+  this shows real data.
+
 ### v2.18.0 — Photo-only social share image (2026-08-31)
 
 - Simplified the generated share-preview image to just the photo,

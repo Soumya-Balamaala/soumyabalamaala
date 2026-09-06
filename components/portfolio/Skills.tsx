@@ -1,11 +1,20 @@
 'use client';
 
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 import { Reveal, SectionReveal, StaggerContainer, StaggerItem, ScalePop } from './motion';
-import { skillsData } from '@/lib/portfolio-data';
+import { useSkillsStore } from '@/lib/stores/skillsStore';
 
 export function Skills() {
+  const { data: skillsData, status, load } = useSkillsStore();
+  const loading = status === 'idle' || status === 'loading';
+  const error = status === 'error';
+
+  useEffect(() => {
+    load();
+  }, [load]);
+
   return (
     <SectionReveal id="skills" className="section-padding bg-gradient-to-b from-white to-sage-light/20">
       <div className="mx-auto max-w-6xl">
@@ -18,16 +27,25 @@ export function Skills() {
           </div>
         </Reveal>
 
+        {loading ? (
+          <p className="text-center text-sm text-slate-light md:text-left">Loading skills...</p>
+        ) : error ? (
+          <p className="text-center text-sm text-red-600 md:text-left">
+            Couldn&apos;t load skills right now. Please try again later.
+          </p>
+        ) : skillsData.length === 0 ? (
+          <p className="text-center text-sm text-slate-light md:text-left">No skills listed yet.</p>
+        ) : (
         <StaggerContainer className="flex flex-wrap justify-center gap-6" staggerDelay={0.08}>
           {skillsData.map((group) => (
-            <StaggerItem key={group.category} className="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
+            <StaggerItem key={group.id} className="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
               <motion.div
                 whileHover={{ y: -4, boxShadow: '0 8px 30px 0 rgba(42,57,105,0.16)' }}
                 transition={{ duration: 0.2 }}
                 className="h-full rounded-card border border-slate-100 bg-white p-5 text-center shadow-card md:text-left"
               >
                 <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-navy">
-                  {group.category}
+                  {group.skillsCategory}
                 </h3>
                 <StaggerContainer className="flex flex-wrap justify-center gap-2 md:justify-start" staggerDelay={0.06}>
                   {group.skills.map((skill) => (
@@ -46,6 +64,7 @@ export function Skills() {
             </StaggerItem>
           ))}
         </StaggerContainer>
+        )}
       </div>
     </SectionReveal>
   );

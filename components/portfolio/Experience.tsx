@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { motion, useInView, useScroll, useSpring } from 'framer-motion';
 import { Briefcase, GraduationCap, MapPin } from 'lucide-react';
 import { Reveal, SectionReveal } from './motion';
-import { timelineData } from '@/lib/portfolio-data';
+import { useJourneysStore } from '@/lib/stores/journeysStore';
+import { toTimelineEntry } from '@/lib/api/journeys';
+import { trackVisitor } from '@/lib/api/visitors';
 
 export function Experience() {
   const ref = useRef(null);
@@ -13,6 +15,22 @@ export function Experience() {
     offset: ['start center', 'end center'],
   });
   const lineScale = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+
+  const { data: journeys, status, load } = useJourneysStore();
+  const loading = status === 'idle' || status === 'loading';
+  const error = status === 'error';
+  const timelineData = journeys.map(toTimelineEntry);
+
+  useEffect(() => {
+    load();
+  }, [load]);
+
+  // Record a visit once this section is actually scrolled into view,
+  // rather than just on page load.
+  const inView = useInView(ref, { once: true, amount: 0.3 });
+  useEffect(() => {
+    if (inView) trackVisitor('experience', window.location.href);
+  }, [inView]);
 
   // Desktop alternates entries left/right, so they slide in from the side;
   // mobile collapses to a single left-aligned stack, so sliding in from the
@@ -42,6 +60,16 @@ export function Experience() {
         </Reveal>
 
         <div ref={ref} className="relative">
+          {loading ? (
+            <p className="text-left text-sm text-slate-light">Loading timeline...</p>
+          ) : error ? (
+            <p className="text-left text-sm text-red-600">
+              Couldn&apos;t load the timeline right now. Please try again later.
+            </p>
+          ) : timelineData.length === 0 ? (
+            <p className="text-left text-sm text-slate-light">No timeline entries yet.</p>
+          ) : (
+            <>
           {/* track - desktop only; mobile uses a simple centered stack instead */}
           <div className="absolute left-1/2 top-2 bottom-2 hidden w-0.5 -translate-x-1/2 bg-slate-100 md:block" />
           {/* animated progress */}
@@ -113,6 +141,8 @@ export function Experience() {
               );
             })}
           </ul>
+            </>
+          )}
         </div>
       </div>
     </SectionReveal>
