@@ -10,7 +10,7 @@ const inter = Inter({
 
 const title = 'Soumya Balamaala — Frontend Engineer';
 const description =
-  'Frontend Engineer with 4.9 years building scalable UI in React.js, Next.js & TypeScript, expanding into Full Stack with Node.js, PostgreSQL & MongoDB. Delivered fintech features at M2P with 100% uptime. Actively open to new opportunities.';
+  'Strategic Frontend Engineer with 4.9 years of expertise in React.js, Next.js & TypeScript, building scalable, production-grade UI architectures. Resolved 100+ critical incidents with zero downtime across fintech platforms, now expanding into Full Stack with Node.js, Express.js & PostgreSQL.';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://soumyabalamaala.vercel.app'),

@@ -10,6 +10,16 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.20.0 — Refreshed Hero copy & metadata (2026-09-06)
+
+- Updated the Hero section's summary paragraph and the "4.5+ yrs"
+  badge (now 4.9+ yrs) to match the latest experience and stack
+  (React.js, Next.js, TypeScript, 100+ incidents resolved with zero
+  downtime across fintech platforms, expanding into Node.js,
+  Express.js & PostgreSQL).
+- Updated the page meta description to match, kept concise for SEO
+  rather than reusing the full Hero paragraph verbatim.
+
 ### v2.19.0 — Live API integration for Timeline, Skills & Projects (2026-09-06)
 
 - Replaced the static timeline, skills, and projects data with live

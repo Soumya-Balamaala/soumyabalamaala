@@ -72,8 +72,11 @@ export function Hero() {
             variants={item}
             className="mt-4 max-w-xl text-base leading-relaxed text-slate-text"
           >
-            Strategic Frontend Engineer with 4.5+ years of expertise in React.js and Material UI,
-            expanding into Full Stack development with Node.js and Express.js.
+            Strategic Frontend Engineer with 4.9+ years of expertise in React.js, Next.js, and
+            TypeScript, building scalable, production-grade UI architectures. Proven track record
+            resolving 100+ critical incidents with zero downtime while sustaining 100% uptime
+            across fintech platforms. Currently expanding into Full Stack development with Node.js,
+            Express.js, and PostgreSQL to deliver end-to-end technical solutions.
           </motion.p>
 
           <motion.div variants={item} className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
@@ -137,7 +140,7 @@ export function Hero() {
             </div>
           </div>
           <div className="absolute -right-4 top-12 rounded-card bg-gold px-4 py-2 text-xs font-bold text-navy shadow-gold">
-            4.5+ yrs
+            4.9+ yrs
           </div>
           <div className="absolute -left-4 bottom-16 rounded-card bg-sage px-4 py-2 text-xs font-bold text-white shadow-card">
             React.js Expert
