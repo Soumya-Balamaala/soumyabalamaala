@@ -7,8 +7,6 @@ import { Reveal, SectionReveal, StaggerContainer, StaggerItem, ScalePop } from '
 import { useSkillsStore } from '@/lib/stores/skillsStore';
 
 export function Skills() {
-  // Falls back to bundled static data if the API is unreachable, so this
-  // never actually surfaces an error state — see skillsStore.
   const { data: skillsData, status, load } = useSkillsStore();
   const loading = status === 'idle' || status === 'loading';
 

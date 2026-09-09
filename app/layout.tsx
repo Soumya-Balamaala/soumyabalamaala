@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { BackendGate } from '@/components/portfolio/BackendGate';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -41,7 +42,9 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/Portfolio_Logo_-1.png" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <BackendGate>{children}</BackendGate>
+      </body>
     </html>
   );
 }

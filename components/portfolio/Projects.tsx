@@ -7,8 +7,6 @@ import { Reveal, SectionReveal, StaggerContainer, StaggerItem } from './motion';
 import { usePortfolioProjectsStore } from '@/lib/stores/portfolioProjectsStore';
 
 export function Projects() {
-  // Falls back to bundled static data if the API is unreachable, so this
-  // never actually surfaces an error state — see portfolioProjectsStore.
   const { data: projectsData, status, load } = usePortfolioProjectsStore();
   const loading = status === 'idle' || status === 'loading';
 

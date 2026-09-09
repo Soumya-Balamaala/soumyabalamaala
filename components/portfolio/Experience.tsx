@@ -14,8 +14,6 @@ export function Experience() {
   });
   const lineScale = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
 
-  // Falls back to bundled static data if the API is unreachable, so this
-  // never actually surfaces an error state — see journeysStore.
   const { data: timelineData, status, load } = useJourneysStore();
   const loading = status === 'idle' || status === 'loading';
 

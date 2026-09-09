@@ -10,6 +10,18 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.22.0 — Full-screen backend outage state (2026-09-09)
+
+- Removed the bundled static-data fallback for Timeline, Skills, and
+  Projects — a failed API call now surfaces as a real failure instead
+  of silently substituting old hardcoded content.
+- Added a backend health check (`lib/checkBackend.ts`, probing
+  `/api/public/health`) that runs once on load. If the backend is
+  unreachable, `BackendGate` replaces the entire page with a full-screen
+  message (logo, explanation, and a "Try Again" button that re-checks
+  and restores the site) instead of leaving broken or empty sections
+  visible.
+
 ### v2.21.0 — Project card redesign & per-section visit tracking (2026-09-09)
 
 - Redesigned the project cards: company badge moved to its own pill,
