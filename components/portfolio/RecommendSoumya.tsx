@@ -92,12 +92,7 @@ export function RecommendSoumya() {
 
   // Companies Soumya has worked at, in reverse-chronological order, de-duplicated.
   const companyOptions = Array.from(
-    new Set(
-      journeys
-        .filter((entry) => entry.type === 'experience')
-        .map((entry) => entry.companyName)
-        .filter((name): name is string => Boolean(name))
-    )
+    new Set(journeys.filter((entry) => entry.type === 'work').map((entry) => entry.organization))
   );
 
   // Only real client/employer engagements — exclude personal projects.

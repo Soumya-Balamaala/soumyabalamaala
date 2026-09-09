@@ -7,9 +7,10 @@ import { Reveal, SectionReveal, StaggerContainer, StaggerItem, ScalePop } from '
 import { useSkillsStore } from '@/lib/stores/skillsStore';
 
 export function Skills() {
+  // Falls back to bundled static data if the API is unreachable, so this
+  // never actually surfaces an error state — see skillsStore.
   const { data: skillsData, status, load } = useSkillsStore();
   const loading = status === 'idle' || status === 'loading';
-  const error = status === 'error';
 
   useEffect(() => {
     load();
@@ -29,10 +30,6 @@ export function Skills() {
 
         {loading ? (
           <p className="text-center text-sm text-slate-light md:text-left">Loading skills...</p>
-        ) : error ? (
-          <p className="text-center text-sm text-red-600 md:text-left">
-            Couldn&apos;t load skills right now. Please try again later.
-          </p>
         ) : skillsData.length === 0 ? (
           <p className="text-center text-sm text-slate-light md:text-left">No skills listed yet.</p>
         ) : (

@@ -1,12 +1,10 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion, useInView, useScroll, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { Briefcase, GraduationCap, MapPin } from 'lucide-react';
 import { Reveal, SectionReveal } from './motion';
 import { useJourneysStore } from '@/lib/stores/journeysStore';
-import { toTimelineEntry } from '@/lib/api/journeys';
-import { trackVisitor } from '@/lib/api/visitors';
 
 export function Experience() {
   const ref = useRef(null);
@@ -16,21 +14,14 @@ export function Experience() {
   });
   const lineScale = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
 
-  const { data: journeys, status, load } = useJourneysStore();
+  // Falls back to bundled static data if the API is unreachable, so this
+  // never actually surfaces an error state — see journeysStore.
+  const { data: timelineData, status, load } = useJourneysStore();
   const loading = status === 'idle' || status === 'loading';
-  const error = status === 'error';
-  const timelineData = journeys.map(toTimelineEntry);
 
   useEffect(() => {
     load();
   }, [load]);
-
-  // Record a visit once this section is actually scrolled into view,
-  // rather than just on page load.
-  const inView = useInView(ref, { once: true, amount: 0.3 });
-  useEffect(() => {
-    if (inView) trackVisitor('experience', window.location.href);
-  }, [inView]);
 
   // Desktop alternates entries left/right, so they slide in from the side;
   // mobile collapses to a single left-aligned stack, so sliding in from the
@@ -62,10 +53,6 @@ export function Experience() {
         <div ref={ref} className="relative">
           {loading ? (
             <p className="text-left text-sm text-slate-light">Loading timeline...</p>
-          ) : error ? (
-            <p className="text-left text-sm text-red-600">
-              Couldn&apos;t load the timeline right now. Please try again later.
-            </p>
           ) : timelineData.length === 0 ? (
             <p className="text-left text-sm text-slate-light">No timeline entries yet.</p>
           ) : (

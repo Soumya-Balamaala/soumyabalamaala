@@ -10,6 +10,22 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.21.0 — Project card redesign & per-section visit tracking (2026-09-09)
+
+- Redesigned the project cards: company badge moved to its own pill,
+  added the project's tagline as an italic line above the description,
+  restored the external-link icon (and a proper "View Project" link,
+  later simplified back to just the icon) for projects that have a
+  `projectUrl`, and made every card in a row stretch to equal height
+  with its skill tags pinned to the bottom regardless of description
+  length.
+- Moved scroll-triggered visit tracking into `SectionReveal` itself,
+  keyed by each section's own `id`. Every home-page section already
+  renders through that one wrapper, so About, Skills, Experience,
+  Projects, Recommendations, and Contact all now record a visit the
+  moment they're actually scrolled into view — removed the
+  one-off manual version this replaced on the Experience section.
+
 ### v2.20.0 — Refreshed Hero copy & metadata (2026-09-06)
 
 - Updated the Hero section's summary paragraph and the "4.5+ yrs"

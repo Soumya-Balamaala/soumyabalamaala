@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from 'react';
 import { motion, useInView, useAnimation, type Variants } from 'framer-motion';
+import { trackVisitor } from '@/lib/api/visitors';
 
 const FADE_UP: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -55,6 +56,10 @@ interface SectionRevealProps {
 
 // Fades/slides the whole <section> in as it scrolls into view, on top of
 // whatever finer-grained Reveal/StaggerContainer animations live inside it.
+// Every section on the page renders through this wrapper, so it's also the
+// one place that records a visit — keyed by the section's own id — the
+// moment someone actually scrolls to it, rather than repeating that in each
+// section individually.
 export function SectionReveal({ children, id, className }: SectionRevealProps) {
   return (
     <motion.section
@@ -64,6 +69,9 @@ export function SectionReveal({ children, id, className }: SectionRevealProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-120px' }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
+      onViewportEnter={() => {
+        if (id) trackVisitor(id, window.location.href);
+      }}
     >
       {children}
     </motion.section>

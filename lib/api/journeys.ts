@@ -69,3 +69,8 @@ export function toTimelineEntry(entry: JourneyEntry): TimelineEntry {
     bullets: entry.description ?? [],
   };
 }
+
+export async function fetchTimeline(): Promise<TimelineEntry[]> {
+  const entries = await fetchJourneys();
+  return entries.map(toTimelineEntry);
+}
