@@ -10,6 +10,18 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.23.0 — Public resume pages (2026-11-08)
+
+- Added `/resume` (primary resume with a country switcher) and
+  `/resume-[segment]` (country or private role resume) rendered as A4
+  cards, with print CSS. Data comes from `/api/public/resume`.
+- Role resumes are `noindex,nofollow`, fetched with `no-store`, and show
+  the cover letter beside the resume from `lg` (tabs below `lg`).
+  Country resumes revalidate every 300 seconds.
+- Added Download PDF / Download Cover Letter buttons via `next.config.js`
+  rewrites to the console download endpoints.
+- Added once-per-session view tracking to `/api/public/resume-events`.
+
 ### v2.22.0 — Full-screen backend outage state (2026-09-09)
 
 - Removed the bundled static-data fallback for Timeline, Skills, and
