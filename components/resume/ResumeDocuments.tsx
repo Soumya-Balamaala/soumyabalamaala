@@ -49,11 +49,11 @@ export function ResumeDocuments({ segment, resumeNode, letterNode }: Props) {
   return (
     <div className="mx-auto w-full max-w-[210mm] lg:max-w-[calc(420mm+1.5rem)]">
       <div className="no-print flex flex-wrap gap-2 mb-4">
-        <a href={pdfHref} className={`${btn} bg-purple-700 text-white hover:bg-purple-800`}>
+        <a href={pdfHref} className={`${btn} bg-black text-white hover:bg-gray-800`}>
           <Download size={16} /> Download PDF
         </a>
         {hasLetter && (
-          <a href={letterHref} className={`${btn} border border-purple-700 text-purple-800 bg-white hover:bg-purple-50`}>
+          <a href={letterHref} className={`${btn} border border-black text-black bg-white hover:bg-gray-100`}>
             <FileText size={16} /> Download Cover Letter
           </a>
         )}
@@ -73,7 +73,7 @@ export function ResumeDocuments({ segment, resumeNode, letterNode }: Props) {
               aria-controls={`panel-${t}`}
               tabIndex={tab === t ? 0 : -1}
               onClick={() => setTab(t)}
-              className={`flex-1 rounded-md px-3 py-2 text-sm font-medium ${tab === t ? 'bg-white text-purple-800 shadow' : 'text-gray-600'}`}
+              className={`flex-1 rounded-md px-3 py-2 text-sm font-medium ${tab === t ? 'bg-white text-black shadow' : 'text-gray-600'}`}
             >
               {t === 'resume' ? 'Resume' : 'Cover Letter'}
             </button>

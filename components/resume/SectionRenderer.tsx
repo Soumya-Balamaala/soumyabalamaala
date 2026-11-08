@@ -110,7 +110,7 @@ export function SectionRenderer({ section }: { section: ResumeSection }) {
   return (
     <section className="mt-4">
       {section.title && (
-        <h2 className="text-[12pt] font-bold uppercase text-purple-800 border-b border-purple-700 pb-0.5 mb-2">{section.title}</h2>
+        <h2 className="text-[12pt] font-bold uppercase text-black border-b border-gray-400 pb-0.5 mb-2">{section.title}</h2>
       )}
       {body}
     </section>

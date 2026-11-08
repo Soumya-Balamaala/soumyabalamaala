@@ -27,7 +27,7 @@ export function CoverLetterView({ letter, fallbackName }: { letter: CoverLetter;
       <p className="mt-4">{person ? `Dear ${person},` : 'Dear Hiring Manager,'}</p>
       {letter.body && <div className="resume-html mt-3 break-words" dangerouslySetInnerHTML={{ __html: letter.body }} />}
       {skills.length > 0 && (
-        <p className="mt-4 bg-purple-50 border-l-4 border-purple-700 px-3 py-1.5 break-words">
+        <p className="mt-4 bg-gray-100 border-l-4 border-black px-3 py-1.5 break-words">
           <span className="font-semibold">Key skills:</span> {skills.join(' | ')}
         </p>
       )}

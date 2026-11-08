@@ -10,6 +10,14 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.24.0 — Resume UI restyle (2026-11-08)
+
+- Restyled the public resume to a black-only look matching the reference:
+  name and profile grid (contacts left, attributes right) beside the
+  photo, thin grey rules, uppercase black section headings.
+- Removed the top rule and the title line under the name.
+- Buttons, tabs, cover-letter highlight and link colours are now black.
+
 ### v2.23.0 — Public resume pages (2026-11-08)
 
 - Added `/resume` (primary resume with a country switcher) and
