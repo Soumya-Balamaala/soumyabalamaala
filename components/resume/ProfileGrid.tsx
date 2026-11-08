@@ -38,24 +38,22 @@ export function ProfileGrid({ info }: { info: BasicInfo }) {
   if (!contacts.length && !visibleAttrs.length) return null;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-[10pt] text-black pt-1">
-      <ul className="space-y-1 list-none p-0 m-0 min-w-0">
-        {contacts.map((c) => (
-          <Item key={c.link}>
-            <span className="mt-[3px] text-black shrink-0">{c.icon}</span>
-            <a href={c.link} className="hover:underline" target={c.link.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">
-              {c.text}
-            </a>
-          </Item>
-        ))}
-      </ul>
-      <ul className="space-y-1 list-none p-0 m-0 min-w-0">
-        {visibleAttrs.map(([label, value]) => (
-          <Item key={label}>
-            <span>{label} : {value}</span>
-          </Item>
-        ))}
-      </ul>
-    </div>
+    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-0.5 text-[10pt] text-black list-none p-0 m-0">
+      {contacts.map((c) => (
+        <Item key={c.link}>
+          <span className="mt-[3px] text-black shrink-0">{c.icon}</span>
+          <a href={c.link} className="hover:underline" target={c.link.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">
+            {c.text}
+          </a>
+        </Item>
+      ))}
+      {visibleAttrs.map(([label, value]) => (
+        <Item key={label}>
+          <span>
+            <span className="font-semibold">{label}:</span> {value}
+          </span>
+        </Item>
+      ))}
+    </ul>
   );
 }

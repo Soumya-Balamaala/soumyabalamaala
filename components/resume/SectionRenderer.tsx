@@ -35,28 +35,32 @@ function dateLine(e: TimelineEntry): string {
 
 function Timeline({ entries }: { entries: TimelineEntry[] }) {
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       {entries.map((e, i) => {
         const title = [e.title, e.organization].map((s) => s?.trim()).filter(Boolean).join(', ');
         const meta = [e.location, e.mode, e.employmentType].map((s) => s?.trim()).filter(Boolean).join(' | ');
         const dates = dateLine(e);
         return (
           <div key={i} className="break-inside-avoid-page">
-            {title && (
-              <h3 className="text-[10.5pt] font-bold text-gray-900 break-words">
-                {e.link ? (
-                  <a href={e.link} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                    {title}
-                  </a>
-                ) : (
-                  title
+            {(title || dates) && (
+              <div className="flex flex-wrap items-baseline justify-between gap-x-4">
+                {title && (
+                  <h3 className="text-[10.5pt] font-bold text-gray-900 break-words">
+                    {e.link ? (
+                      <a href={e.link} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                        {title}
+                      </a>
+                    ) : (
+                      title
+                    )}
+                  </h3>
                 )}
-              </h3>
+                {dates && <span className="text-[10pt] text-gray-800 whitespace-nowrap ml-auto">{dates}</span>}
+              </div>
             )}
-            {meta && <p className="text-[10pt] text-gray-700">{meta}</p>}
-            {dates && <p className="text-[10pt] text-gray-600">{dates}</p>}
+            {meta && <p className="text-[10pt] font-semibold text-gray-800">{meta}</p>}
             {e.description && (
-              <div className="resume-html text-[10pt] text-gray-800 mt-1" dangerouslySetInnerHTML={{ __html: e.description }} />
+              <div className="resume-html text-[10pt] text-gray-800 mt-0.5" dangerouslySetInnerHTML={{ __html: e.description }} />
             )}
           </div>
         );
@@ -74,7 +78,7 @@ function renderBody(section: ResumeSection) {
       const items = (c.items ?? []).filter(Boolean);
       if (!items.length) return null;
       return (
-        <ul className="list-disc pl-5 text-[10pt] text-gray-800 space-y-0.5">
+        <ul className="list-disc pl-5 text-[10pt] text-gray-800 m-0">
           {items.map((it, i) => (
             <li key={i}>{it}</li>
           ))}
@@ -85,7 +89,7 @@ function renderBody(section: ResumeSection) {
       const entries = (c.entries ?? []).filter((e) => e.key || e.value);
       if (!entries.length) return null;
       return (
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-[10pt] text-gray-800 list-none p-0 m-0">
+        <ul className="list-disc pl-5 text-[10pt] text-gray-800 list-outside m-0">
           {entries.map((e, i) => (
             <li key={i} className="break-words">
               {e.key && <span className="font-semibold">{e.key}: </span>}
@@ -108,9 +112,9 @@ export function SectionRenderer({ section }: { section: ResumeSection }) {
   const body = renderBody(section);
   if (!body) return null;
   return (
-    <section className="mt-4">
+    <section className="mt-3">
       {section.title && (
-        <h2 className="text-[12pt] font-bold uppercase text-black border-b border-gray-400 pb-0.5 mb-2">{section.title}</h2>
+        <h2 className="text-[12pt] font-bold uppercase text-black mb-1">{section.title}</h2>
       )}
       {body}
     </section>
