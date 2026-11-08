@@ -112,9 +112,9 @@ export function SectionRenderer({ section }: { section: ResumeSection }) {
   const body = renderBody(section);
   if (!body) return null;
   return (
-    <section className="mt-3">
+    <section className="mt-3 pt-2 border-t border-gray-400">
       {section.title && (
-        <h2 className="text-[12pt] font-bold uppercase text-black mb-1">{section.title}</h2>
+        <h2 className="text-[12pt] font-bold uppercase text-black border-b border-gray-400 pb-0.5 mb-2">{section.title}</h2>
       )}
       {body}
     </section>
