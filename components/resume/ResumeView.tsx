@@ -12,14 +12,16 @@ export function ResumeView({ resume }: { resume: PublicResume }) {
       <header className="flex items-start justify-between gap-4">
         <div className="min-w-0 flex-1">
           <h1 className="text-[22pt] leading-tight font-bold uppercase break-words">{info.fullName?.trim()}</h1>
-          {info.title?.trim() && <p className="text-[12pt] text-gray-700 break-words mb-2">{info.title}</p>}
-          <ProfileGrid info={info} />
+          {info.title?.trim() && <p className="text-[12pt] text-gray-700 break-words">{info.title}</p>}
         </div>
         {photo && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={photo} alt={info.fullName ?? 'Photo'} className="h-20 w-20 sm:h-28 sm:w-28 rounded-full object-cover shrink-0" />
+          <img src={photo} alt={info.fullName ?? 'Photo'} className="h-20 w-20 sm:h-24 sm:w-24 rounded-full object-cover shrink-0" />
         )}
       </header>
+      <div className="mt-2">
+        <ProfileGrid info={info} />
+      </div>
       <div className="border-t border-gray-400 mt-2" />
       {sections.map((s) => (
         <SectionRenderer key={s.id} section={s} />
