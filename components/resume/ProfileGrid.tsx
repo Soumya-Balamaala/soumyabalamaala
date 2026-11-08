@@ -40,7 +40,7 @@ export function ProfileGrid({ info }: { info: BasicInfo }) {
   if (!contacts.length && !visibleAttrs.length) return null;
 
   return (
-    <ul className="grid grid-cols-1 md:[grid-template-columns:repeat(3,max-content)] md:justify-between gap-x-6 gap-y-0.5 text-[10pt] text-black list-none p-0 m-0">
+    <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-0.5 text-[10pt] text-black list-none p-0 m-0">
       {contacts.map((c) => (
         <Item key={c.link}>
           <span className="mt-[3px] text-black shrink-0">{c.icon}</span>
