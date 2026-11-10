@@ -19,7 +19,7 @@ export function ResumeView({ resume }: { resume: PublicResume }) {
         {photo && (
           <div className="flex shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={photo} alt={info.fullName ?? 'Photo'} className="h-32 w-32 sm:h-40 sm:w-40 rounded-full object-cover" />
+            <img src={photo} alt={info.fullName ?? 'Photo'} className="h-24 w-24 sm:h-40 sm:w-40 rounded-full object-cover" />
           </div>
         )}
       </div>
