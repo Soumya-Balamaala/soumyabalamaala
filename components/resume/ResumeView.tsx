@@ -24,7 +24,7 @@ export function ResumeView({ resume }: { resume: PublicResume }) {
             <img
               src={photo}
               alt={info.fullName ?? "Photo"}
-              className="h-24 w-24 sm:h-40 sm:w-40 rounded-full object-cover"
+              className="h-20 w-20 sm:h-40 sm:w-40 rounded-full object-cover"
             />
           </div>
         )}
