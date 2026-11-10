@@ -149,4 +149,7 @@
   html, body { background: #fff !important; }
   .no-print { display: none !important; }
   .resume-card { box-shadow: none !important; max-width: none !important; width: 210mm !important; min-height: 0 !important; }
+  body[data-printing="resume"] #panel-letter { display: none !important; }
+  body[data-printing="letter"] #panel-resume { display: none !important; }
+  body[data-printing="resume"] #panel-resume, body[data-printing="letter"] #panel-letter { display: block !important; }
 }

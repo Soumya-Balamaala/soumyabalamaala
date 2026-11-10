@@ -40,7 +40,8 @@ export function ProfileGrid({ info }: { info: BasicInfo }) {
   if (!contacts.length && !visibleAttrs.length) return null;
 
   return (
-    <ul className="grid grid-cols-1 md:[grid-template-columns:repeat(2,max-content)] md:gap-x-8 gap-x-6 gap-y-0.5 text-[10pt] text-black list-none p-0 m-0">
+    <div className="flex flex-col md:flex-row md:items-start gap-x-10 gap-y-2 text-[10pt] text-black">
+    <ul className="list-none p-0 m-0 space-y-1 min-w-0">
       {contacts.map((c) => (
         <Item key={c.link}>
           <span className="mt-[3px] text-black shrink-0">{c.icon}</span>
@@ -49,13 +50,14 @@ export function ProfileGrid({ info }: { info: BasicInfo }) {
           </a>
         </Item>
       ))}
+    </ul>
+    <ul className="list-none p-0 m-0 space-y-1.5 min-w-0">
       {visibleAttrs.map(([label, value]) => (
         <Item key={label}>
-          <span>
-            <span className="font-semibold">{label}:</span> {value}
-          </span>
+          <span>{label} : {value}</span>
         </Item>
       ))}
     </ul>
+    </div>
   );
 }

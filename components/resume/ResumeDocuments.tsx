@@ -33,8 +33,15 @@ export function ResumeDocuments({ segment, resumeNode, letterNode }: Props) {
     }).catch(() => {});
   }, [segment]);
 
-  const pdfHref = segment === 'resume' ? '/resume/download' : `/${segment}/download`;
-  const letterHref = `/${segment}/cover-letter/download`;
+  function savePdf(which: Tab) {
+    document.body.dataset.printing = which;
+    const done = () => {
+      delete document.body.dataset.printing;
+      window.removeEventListener('afterprint', done);
+    };
+    window.addEventListener('afterprint', done);
+    window.print();
+  }
 
   function onKeyDown(e: KeyboardEvent) {
     if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
@@ -49,13 +56,13 @@ export function ResumeDocuments({ segment, resumeNode, letterNode }: Props) {
   return (
     <div className="mx-auto w-full max-w-[210mm] lg:max-w-[calc(420mm+1.5rem)]">
       <div className="no-print flex flex-wrap gap-2 mb-4">
-        <a href={pdfHref} className={`${btn} bg-black text-white hover:bg-gray-800`}>
-          <Download size={16} /> Download PDF
-        </a>
+        <button type="button" onClick={() => savePdf('resume')} className={`${btn} bg-black text-white hover:bg-gray-800`}>
+          <Download size={16} /> Save Resume as PDF
+        </button>
         {hasLetter && (
-          <a href={letterHref} className={`${btn} border border-black text-black bg-white hover:bg-gray-100`}>
-            <FileText size={16} /> Download Cover Letter
-          </a>
+          <button type="button" onClick={() => savePdf('letter')} className={`${btn} border border-black text-black bg-white hover:bg-gray-100`}>
+            <FileText size={16} /> Save Cover Letter as PDF
+          </button>
         )}
       </div>
 
