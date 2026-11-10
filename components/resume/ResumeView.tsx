@@ -10,9 +10,9 @@ export function ResumeView({ resume }: { resume: PublicResume }) {
   return (
     <article className="resume-card bg-white shadow-lg w-full max-w-[210mm] h-full mx-auto p-4 sm:p-[10mm] sm:min-h-[297mm] text-gray-900 overflow-hidden">
       <header>
-        <h1 className="text-[22pt] leading-tight font-bold break-words">{info.fullName?.trim()}</h1>
+        <h1 className="text-[22pt] leading-none font-bold break-words">{info.fullName?.trim()}</h1>
       </header>
-      <div className="mt-1 pb-3 border-b border-black flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+      <div className="mt-1 pb-3 border-b border-black flex flex-col md:flex-row print:flex-row md:items-start print:items-start md:justify-between print:justify-between gap-3">
         <div className="min-w-0">
           <ProfileGrid info={info} />
         </div>

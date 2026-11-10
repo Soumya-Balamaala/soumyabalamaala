@@ -40,7 +40,7 @@ export function ProfileGrid({ info }: { info: BasicInfo }) {
   if (!contacts.length && !visibleAttrs.length) return null;
 
   return (
-    <div className="flex flex-col md:flex-row md:items-start gap-x-10 gap-y-2 text-[10pt] text-black">
+    <div className="flex flex-col md:flex-row print:flex-row md:items-start print:items-start gap-x-10 gap-y-2 text-[10pt] leading-snug text-black">
     <ul className="list-none p-0 m-0 space-y-1 min-w-0">
       {contacts.map((c) => (
         <Item key={c.link}>
@@ -51,7 +51,7 @@ export function ProfileGrid({ info }: { info: BasicInfo }) {
         </Item>
       ))}
     </ul>
-    <ul className="list-none p-0 m-0 space-y-1.5 min-w-0">
+    <ul className="list-none p-0 m-0 space-y-1 min-w-0">
       {visibleAttrs.map(([label, value]) => (
         <Item key={label}>
           <span>{label} : {value}</span>
