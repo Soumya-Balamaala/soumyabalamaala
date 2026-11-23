@@ -33,7 +33,11 @@ function dateLine(e: TimelineEntry): string {
   return `${fmt(start)}${endText ? ` - ${endText}` : ''}${duration}`;
 }
 
-function Timeline({ entries }: { entries: TimelineEntry[] }) {
+function SectionTitle({ title }: { title?: string }) {
+  return title ? <h2 className="text-[12pt] font-bold uppercase text-black mb-1">{title}</h2> : null;
+}
+
+function Timeline({ entries, heading }: { entries: TimelineEntry[]; heading?: string }) {
   return (
     <div className="space-y-2">
       {entries.map((e, i) => {
@@ -41,7 +45,9 @@ function Timeline({ entries }: { entries: TimelineEntry[] }) {
         const meta = [e.location, e.mode, e.employmentType].map((s) => s?.trim()).filter(Boolean).join(' | ');
         const dates = dateLine(e);
         return (
-          <div key={i} className="break-inside-avoid-page">
+          // Each entry is kept whole on one page; the section heading rides with the first entry.
+          <div key={i} className="print-keep break-inside-avoid-page">
+            {i === 0 && <SectionTitle title={heading} />}
             {(title || dates) && (
               <div className="flex flex-wrap items-baseline justify-between gap-x-4">
                 {title && (
@@ -69,7 +75,7 @@ function Timeline({ entries }: { entries: TimelineEntry[] }) {
   );
 }
 
-function renderBody(section: ResumeSection) {
+function renderBody(section: ResumeSection, heading?: string) {
   const c = section.content ?? {};
   switch (section.type) {
     case 'richText':
@@ -101,7 +107,7 @@ function renderBody(section: ResumeSection) {
     }
     case 'timeline': {
       const entries = (c.entries ?? []) as TimelineEntry[];
-      return entries.length ? <Timeline entries={entries} /> : null;
+      return entries.length ? <Timeline entries={entries} heading={heading} /> : null;
     }
     default:
       return null;
@@ -109,13 +115,13 @@ function renderBody(section: ResumeSection) {
 }
 
 export function SectionRenderer({ section }: { section: ResumeSection }) {
-  const body = renderBody(section);
+  const isTimeline = section.type === 'timeline';
+  const body = renderBody(section, section.title);
   if (!body) return null;
   return (
-    <section className="pt-3 pb-3 border-b border-black">
-      {section.title && (
-        <h2 className="text-[12pt] font-bold uppercase text-black mb-1">{section.title}</h2>
-      )}
+    // Non-timeline sections (summary, skills, ...) are short: keep them whole on one page.
+    <section className={`pt-3 pb-3 border-b border-black ${isTimeline ? '' : 'print-keep'}`}>
+      {!isTimeline && <SectionTitle title={section.title} />}
       {body}
     </section>
   );

@@ -145,10 +145,20 @@
 .resume-html { overflow-wrap: anywhere; }
 
 @media print {
-  @page { size: A4; margin: 0; }
+  /* Real page margins so every page (not just the first) gets top/bottom space. */
+  @page { size: A4; margin: 10mm; }
   html, body { background: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  main { padding: 0 !important; min-height: 0 !important; background: #fff !important; }
   .no-print { display: none !important; }
-  .resume-card { box-shadow: none !important; max-width: none !important; width: 210mm !important; min-height: 0 !important; }
+  .resume-card {
+    box-shadow: none !important; max-width: none !important; width: 190mm !important;
+    min-height: 0 !important; height: auto !important; padding: 0 !important; overflow: visible !important;
+  }
+  /* Scale set by the Download button so the resume fits in 2 pages. */
+  body[data-printing="resume"] #panel-resume .resume-card { zoom: var(--resume-zoom, 1); width: var(--resume-width, 190mm) !important; }
+  /* Keep entries, bullets and paragraphs whole; move them to the next page instead of splitting. */
+  .resume-card .print-keep, .resume-card li, .resume-card .resume-html p { break-inside: avoid; page-break-inside: avoid; }
+  .resume-card h1, .resume-card h2, .resume-card h3 { break-after: avoid; page-break-after: avoid; }
   body[data-printing="resume"] #panel-letter { display: none !important; }
   body[data-printing="letter"] #panel-resume { display: none !important; }
   body[data-printing="resume"] #panel-resume, body[data-printing="letter"] #panel-letter { display: block !important; }

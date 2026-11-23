@@ -10,6 +10,15 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.25.0 — Resume download fixes (2026-11-23)
+
+- Buttons renamed to **Download** / **Download Cover Letter**.
+- Resume prints on A4 with 10mm margins on every page and is scaled down
+  when needed so it never exceeds 2 pages.
+- Timeline entries, bullets and short sections are never split across
+  pages; section headings stay with their first entry.
+- Header: photo beside the name with inline labelled contact details.
+
 ### v2.24.0 — Resume UI restyle (2026-11-08)
 
 - Restyled the public resume to a black-only look matching the reference:
