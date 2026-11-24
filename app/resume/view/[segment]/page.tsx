@@ -33,7 +33,7 @@ export default async function ResumeSegmentPage({ params }: Params) {
   return (
     <main className="min-h-screen bg-gray-100 px-3 py-6 sm:px-6">
       <ResumeDocuments
-        segment={`resume-${segment}`}
+        segment={segment}
         resumeNode={<ResumeView resume={resume} />}
         letterNode={letter ? <CoverLetterView letter={letter} fallbackName={resume.basicInfo?.fullName} /> : undefined}
       />

@@ -11,7 +11,7 @@ export function ResumeView({ resume }: { resume: PublicResume }) {
 
   return (
     <article className="resume-card bg-white shadow-lg w-full max-w-[210mm] h-full mx-auto p-4 sm:p-[10mm] sm:min-h-[297mm] text-gray-900 overflow-hidden">
-      <div className="pb-3 border-b border-black flex flex-col sm:flex-row print:flex-row sm:items-center print:items-center gap-4">
+      <div className="pb-3 border-b border-black last:border-b-0 flex flex-col sm:flex-row print:flex-row sm:items-center print:items-center gap-4">
         {photo && (
           <div className="flex shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}

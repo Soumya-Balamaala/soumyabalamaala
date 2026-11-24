@@ -58,7 +58,10 @@ function fitResumeToPages(): { zoom: number; widthMm: number } {
 }
 
 interface Props {
-  segment: string; // "resume" | "resume-{slug}"
+  // Backend segment used to count the view: "resume" (primary), "{slug}" (country)
+  // or "{slug}-{token}" (role). Must not carry the "resume-" URL prefix, or the
+  // backend finds no matching resume and the view is not recorded.
+  segment: string;
   resumeNode: ReactNode;
   letterNode?: ReactNode;
 }

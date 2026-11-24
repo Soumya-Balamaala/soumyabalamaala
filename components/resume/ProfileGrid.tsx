@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { BasicInfo } from '@/lib/api/publicResume';
 
 const clean = (v?: string) => (typeof v === 'string' ? v.trim() : '');
@@ -34,19 +35,26 @@ export function ProfileGrid({ info }: { info: BasicInfo }) {
 
   if (!contacts.length && !visibleAttrs.length) return null;
 
+  const items: Array<{ key: string; label: string; value: ReactNode }> = [
+    ...contacts.map((c) => ({
+      key: c.link,
+      label: c.label,
+      value: (
+        <a href={c.link} className="hover:underline" target={c.link.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">
+          {shown(c.text)}
+        </a>
+      ),
+    })),
+    ...visibleAttrs.map(([label, value]) => ({ key: label, label, value })),
+  ];
+
   return (
-    <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10pt] leading-snug text-black min-w-0">
-      {contacts.map((c) => (
-        <span key={c.link} className="break-words [overflow-wrap:anywhere]">
-          <b>{c.label}:</b>{' '}
-          <a href={c.link} className="hover:underline" target={c.link.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">
-            {shown(c.text)}
-          </a>
-        </span>
-      ))}
-      {visibleAttrs.map(([label, value]) => (
-        <span key={label} className="break-words [overflow-wrap:anywhere]">
-          <b>{label}:</b> {value}
+    <div className="flex flex-wrap gap-x-2 gap-y-1 text-[10pt] leading-snug text-black min-w-0">
+      {items.map((it, i) => (
+        <span key={it.key} className="break-words [overflow-wrap:anywhere]">
+          <b>{it.label}:</b> {it.value}
+          {/* Separator after every pair except the last. */}
+          {i < items.length - 1 && <span aria-hidden="true" className="ml-2">|</span>}
         </span>
       ))}
     </div>

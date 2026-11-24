@@ -120,7 +120,8 @@ export function SectionRenderer({ section }: { section: ResumeSection }) {
   if (!body) return null;
   return (
     // Non-timeline sections (summary, skills, ...) are short: keep them whole on one page.
-    <section className={`pt-3 pb-3 border-b border-black ${isTimeline ? '' : 'print-keep'}`}>
+    // No divider under the last section: nothing follows it.
+    <section className={`pt-3 pb-3 border-b border-black last:border-b-0 ${isTimeline ? '' : 'print-keep'}`}>
       {!isTimeline && <SectionTitle title={section.title} />}
       {body}
     </section>

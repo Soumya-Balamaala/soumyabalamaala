@@ -10,6 +10,15 @@ Live site: https://soumyabalamaala.vercel.app
 
 
 
+### v2.25.1 — Resume view tracking & header separators (2026-11-24)
+
+- Role and country resume visits are now recorded against their own
+  resume: the view beacon sends the bare segment (`{slug}` or
+  `{slug}-{token}`) instead of `resume-{segment}`, which the backend
+  could not match, so those visits were never saved.
+- Header contact details are separated with `|`.
+- No divider line is drawn under the last section of the resume.
+
 ### v2.25.0 — Resume download fixes (2026-11-23)
 
 - Buttons renamed to **Download** / **Download Cover Letter**.
